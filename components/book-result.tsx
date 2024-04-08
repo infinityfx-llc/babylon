@@ -1,16 +1,20 @@
+'use client';
+
 import { Badge, Button, Frame } from '@infinityfx/fluid';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { IoBookmarkOutline, IoStar } from 'react-icons/io5';
+import { IoBookmarkOutline, IoBookmark, IoStar } from 'react-icons/io5';
 import styles from './book-result.module.css';
 
 export default function BookResult() {
+    const [bookmarked, setBookmarked] = useState(false);
 
     return <div className={styles.result}>
         <Link href="/book/the-lord-of-the-rings" style={{ flexGrow: 1 }}>
             <Frame className={styles.image}>
                 <Image src="/images/the-lord-of-the-rings.jpg" fill />
-                
+
                 <div className={styles.focus} />
             </Frame>
         </Link>
@@ -26,8 +30,8 @@ export default function BookResult() {
                 <div className={styles.author}>By J.R.R. Tolkien</div>
             </div>
 
-            <Button variant="minimal" round size="lrg">
-                <IoBookmarkOutline />
+            <Button variant="minimal" round size="lrg" onClick={() => setBookmarked(!bookmarked)}>
+                {bookmarked ? <IoBookmark /> : <IoBookmarkOutline />}
             </Button>
         </div>
     </div>;

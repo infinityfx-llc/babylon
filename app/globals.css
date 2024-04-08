@@ -1,5 +1,5 @@
 :root {
-    --space: var(--f-spacing-xxl);
+    --space: 20rem;
     --header: 5rem;
 }
 

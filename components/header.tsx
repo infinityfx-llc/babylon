@@ -11,7 +11,12 @@ export default function Header() {
 
         <NavigationMenu Link={Link} links={[
             { label: 'Home', href: '/' },
-            { label: 'Catalogue', href: '/catalogue' }
+            {
+                label: 'Catalogue', href: '/catalogue', links: [
+                    { label: 'Fantasy', href: '/catalogue/fantasy' },
+                    { label: 'Thriller', href: '/catalogue/thriller' }
+                ]
+            }
         ]} />
 
         <Link href="/sign-in" tabIndex={-1} style={{ marginLeft: 'auto' }}>
