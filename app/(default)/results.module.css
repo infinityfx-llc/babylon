@@ -1,0 +1,21 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--f-spacing-sml);
+}
+
+.heading {
+    font-size: var(--f-font-size-sml);
+    font-weight: 600;
+}
+
+.list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: var(--f-spacing-sml);
+}
+
+.view__all {
+    margin-left: auto;
+    padding-inline: 1em !important;
+}

@@ -1,0 +1,10 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--f-spacing-sml);
+}
+
+.large {
+    font-size: var(--f-font-size-med);
+    font-weight: 600;
+}

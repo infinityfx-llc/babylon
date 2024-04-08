@@ -1,0 +1,38 @@
+.result {
+    min-width: 16rem;
+    aspect-ratio: 3 / 5;
+    background-color: var(--f-clr-fg-100);
+    border-radius: var(--f-radius-med);
+    display: flex;
+    flex-direction: column;
+    padding: var(--f-spacing-sml);
+    gap: var(--f-spacing-sml);
+}
+
+.image {
+    position: relative;
+    flex-grow: 1;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title {
+    font-size: var(--f-font-size-med);
+    font-weight: 500;
+}
+
+.author {
+    font-size: var(--f-font-size-sml);
+    font-weight: 400;
+}
+
+.rating {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: var(--f-spacing-xsm);
+}
