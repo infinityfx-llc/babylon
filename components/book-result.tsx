@@ -1,6 +1,6 @@
 'use client';
 
-import { Badge, Button, Frame } from '@infinityfx/fluid';
+import { Badge, Button, Frame, Tooltip } from '@infinityfx/fluid';
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -30,9 +30,11 @@ export default function BookResult() {
                 <div className={styles.author}>By J.R.R. Tolkien</div>
             </div>
 
-            <Button variant="minimal" round size="lrg" onClick={() => setBookmarked(!bookmarked)}>
-                {bookmarked ? <IoBookmark /> : <IoBookmarkOutline />}
-            </Button>
+            <Tooltip content={bookmarked ? 'Remove from bookmarks' : 'Add to bookmarks'}>
+                <Button variant="minimal" round size="lrg" onClick={() => setBookmarked(!bookmarked)}>
+                    {bookmarked ? <IoBookmark /> : <IoBookmarkOutline />}
+                </Button>
+            </Tooltip>
         </div>
     </div>;
 }

@@ -1,4 +1,6 @@
-import { Frame, Accordion, Checkbox } from '@infinityfx/fluid';
+'use client';
+
+import { Frame, Accordion, Checkbox, Slider } from '@infinityfx/fluid';
 import styles from './filters.module.css';
 
 export default function Filters() {
@@ -17,6 +19,10 @@ export default function Filters() {
                         <Checkbox />
                     </label>
                 </div>
+            </Accordion.Item>
+
+            <Accordion.Item label="Rating">
+                <Slider min={1} max={10} step={1} handles={2} formatTooltip={value => `${value} star${value > 1 ? 's' : ''}`} />
             </Accordion.Item>
         </Accordion.Root>
     </Frame>;
