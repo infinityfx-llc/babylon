@@ -1,0 +1,28 @@
+{
+    "name": "next-fluid-template",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "npx fluid compile && next dev",
+        "build": "npx fluid compile && next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@infinityfx/fluid": "^0.1.0-beta.43",
+        "@infinityfx/lively": "^3.2.7",
+        "eslint": "^8.50.0",
+        "next": "^14.0.3",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-icons": "^4.11.0",
+        "sharp": "^0.32.6",
+        "typescript": "^5.2.2"
+    },
+    "devDependencies": {
+        "@types/node": "^20.9.2",
+        "@types/react": "^18.2.37",
+        "@types/react-dom": "^18.2.15",
+        "eslint-config-next": "^14.0.3"
+    }
+}
