@@ -14,7 +14,7 @@ export default function Header() {
             { label: 'Catalogue', href: '/catalogue' }
         ]} />
 
-        <Button variant="light" round className={styles.push}>
+        <Button variant="light" round className={styles.account}>
             My Account
         </Button>
 

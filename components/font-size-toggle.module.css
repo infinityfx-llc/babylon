@@ -4,6 +4,11 @@
     gap: var(--f-spacing-sml);
 }
 
+.small {
+    font-size: var(--f-font-size-xsm);
+    font-weight: 400;
+}
+
 .large {
     font-size: var(--f-font-size-med);
     font-weight: 600;
