@@ -13,8 +13,8 @@ export default function Header() {
             { label: 'Home', href: '/' },
             {
                 label: 'Catalogue', href: '/catalogue', links: [
-                    { label: 'Fantasy', href: '/catalogue/fantasy' },
-                    { label: 'Thriller', href: '/catalogue/thriller' }
+                    { label: 'Fantasy', href: '/catalogue/genre/fantasy' },
+                    { label: 'Thriller', href: '/catalogue/genre/thriller' }
                 ]
             }
         ]} />
