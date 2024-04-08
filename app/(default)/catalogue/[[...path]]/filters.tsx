@@ -2,22 +2,26 @@
 
 import { Frame, Accordion, Checkbox, Slider } from '@infinityfx/fluid';
 import styles from './filters.module.css';
+import { Genre } from '@/lib/types';
+import { useFilterStore } from '@/lib/stores';
 
 export default function Filters() {
+    const { data, mutate } = useFilterStore();
 
     return <Frame className={styles.container} background="light" border>
         <Accordion.Root multiple variant="minimal">
             <Accordion.Item label="Genres" defaultOpen>
                 <div className={styles.list}>
-                    <label className={styles.filter}>
-                        Fantasy
-                        <Checkbox />
-                    </label>
+                    {Object.entries(Genre).map(([value, name]) => {
+                        const i = data.genres.indexOf(value as any);
 
-                    <label className={styles.filter}>
-                        Thriller
-                        <Checkbox />
-                    </label>
+                        return <label key={value} className={styles.filter}>
+                            {name}
+                            <Checkbox checked={i >= 0} onChange={e => mutate(data => {
+                                e.target.checked ? data.genres.push(value as any) : data.genres.splice(i, 1)
+                            })} />
+                        </label>
+                    })}
                 </div>
             </Accordion.Item>
 

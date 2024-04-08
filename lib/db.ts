@@ -1,3 +1,5 @@
+import { Book } from "./types";
+
 const data: Book[] = [
     {
         id: 'tolkien-the-lord-of-the-rings-1954',

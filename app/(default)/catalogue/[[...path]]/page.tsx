@@ -5,17 +5,19 @@ import BookResult from '@/components/book-result';
 import styles from './page.module.css';
 
 import { getAll } from '@/lib/db';
+import ViewAllButton from './view-all-button';
+import { Genre } from '@/lib/types';
 
 export default function Page({ params }: { params: { path: string[]; }; }) {
     const [type, value] = params.path || [];
 
     const results = [
         {
-            name: 'Fantasy',
+            name: 'fantasy' as const,
             books: getAll()
         },
         {
-            name: 'Thriller',
+            name: 'thriller' as const,
             books: getAll()
         }
     ]
@@ -26,15 +28,13 @@ export default function Page({ params }: { params: { path: string[]; }; }) {
 
             {results.map(({ name, books }) => (
                 <div className={styles.results__set} key={name}>
-                    <div className={styles.heading}>{name}</div>
+                    <div className={styles.heading}>{Genre[name]}</div>
 
                     <div className={styles.list}>
                         {books.slice(0, 5).map((book, i) => <BookResult key={i} book={book} />)}
                     </div>
 
-                    <Button variant="neutral" size="sml" round className={styles.button}>
-                        View all
-                    </Button>
+                    <ViewAllButton genre={name} />
                 </div>
             ))}
         </section>

@@ -1,3 +1,8 @@
+export const Genre = {
+    thriller: 'Thriller',
+    fantasy: 'Fantasy'
+} as const;
+
 export type Book = {
     id: string;
     title: string;
@@ -7,8 +12,8 @@ export type Book = {
     description: string;
     releaseDate: Date;
     genre: {
-        id: string;
-        name: string;
+        id: keyof typeof Genre;
+        name: typeof Genre[keyof typeof Genre]
     };
     rating: {
         count: number;
@@ -16,4 +21,4 @@ export type Book = {
     },
     pages: number;
     language: string;
-}
+};
