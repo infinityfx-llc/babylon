@@ -11,11 +11,10 @@
 
 .list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(20rem, .25fr));
     gap: var(--f-spacing-sml);
 }
 
 .view__all {
-    margin-left: auto;
     padding-inline: 1em !important;
 }

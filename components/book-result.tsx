@@ -6,28 +6,29 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { IoBookmarkOutline, IoBookmark, IoStar } from 'react-icons/io5';
 import styles from './book-result.module.css';
+import { Book } from '@/lib/types';
 
-export default function BookResult() {
+export default function BookResult({ book }: { book: Book; }) {
     const [bookmarked, setBookmarked] = useState(false);
 
     return <div className={styles.result}>
-        <Link href="/book/the-lord-of-the-rings" style={{ flexGrow: 1 }}>
+        <Link href={`/book/${book.id}`} style={{ flexGrow: 1 }}>
             <Frame className={styles.image}>
-                <Image src="/images/the-lord-of-the-rings.jpg" fill />
+                <Image src={`/images/${book.id}.jpg`} fill />
 
                 <div className={styles.focus} />
             </Frame>
         </Link>
         <div className={styles.row}>
-            <Badge color="var(--f-clr-fg-200)">Fantasy</Badge>
+            <Badge color="var(--f-clr-fg-200)">{book.genre.name}</Badge>
             <span className={styles.rating}>
-                <IoStar /> 10.0
+                <IoStar /> {book.rating.value.toFixed(1)}
             </span>
         </div>
         <div className={styles.row}>
             <div>
-                <div className={styles.title}>The lord of the rings</div>
-                <div className={styles.author}>By J.R.R. Tolkien</div>
+                <div className={styles.title}>{book.title}</div>
+                <div className={styles.author}>By {book.author.name}</div>
             </div>
 
             <Tooltip content={bookmarked ? 'Remove from bookmarks' : 'Add to bookmarks'}>
