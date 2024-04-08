@@ -1,4 +1,4 @@
-import { Button, NavigationMenu } from '@infinityfx/fluid';
+import { Button, NavigationMenu, ThemeToggle } from '@infinityfx/fluid';
 import Link from 'next/link';
 import FontSizeToggle from './font-size-toggle';
 import Logo from './logo';
@@ -21,5 +21,7 @@ export default function Header() {
         </Link>
 
         <FontSizeToggle />
+
+        <ThemeToggle />
     </header>
 }

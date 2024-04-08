@@ -1,14 +1,19 @@
 import { Badge, Button, Frame } from '@infinityfx/fluid';
 import Image from 'next/image';
+import Link from 'next/link';
 import { IoBookmarkOutline, IoStar } from 'react-icons/io5';
 import styles from './book-result.module.css';
 
 export default function BookResult() {
 
     return <div className={styles.result}>
-        <Frame className={styles.image}>
-            <Image src="/images/the-lord-of-the-rings.jpg" fill />
-        </Frame>
+        <Link href="/book/the-lord-of-the-rings" style={{ flexGrow: 1 }}>
+            <Frame className={styles.image}>
+                <Image src="/images/the-lord-of-the-rings.jpg" fill />
+                
+                <div className={styles.focus} />
+            </Frame>
+        </Link>
         <div className={styles.row}>
             <Badge color="var(--f-clr-fg-200)">Fantasy</Badge>
             <span className={styles.rating}>
