@@ -14,9 +14,11 @@ export default function Header() {
             { label: 'Catalogue', href: '/catalogue' }
         ]} />
 
-        <Button variant="light" round className={styles.account}>
-            My Account
-        </Button>
+        <Link href="/sign-in" tabIndex={-1} style={{ marginLeft: 'auto' }}>
+            <Button variant="light" round className={styles.account}>
+                My Account
+            </Button>
+        </Link>
 
         <FontSizeToggle />
     </header>
