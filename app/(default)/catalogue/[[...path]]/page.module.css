@@ -15,7 +15,7 @@
 }
 
 .sidebar {
-    width: 20%;
+    width: 24rem;
     padding-block: var(--f-spacing-xlg);
 }
 
@@ -30,7 +30,8 @@
 }
 
 .results__set .list {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
     gap: var(--f-spacing-sml);
 }
 
