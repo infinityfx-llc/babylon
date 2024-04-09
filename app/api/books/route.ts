@@ -1,9 +1,22 @@
-import { ApiReturnType, Genres } from '@/lib/types';
+import { ApiReturnType, Genres, Sorting } from '@/lib/types';
 import db from '@/prisma/client';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
     const data: ApiBooksRequest = await req.json();
+    let orderBy = { rating: 'desc' };
+
+    switch (data.sorting) {
+        case 'latest': orderBy = { releaseDate: 'desc' };
+            break;
+        case 'earliest': orderBy = { releaseDate: 'asc' };
+            break;
+        case 'highestRated': orderBy = { rating: 'desc' };
+            break;
+        case 'lowestRated': orderBy = { rating: 'asc' };
+            break;
+    }
+
     const config = {
         where: {
             OR: data.query ? [
@@ -33,7 +46,8 @@ export async function POST(req: Request) {
         include: {
             author: true,
             genre: true
-        }
+        },
+        orderBy
     };
 
     if (data.aggregrate) {
@@ -54,6 +68,7 @@ export async function POST(req: Request) {
 export type ApiBooksRequest = {
     aggregrate?: boolean;
     query?: string;
+    sorting?: keyof typeof Sorting;
     genres?: (keyof typeof Genres)[];
     ratings?: number[];
 };
