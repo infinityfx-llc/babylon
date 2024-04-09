@@ -6,23 +6,21 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { IoBookmarkOutline, IoBookmark, IoStar } from 'react-icons/io5';
 import styles from './book-result.module.css';
-import { Book } from '@/lib/types';
+import { BaseBook } from '@/lib/types';
 
-export default function BookResult({ book }: { book: Book; }) {
+export default function BookResult({ book }: { book: BaseBook; }) {
     const [bookmarked, setBookmarked] = useState(false);
 
     return <div className={styles.result}>
         <Link href={`/book/${book.id}`} style={{ flexGrow: 1 }}>
             <Frame className={styles.image}>
-                <Image src={`/images/${book.id}.jpg`} fill />
-
-                <div className={styles.focus} />
+                <Image src={`/images/${book.id}.jpg`} fill alt={book.title} />
             </Frame>
         </Link>
         <div className={styles.row}>
             <Badge color="var(--f-clr-fg-200)">{book.genre.name}</Badge>
             <span className={styles.rating}>
-                <IoStar /> {book.rating.value.toFixed(1)}
+                <IoStar /> {book.rating / 10}
             </span>
         </div>
         <div className={styles.row}>

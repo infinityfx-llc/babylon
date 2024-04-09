@@ -1,6 +1,6 @@
 import Filters from './filters';
-import styles from './page.module.css';
 import Header from './header';
+import styles from './page.module.css';
 import Results from './results';
 
 export default function Page() {
@@ -8,7 +8,7 @@ export default function Page() {
     return <main className={styles.main}>
         <section className={styles.content}>
             <Header />
-
+            
             <Results />
         </section>
         

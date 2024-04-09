@@ -2,7 +2,7 @@
 
 import { Frame, Accordion, Checkbox, Slider, DateField } from '@infinityfx/fluid';
 import styles from './filters.module.css';
-import { Genre } from '@/lib/types';
+import { Genres } from '@/lib/types';
 import { useFilterStore } from '@/lib/stores';
 
 export default function Filters() {
@@ -12,7 +12,7 @@ export default function Filters() {
         <Accordion.Root multiple variant="minimal">
             <Accordion.Item label="Genres" defaultOpen>
                 <div className={styles.list}>
-                    {Object.entries(Genre).map(([value, name]) => {
+                    {Object.entries(Genres).map(([value, name]) => {
                         const i = data.genres.indexOf(value as any);
 
                         return <label key={value} className={styles.filter}>

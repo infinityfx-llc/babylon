@@ -4,23 +4,33 @@ import Image from 'next/image';
 import WriteReview from './write-review';
 import Review from './review';
 import styles from './page.module.css';
+import db from '@/prisma/client';
+import { notFound } from 'next/navigation';
 
-import { getById } from '@/lib/db';
+export default async function Page({ params }: { params: { id: string; }; }) {
 
-export default function Page({ params }: { params: { id: string; }; }) {
+    const book = await db.book.findUnique({
+        where: {
+            id: params.id
+        },
+        include: {
+            author: true,
+            genre: true
+        }
+    });
 
-    const book = getById(params.id);
+    if (!book) return notFound();
 
     return <main className={styles.main}>
         <section className={styles.section}>
             <div className={styles.side}>
 
                 <Frame className={styles.cover}>
-                    <Image src={`/images/${book.id}.jpg`} fill />
+                    <Image src={`/images/${book.id}.jpg`} fill alt={book.title} />
                 </Frame>
 
                 <div className={styles.rating}>
-                    <IoStar /> {book.rating.value.toFixed(1)} &bull; {book.rating.count} ratings
+                    <IoStar /> {book.rating / 10} &bull; {book.ratings} ratings
                 </div>
 
                 <Button>
