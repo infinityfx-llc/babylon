@@ -1,0 +1,19 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--f-spacing-sml);
+}
+
+.heading {
+    font-size: var(--f-font-size-med);
+    font-weight: 600;
+}
+
+.list {
+    display: flex;
+    gap: var(--f-spacing-sml);
+}
+
+.list > * {
+    flex-basis: 20%;
+}

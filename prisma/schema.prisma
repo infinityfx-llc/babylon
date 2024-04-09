@@ -13,6 +13,18 @@ model Author {
     books Book[]
 }
 
+model Reader {
+    id           String   @id @default(cuid())
+    firstName    String
+    lastName     String
+    email        String   @unique
+    passwordHash String
+    reviews      Review[]
+    readBooks    Book[]
+    friends      Reader[] @relation("friends")
+    friendOf     Reader[] @relation("friends")
+}
+
 model Genre {
     id    String @id
     name  String
@@ -33,6 +45,10 @@ model Book {
     pages       Int
     language    String
     reviews     Review[]
+    readers     Reader[]
+
+    @@index([releaseDate])
+    @@index([rating])
 }
 
 model Review {
@@ -42,4 +58,6 @@ model Review {
     rating    Int
     text      String   @db.Text
     timestamp DateTime @default(now())
+    readerId  String
+    reader    Reader   @relation(fields: [readerId], references: [email])
 }

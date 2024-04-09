@@ -1,0 +1,5 @@
+.heading {
+    padding-bottom: var(--f-spacing-sml);
+    font-size: var(--f-font-size-med);
+    font-weight: 600;
+}

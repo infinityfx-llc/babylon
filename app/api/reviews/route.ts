@@ -9,6 +9,9 @@ export async function POST(req: Request) {
     const reviews = await db.review.findMany({
         where: {
             bookId: data.bookId
+        },
+        include: {
+            reader: true
         }
     });
 

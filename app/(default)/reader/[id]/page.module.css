@@ -1,0 +1,37 @@
+.main {
+    min-height: 100svh;
+    padding-top: var(--header);
+    padding-inline: var(--space);
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    padding-block: var(--f-spacing-xlg);
+    gap: var(--f-spacing-lrg);
+}
+
+.row {
+    display: flex;
+    gap: var(--f-spacing-lrg);
+    align-items: center;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--f-spacing-sml);
+}
+
+.profile {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 99px;
+    background-color: var(--f-clr-fg-200);
+}
+
+.buttons {
+    margin-left: auto;
+    display: flex;
+    gap: var(--f-spacing-sml);
+}

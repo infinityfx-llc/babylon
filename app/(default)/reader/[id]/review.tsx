@@ -1,19 +1,22 @@
-import { Button } from '@infinityfx/fluid';
-import { Reader, Review } from '@prisma/client';
+import { Button, Frame } from '@infinityfx/fluid';
+import { Book, Review } from '@prisma/client';
+import Image from 'next/image';
 import Link from 'next/link';
 import { IoStar } from 'react-icons/io5';
 import styles from './review.module.css';
 
-export default function Review({ review }: { review: Review & { reader: Reader; }; }) {
+export default function Review({ review }: { review: Review & { book: Book; } }) {
 
     return <div className={styles.review}>
-        <div className={styles.profile} />
+        <Frame className={styles.cover}>
+            <Image src={`/images/${review.book.id}.jpg`} fill alt={review.book.title} />
+        </Frame>
 
         <div className={styles.body}>
             <div className={styles.row}>
-                <Link href={`/reader/${review.reader.id}`} tabIndex={-1}>
-                    <Button variant="minimal" size="sml">
-                        {review.reader.firstName} {review.reader.lastName}
+                <Link href={`/book/${review.book.id}`} tabIndex={-1}>
+                    <Button variant="minimal">
+                        {review.book.title} by {review.book.authorName}
                     </Button>
                 </Link>
 
