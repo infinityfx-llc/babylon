@@ -3,6 +3,7 @@ import Link from 'next/link';
 import FontSizeToggle from './font-size-toggle';
 import Logo from './logo';
 import styles from './header.module.css';
+import { Genres } from '@/lib/types';
 
 export default function Header() {
 
@@ -14,10 +15,10 @@ export default function Header() {
         <NavigationMenu Link={Link} links={[
             { label: 'Home', href: '/' },
             {
-                label: 'Catalogue', href: '/catalogue', links: [
-                    { label: 'Fantasy', href: '/catalogue/genre/fantasy' },
-                    { label: 'Thriller', href: '/catalogue/genre/thriller' }
-                ]
+                label: 'Catalogue', href: '/catalogue', links: Object.entries(Genres).map(([value, name]) => ({
+                    label: name,
+                    href: `/catalogue/genre/${value}`
+                }))
             }
         ]} />
 

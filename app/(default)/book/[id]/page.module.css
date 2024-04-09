@@ -70,16 +70,3 @@
 .description {
     text-align: justify;
 }
-
-.reviews {
-    display: flex;
-    flex-direction: column;
-    gap: var(--f-spacing-sml);
-}
-
-.reviews .list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--f-spacing-lrg);
-    padding-top: var(--f-spacing-lrg);
-}

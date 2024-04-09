@@ -7,7 +7,7 @@
     width: 4rem;
     height: 4rem;
     border-radius: 99px;
-    background-color: var(--f-clr-fg-100);
+    background-color: var(--f-clr-fg-200);
 }
 
 .body {
@@ -20,10 +20,6 @@
 .row {
     display: flex;
     justify-content: space-between;
-}
-
-.name {
-    font-weight: 600;
 }
 
 .date {

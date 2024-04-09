@@ -1,0 +1,10 @@
+.list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, .25fr));
+    gap: var(--f-spacing-sml);
+}
+
+.heading {
+    padding-bottom: var(--f-spacing-med);
+    font-size: var(--f-font-size-med);
+}

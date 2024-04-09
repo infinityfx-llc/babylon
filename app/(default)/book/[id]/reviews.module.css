@@ -1,0 +1,10 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--f-spacing-lrg);
+}
+
+.heading {
+    padding-bottom: var(--f-spacing-med);
+    font-size: var(--f-font-size-med);
+}

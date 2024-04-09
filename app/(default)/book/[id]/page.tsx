@@ -1,11 +1,13 @@
-import { Frame, Badge, Button, Accordion } from '@infinityfx/fluid';
+import { Frame, Badge, Button, Accordion, ActionMenu } from '@infinityfx/fluid';
 import { IoBookmarkOutline, IoShareSocial, IoStar } from 'react-icons/io5';
 import Image from 'next/image';
 import WriteReview from './write-review';
-import Review from './review';
 import styles from './page.module.css';
 import db from '@/prisma/client';
 import { notFound } from 'next/navigation';
+import Reviews from './reviews';
+import { formatCount } from '@/lib/utils';
+import Related from './related';
 
 export default async function Page({ params }: { params: { id: string; }; }) {
 
@@ -30,14 +32,18 @@ export default async function Page({ params }: { params: { id: string; }; }) {
                 </Frame>
 
                 <div className={styles.rating}>
-                    <IoStar /> {book.rating / 10} &bull; {book.ratings} ratings
+                    <IoStar /> {book.rating / 10} &bull; {formatCount(book.ratings)} ratings
                 </div>
 
-                <Button>
-                    Where to buy
-                </Button>
+                <ActionMenu stretch options={[
+                    { type: 'option', label: 'Amazon' }
+                ]}>
+                    <Button>
+                        Where to buy
+                    </Button>
+                </ActionMenu>
             </div>
-            
+
             <div className={styles.content}>
 
                 <section className={styles.header}>
@@ -64,20 +70,16 @@ export default async function Page({ params }: { params: { id: string; }; }) {
                         </p>
                     </Accordion.Item>
                     <Accordion.Item label="Details">
-                        Released: {book.releaseDate.toLocaleDateString()} <br />
+                        Released: {book.releaseDate.toLocaleDateString('en', { dateStyle: 'long' })} <br />
                         Pages: {book.pages}
                     </Accordion.Item>
                 </Accordion.Root>
 
-                <section className={styles.reviews}>
-                    <h3>Reviews</h3>
+                <Related bookId={book.id} />
 
-                    <WriteReview />
+                <WriteReview />
 
-                    <div className={styles.list}>
-                        {new Array(6).fill(0).map((_, i) => <Review key={i} />)}
-                    </div>
-                </section>
+                <Reviews bookId={book.id} />
             </div>
         </section>
     </main>

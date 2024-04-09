@@ -10,6 +10,7 @@ import { source } from '@/lib/request';
 import { ApiBooksRequest, ApiBooksResponse } from '@/app/api/books/route';
 import { Skeleton } from '@infinityfx/fluid';
 import { useDebounce } from '@infinityfx/control';
+import { formatCount } from '@/lib/utils';
 
 export default function Results() {
     useFilters();
@@ -30,16 +31,18 @@ export default function Results() {
             <Skeleton h={34} w={100} radius="max" style={{ marginLeft: 'auto' }} />
         </div>}
 
-        {data?.genres.map(({ id, name, books }) => (
-            <div className={styles.row} key={name}>
-                <div className={styles.heading}>{name}</div>
+        {data?.genres.map(({ id, name, books }) => {
+            if (!books.length) return null;
+
+            return <div className={styles.row} key={name}>
+                <div className={styles.heading}>{name} &bull; {formatCount(books.length)} results</div>
 
                 <div className={styles.list}>
                     {books.slice(0, 5).map((book, i) => <BookResult key={i} book={book} />)}
                 </div>
 
                 <ViewAllButton genre={id as any} />
-            </div>
-        ))}
+            </div>;
+        })}
     </>
 }

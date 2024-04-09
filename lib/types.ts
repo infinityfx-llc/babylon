@@ -4,8 +4,19 @@ import { NextResponse } from "next/server";
 export type Filter = 'genre' | 'search';
 
 export const Genres = {
-    thriller: 'Thriller',
-    fantasy: 'Fantasy'
+    biography: 'Biography',
+    comics: 'Comics',
+    culinary: 'Culinary',
+    fantasy: 'Fantasy',
+    fiction: 'Fiction',
+    history: 'History',
+    horror: 'Horror',
+    music: 'Music',
+    phsychology: 'Psychology',
+    romance: 'Romance',
+    science: 'Science',
+    sport: 'Sport',
+    thriller: 'Thriller'
 } as const;
 
 export const Sorting = {

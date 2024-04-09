@@ -24,7 +24,7 @@ model Book {
     title       String
     authorName  String
     author      Author   @relation(fields: [authorName], references: [name])
-    description String
+    description String   @db.Text
     releaseDate DateTime
     genreId     String
     genre       Genre    @relation(fields: [genreId], references: [id])
@@ -32,4 +32,14 @@ model Book {
     ratings     Int
     pages       Int
     language    String
+    reviews     Review[]
+}
+
+model Review {
+    id        Int      @id @default(autoincrement())
+    bookId    String
+    book      Book     @relation(fields: [bookId], references: [id])
+    rating    Int
+    text      String   @db.Text
+    timestamp DateTime @default(now())
 }

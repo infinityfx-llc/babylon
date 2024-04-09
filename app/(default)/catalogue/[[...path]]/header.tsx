@@ -13,7 +13,7 @@ export default function Header() {
     const { data, mutate } = useFilterStore();
     const { data: queryData, mutate: mutateQuery } = useQueryStore();
 
-    const debouncedQuery = useDebounce(queryData.query, .5);
+    const debouncedQuery = useDebounce(queryData.query);
     const { data: completions } = useSWR(['/api/autocomplete', { query: debouncedQuery }], args => source<ApiAutocompleteRequest, ApiAutocompleteResponse>(...args), {
         keepPreviousData: true
     });
