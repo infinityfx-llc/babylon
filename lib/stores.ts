@@ -1,8 +1,10 @@
 import { createGlobalStore } from "@infinityfx/control";
-import { Genre } from "./types";
+import { Genre, Sorting } from "./types";
 
 export const useFilterStore = createGlobalStore({
     initial: {
-        genres: [] as (keyof typeof Genre)[]
+        sorting: 'trending' as keyof typeof Sorting,
+        genres: [] as (keyof typeof Genre)[],
+        ratings: [1, 10]
     }
 });

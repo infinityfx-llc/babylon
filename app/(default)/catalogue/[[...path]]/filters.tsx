@@ -1,6 +1,6 @@
 'use client';
 
-import { Frame, Accordion, Checkbox, Slider } from '@infinityfx/fluid';
+import { Frame, Accordion, Checkbox, Slider, DateField } from '@infinityfx/fluid';
 import styles from './filters.module.css';
 import { Genre } from '@/lib/types';
 import { useFilterStore } from '@/lib/stores';
@@ -8,7 +8,7 @@ import { useFilterStore } from '@/lib/stores';
 export default function Filters() {
     const { data, mutate } = useFilterStore();
 
-    return <Frame className={styles.container} background="light" border>
+    return <Frame className={styles.container} background="dark" border>
         <Accordion.Root multiple variant="minimal">
             <Accordion.Item label="Genres" defaultOpen>
                 <div className={styles.list}>
@@ -25,8 +25,20 @@ export default function Filters() {
                 </div>
             </Accordion.Item>
 
-            <Accordion.Item label="Rating">
-                <Slider min={1} max={10} step={1} handles={2} formatTooltip={value => `${value} star${value > 1 ? 's' : ''}`} />
+            <Accordion.Item label="Ratings">
+                <Slider min={1} max={10} step={1} handles={2}
+                    formatTooltip={value => `${value} star${value > 1 ? 's' : ''}`}
+                    value={data.ratings}
+                    onChange={vals => mutate(data => {
+                        data.ratings = vals;
+                    })} />
+            </Accordion.Item>
+
+            <Accordion.Item label="Release date">
+                <div className={styles.row}>
+                    <DateField label="From" />
+                    <DateField label="To" />
+                </div>
             </Accordion.Item>
         </Accordion.Root>
     </Frame>;

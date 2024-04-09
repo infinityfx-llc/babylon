@@ -18,23 +18,3 @@
     width: 24rem;
     padding-block: var(--f-spacing-xlg);
 }
-
-.results__set {
-    display: flex;
-    flex-direction: column;
-    gap: var(--f-spacing-sml);
-}
-
-.results__set .heading {
-    font-weight: 600;
-}
-
-.results__set .list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-    gap: var(--f-spacing-sml);
-}
-
-.results__set .list > * {
-    flex-grow: 1;
-}

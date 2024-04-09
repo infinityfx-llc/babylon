@@ -2,6 +2,17 @@
     padding: var(--f-spacing-med);
 }
 
+.row {
+    display: flex;
+    gap: var(--f-spacing-sml);
+}
+
+.row > * {
+    min-width: 0 !important;
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
 .list {
     display: flex;
     flex-direction: column;
