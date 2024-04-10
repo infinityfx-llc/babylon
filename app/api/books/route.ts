@@ -50,7 +50,7 @@ export async function POST(req: Request) {
         orderBy
     };
 
-    if (data.aggregrate) {
+    if (data.aggregate) {
         const books = await db.book.findMany(config);
 
         return NextResponse.json({ books, genres: [] });
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
 }
 
 export type ApiBooksRequest = {
-    aggregrate?: boolean;
+    aggregate?: boolean;
     query?: string;
     sorting?: keyof typeof Sorting;
     genres?: (keyof typeof Genres)[];

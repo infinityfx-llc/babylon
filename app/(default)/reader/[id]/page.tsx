@@ -1,10 +1,10 @@
+import Readlist from '@/components/readlist';
 import { formatCount } from '@/lib/utils';
 import db from '@/prisma/client';
 import { Button, Tooltip } from '@infinityfx/fluid';
 import { notFound } from 'next/navigation';
 import { IoEllipsisVertical, IoPersonAdd } from 'react-icons/io5';
 import styles from './page.module.css';
-import ReadList from './read-list';
 import Reviews from './reviews';
 
 export default async function Page({ params }: { params: { id: string; } }) {
@@ -43,7 +43,7 @@ export default async function Page({ params }: { params: { id: string; } }) {
                 </div>
             </div>
 
-            <ReadList readerId={reader.id} />
+            <Readlist readerId={reader.id} />
 
             <Reviews />
         </section>

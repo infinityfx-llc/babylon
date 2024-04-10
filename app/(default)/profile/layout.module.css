@@ -1,0 +1,30 @@
+.main {
+    min-height: 100svh;
+    padding-top: var(--header);
+    padding-inline: var(--space);
+}
+
+.section {
+    padding-block: var(--f-spacing-xlg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--f-spacing-lrg);
+}
+
+.header {
+    display: flex;
+    gap: var(--f-spacing-med);
+    align-items: center;
+}
+
+.profile {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 99px;
+    background-color: var(--f-clr-fg-200);
+}
+
+.name {
+    font-size: var(--f-font-size-lrg);
+    font-weight: 700;
+}

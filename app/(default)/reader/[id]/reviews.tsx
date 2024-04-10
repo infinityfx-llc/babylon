@@ -12,6 +12,8 @@ export default async function Reviews() {
     return <section>
         <h2 className={styles.heading}>Reviews</h2>
 
-        {reviews.map(review => <Review key={review.id} review={review} />)}
+        <div className={styles.list}>
+            {reviews.map(review => <Review key={review.id} review={review} />)}
+        </div>
     </section>;
 }

@@ -29,7 +29,7 @@ export default function BookResult({ book }: { book: BaseBook; }) {
                 <div className={styles.author}>By {book.author.name}</div>
             </div>
 
-            <Tooltip content={bookmarked ? 'Remove from bookmarks' : 'Add to bookmarks'}>
+            <Tooltip content={bookmarked ? 'Unmark as read' : 'Mark as read'}>
                 <Button variant="minimal" round size="lrg" onClick={() => setBookmarked(!bookmarked)}>
                     {bookmarked ? <IoBookmark /> : <IoBookmarkOutline />}
                 </Button>

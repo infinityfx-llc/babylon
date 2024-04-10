@@ -3,3 +3,9 @@
     font-size: var(--f-font-size-med);
     font-weight: 600;
 }
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--f-spacing-sml);
+}

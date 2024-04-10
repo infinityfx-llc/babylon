@@ -21,7 +21,7 @@ export default function Results() {
         keepPreviousData: true
     });
 
-    const { data, isLoading } = useSWR(['/api/books', debouncedQuery], ([url, query]) => source<ApiBooksRequest, ApiBooksResponse>(url, { aggregrate: true, query }));
+    const { data, isLoading } = useSWR(['/api/books', debouncedQuery], ([url, query]) => source<ApiBooksRequest, ApiBooksResponse>(url, { aggregate: true, query }));
 
     return <>
         <Autocomplete
@@ -33,7 +33,7 @@ export default function Results() {
             onChange={e => setQuery(e.target.value)} />
 
         <div className={styles.wrapper}>
-            <h2 className={styles.heading}>{formatCount(data?.books.length)} results</h2>
+            <h3 className={styles.heading}>{formatCount(data?.books.length)} results</h3>
 
             <div className={styles.list}>
                 {isLoading && new Array(5).fill(0).map((_, i) => <Skeleton key={i} style={{ aspectRatio: 3 / 5 }} />)}

@@ -9,7 +9,3 @@
     gap: var(--f-spacing-lrg);
     z-index: 100;
 }
-
-.account {
-    padding-inline: 1em !important;
-}

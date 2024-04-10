@@ -4,6 +4,7 @@ import FontSizeToggle from './font-size-toggle';
 import Logo from './logo';
 import styles from './header.module.css';
 import { Genres } from '@/lib/types';
+import Account from './account';
 
 export default function Header() {
 
@@ -22,11 +23,7 @@ export default function Header() {
             }
         ]} />
 
-        <Link href="/sign-in" tabIndex={-1} style={{ marginLeft: 'auto' }}>
-            <Button variant="light" round className={styles.account}>
-                My Account
-            </Button>
-        </Link>
+        <Account />
 
         <FontSizeToggle />
 

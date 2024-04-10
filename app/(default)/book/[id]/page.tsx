@@ -84,7 +84,7 @@ export default async function Page({ params }: { params: { id: string; }; }) {
 
                 <Related bookId={book.id} />
 
-                <WriteReview />
+                <WriteReview bookId={book.id} />
 
                 <Reviews bookId={book.id} />
             </div>

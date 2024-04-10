@@ -15,6 +15,9 @@ export async function POST(req: Request) {
         },
         include: {
             reader: true
+        },
+        orderBy: {
+            timestamp: 'desc'
         }
     });
 

@@ -1,0 +1,34 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--f-spacing-sml);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.heading {
+    font-size: var(--f-font-size-med);
+    font-weight: 600;
+}
+
+.list {
+    display: flex;
+    gap: var(--f-spacing-sml);
+}
+
+.list > * {
+    flex-basis: 20%;
+}
+
+.message {
+    flex-grow: 1;
+    height: 26.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--f-font-size-med);
+}
