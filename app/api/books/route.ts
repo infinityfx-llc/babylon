@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
     const data: ApiBooksRequest = await req.json();
-    let orderBy = { rating: 'desc' };
+    let orderBy: any = { rating: 'desc' };
 
     switch (data.sorting) {
         case 'latest': orderBy = { releaseDate: 'desc' };

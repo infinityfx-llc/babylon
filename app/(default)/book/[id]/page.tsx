@@ -1,4 +1,4 @@
-import { Frame, Badge, Button, Accordion, ActionMenu } from '@infinityfx/fluid';
+import { Frame, Badge, Button, Accordion, ActionMenu, Tooltip } from '@infinityfx/fluid';
 import { IoBookmarkOutline, IoShareSocial, IoStar } from 'react-icons/io5';
 import Image from 'next/image';
 import WriteReview from './write-review';
@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation';
 import Reviews from './reviews';
 import { formatCount } from '@/lib/utils';
 import Related from './related';
+import Link from 'next/link';
 
 export default async function Page({ params }: { params: { id: string; }; }) {
 
@@ -50,13 +51,19 @@ export default async function Page({ params }: { params: { id: string; }; }) {
                     <div className={styles.vertical}>
                         <Badge color="var(--f-clr-fg-200)">{book.genre.name}</Badge>
                         <h1 className={styles.title}>{book.title}</h1>
-                        <h2 className={styles.author}>By {book.author.name}</h2>
+                        <Link href={`/catalogue/search/${book.author.name}`}>
+                            <Button variant="minimal" size="lrg">
+                                By {book.author.name}
+                            </Button>
+                        </Link>
                     </div>
 
                     <div className={styles.horizontal}>
-                        <Button round size="lrg" variant="minimal">
-                            <IoBookmarkOutline />
-                        </Button>
+                        <Tooltip content="Mark as read">
+                            <Button round size="lrg" variant="minimal">
+                                <IoBookmarkOutline />
+                            </Button>
+                        </Tooltip>
                         <Button round size="lrg" variant="minimal">
                             <IoShareSocial />
                         </Button>

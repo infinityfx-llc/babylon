@@ -4,7 +4,20 @@
     gap: var(--f-spacing-lrg);
 }
 
-.heading {
+.header {
+    display: flex;
     padding-bottom: var(--f-spacing-med);
+    align-items: center;
+    justify-content: space-between;
+}
+
+.heading {
+    font-size: var(--f-font-size-med);
+}
+
+.loader {
+    padding-block: var(--f-spacing-lrg);
+    display: flex;
+    justify-content: center;
     font-size: var(--f-font-size-med);
 }

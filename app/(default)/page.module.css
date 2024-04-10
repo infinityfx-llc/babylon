@@ -17,3 +17,9 @@
     font-size: var(--f-font-size-xlg);
     font-weight: 700;
 }
+
+.subtitle {
+    font-size: var(--f-font-size-med);
+    font-weight: 600;
+    color: var(--f-clr-grey-600);
+}

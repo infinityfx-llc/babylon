@@ -16,7 +16,7 @@ export default function useFilters() {
                 if (value in Genres) mutate(data => { data.genres = [value] as any; })
                 break;
             case 'search':
-                mutateQuery(data => { data.query = value; });
+                mutateQuery(data => { data.query = decodeURIComponent(value); });
                 break;
                 
         }

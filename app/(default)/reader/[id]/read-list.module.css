@@ -17,3 +17,12 @@
 .list > * {
     flex-basis: 20%;
 }
+
+.message {
+    flex-grow: 1;
+    height: 26.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--f-font-size-med);
+}

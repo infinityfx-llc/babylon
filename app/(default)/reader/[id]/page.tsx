@@ -43,7 +43,7 @@ export default async function Page({ params }: { params: { id: string; } }) {
                 </div>
             </div>
 
-            <ReadList />
+            <ReadList readerId={reader.id} />
 
             <Reviews />
         </section>
