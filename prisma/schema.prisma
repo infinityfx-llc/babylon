@@ -8,7 +8,7 @@ datasource db {
     directUrl = env("DIRECT_URL")
 }
 
-model Author {
+model Author { // add birthday, etc..
     name  String @id
     books Book[]
 }

@@ -77,8 +77,11 @@ export default async function Page({ params }: { params: { id: string; }; }) {
                         </p>
                     </Accordion.Item>
                     <Accordion.Item label="Details">
-                        Released: {book.releaseDate.toLocaleDateString('en', { dateStyle: 'long' })} <br />
-                        Pages: {book.pages}
+                        <p className={styles.details}>
+                            ISBN: {book.id} <br />
+                            Released: {book.releaseDate.toLocaleDateString('en', { dateStyle: 'long' })} <br />
+                            Pages: {book.pages}
+                        </p>
                     </Accordion.Item>
                 </Accordion.Root>
 

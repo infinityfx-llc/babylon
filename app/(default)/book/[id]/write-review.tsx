@@ -3,7 +3,7 @@
 import { ApiBookReviewRequest, ApiBookReviewResponse } from '@/app/api/book/review/route';
 import { source } from '@/lib/request';
 import { useForm } from '@infinityfx/control';
-import { Textarea, Button, Segmented } from '@infinityfx/fluid';
+import { Textarea, Button, NumberField } from '@infinityfx/fluid';
 import styles from './write-review.module.css';
 
 export default function WriteReview({ bookId }: { bookId: string; }) {
@@ -26,14 +26,19 @@ export default function WriteReview({ bookId }: { bookId: string; }) {
     });
 
     return <div className={styles.wrapper}>
-        <h3>Give a rating</h3>
+        <h3>Rate this book</h3>
 
-        <Segmented
-            options={new Array(10).fill(0).map((_, i) => ({ label: i + 1, value: i + 1 }))}
+        <NumberField
+            label="Rating"
+            min={1}
+            max={10}
+            precision={1}
             value={form.values.rating / 10}
-            onChange={val => form.setValues({ rating: val * 10 })} />
+            onChange={e => form.setValues({ rating: parseFloat(e.target.value) * 10 })} />
 
-        <Textarea resize="vertical" label="Review (optional)"
+        <Textarea
+            resize="vertical"
+            label="Review"
             value={form.values.text}
             onChange={e => form.setValues({ text: e.target.value })} />
 

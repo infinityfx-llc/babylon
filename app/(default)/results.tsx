@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { useDebounce } from '@infinityfx/control';
 import { ApiAutocompleteRequest, ApiAutocompleteResponse } from '../api/autocomplete/route';
 import { formatCount } from '@/lib/utils';
+import LoadingBooks from '@/components/loading-books';
 
 export default function Results() {
     const [query, setQuery] = useState('');
@@ -36,7 +37,7 @@ export default function Results() {
             <h3 className={styles.heading}>{formatCount(data?.books.length)} results</h3>
 
             <div className={styles.list}>
-                {isLoading && new Array(5).fill(0).map((_, i) => <Skeleton key={i} style={{ aspectRatio: 3 / 5 }} />)}
+                {isLoading && <LoadingBooks count={5} />}
 
                 {data?.books.map((book, i) => <BookResult key={i} book={book} />)}
             </div>

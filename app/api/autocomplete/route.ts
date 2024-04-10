@@ -1,4 +1,4 @@
-import { ApiReturnType, Genres } from '@/lib/types';
+import { ApiReturnType } from '@/lib/types';
 import db from '@/prisma/client';
 import { NextResponse } from 'next/server';
 

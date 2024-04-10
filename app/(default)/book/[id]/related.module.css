@@ -1,6 +1,6 @@
 .list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, .25fr));
+    grid-template-columns: repeat(var(--books-per-row), 1fr);
     gap: var(--f-spacing-sml);
 }
 

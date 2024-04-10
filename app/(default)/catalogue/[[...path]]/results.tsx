@@ -11,6 +11,7 @@ import { ApiBooksRequest, ApiBooksResponse } from '@/app/api/books/route';
 import { Skeleton } from '@infinityfx/fluid';
 import { useDebounce } from '@infinityfx/control';
 import { formatCount } from '@/lib/utils';
+import LoadingBooks from '@/components/loading-books';
 
 export default function Results() {
     useFilters();
@@ -25,7 +26,7 @@ export default function Results() {
             <Skeleton h={22} w={100} />
 
             <div className={styles.list}>
-                {new Array(5).fill(0).map((_, i) => <Skeleton key={i} style={{ aspectRatio: 3 / 5 }} />)}
+                <LoadingBooks count={5} />
             </div>
 
             <Skeleton h={34} w={100} radius="max" style={{ marginLeft: 'auto' }} />

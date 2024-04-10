@@ -1,13 +1,18 @@
 import Readlist from '@/components/readlist';
+import { getSession } from '@/lib/session';
 import { formatCount } from '@/lib/utils';
 import db from '@/prisma/client';
 import { Button, Tooltip } from '@infinityfx/fluid';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { IoEllipsisVertical, IoPersonAdd } from 'react-icons/io5';
 import styles from './page.module.css';
 import Reviews from './reviews';
 
 export default async function Page({ params }: { params: { id: string; } }) {
+    const { user } = getSession();
+
+    if (user?.id === params.id) redirect('/profile');
+
     const reader = await db.reader.findUnique({
         where: {
             id: params.id

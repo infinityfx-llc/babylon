@@ -1,6 +1,8 @@
 :root {
     --space: 20rem;
     --header: 5rem;
+
+    --books-per-row: 5;
 }
 
 body {

@@ -1,6 +1,7 @@
 import { getSession } from '@/lib/session';
-import { Button, Frame, Popover } from '@infinityfx/fluid';
+import { Button } from '@infinityfx/fluid';
 import Link from 'next/link';
+import AccountMenu from './account-menu';
 import styles from './account.module.css';
 
 export default function Account() {
@@ -12,22 +13,9 @@ export default function Account() {
         </Button>
     </Link>;
 
-    return <Popover.Root>
-        <Popover.Trigger>
-            <Button variant="light" round className={styles.account}>
-                My Account
-            </Button>
-        </Popover.Trigger>
-
-        {/* TODO!!! */}
-        <Popover.Content>
-            <Frame background="light" border shadow>
-                <Link href="/profile">
-                    <Button variant="minimal">
-                        Profile
-                    </Button>
-                </Link>
-            </Frame>
-        </Popover.Content>
-    </Popover.Root>;
+    return <AccountMenu name={`${user.firstName.charAt(0)}. ${user.lastName}`}>
+        <Button variant="light" round className={styles.account}>
+            My Account
+        </Button>
+    </AccountMenu>;
 }

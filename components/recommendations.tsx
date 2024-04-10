@@ -1,18 +1,19 @@
 'use client';
 
 import { Genres } from '@/lib/types';
-import { Pagination, Select } from '@infinityfx/fluid';
+import { Pagination, Select, Skeleton } from '@infinityfx/fluid';
 import styles from './recommendations.module.css';
 import useSWR from 'swr';
 import { source } from '@/lib/request';
-import { ApiBooksRequest, ApiBooksResponse } from '@/app/api/books/route';
 import BookResult from './book-result';
 import { useState } from 'react';
+import { ApiRecommendationsRequest, ApiRecommendationsResponse } from '@/app/api/recommendations/route';
+import LoadingBooks from './loading-books';
 
 export default function Recommendations() {
-    const [genre, setGenre] = useState('all');
+    const [genre, setGenre] = useState<'all' | keyof typeof Genres>('all');
 
-    const { data } = useSWR(['/api/books', { aggregate: true }], args => source<ApiBooksRequest, ApiBooksResponse>(...args));
+    const { data, isLoading } = useSWR(['/api/recommendations', { genre }], args => source<ApiRecommendationsRequest, ApiRecommendationsResponse>(...args));
 
     return <section className={styles.container}>
         <div className={styles.header}>
@@ -25,6 +26,8 @@ export default function Recommendations() {
         </div>
 
         <div className={styles.list}>
+            {isLoading && <LoadingBooks count={5} />}
+
             {data?.books.map(book => <BookResult key={book.id} book={book} />)}
         </div>
 

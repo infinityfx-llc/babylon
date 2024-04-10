@@ -16,10 +16,7 @@
 }
 
 .list {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(var(--books-per-row), 1fr);
     gap: var(--f-spacing-sml);
-}
-
-.list > * {
-    flex-basis: 20%;
 }
