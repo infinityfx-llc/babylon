@@ -18,15 +18,21 @@ export default function Footer() {
             </div>
 
             <div className={styles.socials}>
-                <Button variant="minimal" round size="lrg">
-                    <IoLogoGithub />
-                </Button>
-                <Button variant="minimal" round size="lrg">
-                    <IoLogoInstagram />
-                </Button>
-                <Button variant="minimal" round size="lrg">
-                    <IoLogoTwitter />
-                </Button>
+                <Link href="https://github.com/florian-lp/babylon" target="_blank" tabIndex={-1}>
+                    <Button variant="minimal" size="lrg">
+                        <IoLogoGithub />
+                    </Button>
+                </Link>
+                <Link href="https://www.instagram.com/infinityfx/" target="_blank" tabIndex={-1}>
+                    <Button variant="minimal" size="lrg">
+                        <IoLogoInstagram />
+                    </Button>
+                </Link>
+                <Link href="https://twitter.com/infinityfx" target="_blank" tabIndex={-1}>
+                    <Button variant="minimal" size="lrg">
+                        <IoLogoTwitter />
+                    </Button>
+                </Link>
             </div>
         </section>
         <section className={styles.row}>

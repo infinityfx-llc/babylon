@@ -19,7 +19,8 @@ export default function Results() {
     const debouncedQuery = useDebounce(query);
 
     const { data: completions } = useSWR(['/api/autocomplete', { query: debouncedQuery }], args => source<ApiAutocompleteRequest, ApiAutocompleteResponse>(...args), {
-        keepPreviousData: true
+        keepPreviousData: true,
+        revalidateOnFocus: false
     });
 
     const { data, isLoading } = useSWR(['/api/books', debouncedQuery], ([url, query]) => source<ApiBooksRequest, ApiBooksResponse>(url, { aggregate: true, query }));

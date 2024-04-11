@@ -11,8 +11,8 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
     title: {
-        default: 'Babylon',
-        template: '%s | Babylon'
+        default: "Babel's library",
+        template: "%s | Babel's library"
     }
 };
 

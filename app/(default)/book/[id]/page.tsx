@@ -92,19 +92,15 @@ export default async function Page({ params }: { params: { id: string; }; }) {
                     </p>
                 </div>
 
-                <div className={styles.tags}>
+                <div className={styles.info}>
                     <Badge size="med">
                         {BookTypes[edition.type]}
                     </Badge>
-                    <Badge size="med" color="var(--f-clr-fg-200)">
-                        Published: {edition.published.toLocaleDateString('en', { dateStyle: 'medium' })}
-                    </Badge>
-                    <Badge size="med" color="var(--f-clr-fg-200)">
-                        Language: {edition.language}
-                    </Badge>
-                    <Badge size="med" color="var(--f-clr-fg-200)">
-                        Pages: {edition.pages}
-                    </Badge>
+
+                    Published: {edition.published.toLocaleDateString('en', { dateStyle: 'medium' })} <br />
+                    Language: {edition.language} <br />
+                    Pages: {edition.pages} <br />
+                    ISBN: {edition.id}
                 </div>
 
                 <Editions title={book.title} editions={editions} />

@@ -1,8 +1,10 @@
+import { getSession } from '@/lib/session';
 import { ApiReturnType } from '@/lib/types';
 import db from '@/prisma/client';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
+    const { user } = getSession();
     const data: ApiBookReviewRequest = await req.json();
 
     const book = await db.book.findUnique({
@@ -14,7 +16,7 @@ export async function POST(req: Request) {
         }
     });
 
-    if (!book) return NextResponse.json({ review: null });
+    if (!book || !user) return NextResponse.json({ review: null });
     const ratings = book._count.reviews + 1;
 
     const [review] = await db.$transaction([
@@ -29,7 +31,7 @@ export async function POST(req: Request) {
                 },
                 reader: {
                     connect: {
-                        id: 'clustxuvn0000gw0o09wel7ps'
+                        id: user.id
                     }
                 }
             }

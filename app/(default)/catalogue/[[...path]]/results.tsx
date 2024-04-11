@@ -26,7 +26,7 @@ export default function Results() {
             <Skeleton h={22} w={100} />
 
             <div className={styles.list}>
-                <LoadingBooks count={5} />
+                <LoadingBooks count={4} />
             </div>
 
             <Skeleton h={34} w={100} radius="max" style={{ marginLeft: 'auto' }} />

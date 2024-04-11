@@ -7,9 +7,24 @@ import Link from 'next/link';
 import { IoBookmarkOutline, IoBookmark, IoStar } from 'react-icons/io5';
 import styles from './book-result.module.css';
 import { BaseBook } from '@/lib/types';
+import { source } from '@/lib/request';
+import { ApiReadlistRequest, ApiReadlistResponse } from '@/app/api/readlist/route';
 
 export default function BookResult({ book }: { book: BaseBook; }) {
-    const [bookmarked, setBookmarked] = useState(false);
+    const [bookmarked, setBookmarked] = useState(false); // set default value!!
+
+    async function toggleRead() {
+        setBookmarked(!bookmarked);
+
+        const { read } = await source<ApiReadlistRequest, ApiReadlistResponse>('/api/readlist', { bookId: book.id });
+
+        if (read === null) {
+            setBookmarked(false);
+            // show error / need to be logged in
+        } else {
+            setBookmarked(read);
+        }
+    }
 
     return <div className={styles.result}>
         <Link href={`/book/${book.id}`} style={{ flexGrow: 1 }}>
@@ -17,12 +32,14 @@ export default function BookResult({ book }: { book: BaseBook; }) {
                 <Image src={`/images/${book.id}.jpg`} fill alt={book.title} />
             </Frame>
         </Link>
+
         <div className={styles.row}>
             <Badge color="var(--f-clr-fg-200)">{book.genre.name}</Badge>
             <span className={styles.rating}>
                 <IoStar /> {book.rating.toFixed(1)}
             </span>
         </div>
+
         <div className={styles.row}>
             <div>
                 <div className={styles.title}>{book.title}</div>
@@ -30,7 +47,7 @@ export default function BookResult({ book }: { book: BaseBook; }) {
             </div>
 
             <Tooltip content={bookmarked ? 'Unmark as read' : 'Mark as read'}>
-                <Button variant="minimal" round size="lrg" onClick={() => setBookmarked(!bookmarked)}>
+                <Button variant="minimal" round size="lrg" onClick={toggleRead}>
                     {bookmarked ? <IoBookmark /> : <IoBookmarkOutline />}
                 </Button>
             </Tooltip>

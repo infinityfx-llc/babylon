@@ -76,8 +76,11 @@
     font-weight: 600;
 }
 
-.tags {
+.info {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
     gap: var(--f-spacing-sml);
+    line-height: 1.8;
+    font-weight: 600;
 }

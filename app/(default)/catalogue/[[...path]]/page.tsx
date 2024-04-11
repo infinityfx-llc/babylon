@@ -1,7 +1,14 @@
+import { Metadata } from 'next';
 import Filters from './filters';
 import Header from './header';
 import styles from './page.module.css';
 import Results from './results';
+
+export const metadata: Metadata = {
+    title: {
+        default: 'Catalogue'
+    }
+};
 
 export default function Page() {
 

@@ -20,7 +20,7 @@ export default function Editions({ title, editions }: { title: string; editions:
                             <Image src={`/images/${edition.id}.jpg`} fill alt={title} />
                         </Frame>
                         
-                        <Badge color="var(--f-clr-fg-200)" className={styles.badge}>
+                        <Badge className={styles.badge}>
                             {BookTypes[edition.type]}
                         </Badge>
 

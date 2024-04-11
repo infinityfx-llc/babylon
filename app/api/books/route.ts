@@ -7,9 +7,9 @@ export async function POST(req: Request) {
     let orderBy: any = { rating: 'desc' };
 
     switch (data.sorting) {
-        case 'latest': orderBy = { releaseDate: 'desc' };
+        case 'latest': orderBy = { published: 'desc' };
             break;
-        case 'earliest': orderBy = { releaseDate: 'asc' };
+        case 'earliest': orderBy = { published: 'asc' };
             break;
         case 'highestRated': orderBy = { rating: 'desc' };
             break;
@@ -19,28 +19,41 @@ export async function POST(req: Request) {
 
     const config = {
         where: {
-            OR: data.query ? [
+            AND: [
                 {
-                    title: {
-                        contains: data.query,
-                        mode: 'insensitive' as const
-                    }
+                    OR: data.query ? [
+                        {
+                            title: {
+                                contains: data.query,
+                                mode: 'insensitive' as const
+                            }
+                        },
+                        {
+                            author: {
+                                fullName: {
+                                    contains: data.query,
+                                    mode: 'insensitive' as const
+                                }
+                            }
+                        }
+                    ] : undefined
                 },
                 {
-                    author: {
-                        name: {
-                            contains: data.query,
-                            mode: 'insensitive' as const
+                    OR: data.ratings?.length ? [
+                        {
+                            rating: {
+                                gte: data.ratings[0] * 10,
+                                lte: data.ratings[1] * 10
+                            }
+                        },
+                        {
+                            rating: 0
                         }
-                    }
+                    ] : undefined
                 }
-            ] : undefined,
+            ],
             genreId: data.genres?.length ? {
                 in: data.genres
-            } : undefined,
-            rating: data.ratings?.length ? {
-                gte: data.ratings[0] * 10,
-                lte: data.ratings[1] * 10
             } : undefined
         },
         include: {

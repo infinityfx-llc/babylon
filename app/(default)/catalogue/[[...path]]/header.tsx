@@ -15,7 +15,8 @@ export default function Header() {
 
     const debouncedQuery = useDebounce(queryData.query);
     const { data: completions } = useSWR(['/api/autocomplete', { query: debouncedQuery }], args => source<ApiAutocompleteRequest, ApiAutocompleteResponse>(...args), {
-        keepPreviousData: true
+        keepPreviousData: true,
+        revalidateOnFocus: false
     });
 
     return <div style={{ display: 'flex', gap: 'var(--f-spacing-med)' }}>

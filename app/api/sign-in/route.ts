@@ -7,7 +7,7 @@ export async function POST(req: Request) {
 
     const user = await db.reader.findUnique({
         where: {
-            id: 'clustxuvn0000gw0o09wel7ps'
+            email: 'john@doe.com'
         }
     });
 

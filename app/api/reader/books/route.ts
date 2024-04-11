@@ -4,7 +4,6 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
     const data: ApiReaderBooksRequest = await req.json();
-    
 
     const reader = await db.reader.findUnique({
         where: {
