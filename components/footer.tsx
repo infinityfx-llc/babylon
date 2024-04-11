@@ -18,7 +18,7 @@ export default function Footer() {
             </div>
 
             <div className={styles.socials}>
-                <Link href="https://github.com/florian-lp/babylon" target="_blank" tabIndex={-1}>
+                <Link href="https://github.com/infinityfx-llc/babylon" target="_blank" tabIndex={-1}>
                     <Button variant="minimal" size="lrg">
                         <IoLogoGithub />
                     </Button>
