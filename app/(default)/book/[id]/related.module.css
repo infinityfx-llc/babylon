@@ -1,10 +1,11 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--f-spacing-med);
+}
+
 .list {
     display: grid;
     grid-template-columns: repeat(calc(var(--books-per-row) - 1), 1fr);
     gap: var(--f-spacing-sml);
-}
-
-.heading {
-    padding-bottom: var(--f-spacing-med);
-    font-size: var(--f-font-size-med);
 }

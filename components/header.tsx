@@ -1,4 +1,4 @@
-import { Button, NavigationMenu, ThemeToggle } from '@infinityfx/fluid';
+import { Cull, NavigationMenu, ThemeToggle } from '@infinityfx/fluid';
 import Link from 'next/link';
 import FontSizeToggle from './font-size-toggle';
 import Logo from './logo';
@@ -13,20 +13,24 @@ export default function Header() {
             <Logo />
         </Link>
 
-        <NavigationMenu Link={Link} links={[
-            { label: 'Home', href: '/' },
-            {
-                label: 'Catalogue', href: '/catalogue', links: Object.entries(Genres).map(([value, name]) => ({
-                    label: name,
-                    href: `/catalogue/genre/${value}`
-                }))
-            }
-        ]} />
+        <Cull include={['mob', 'tab']}>
+            <NavigationMenu Link={Link} links={[
+                { label: 'Home', href: '/' },
+                {
+                    label: 'Catalogue', href: '/catalogue', links: Object.entries(Genres).map(([value, name]) => ({
+                        label: name,
+                        href: `/catalogue/genre/${value}`
+                    }))
+                }
+            ]} />
+        </Cull>
 
         <Account />
 
-        <FontSizeToggle />
+        {/* <FontSizeToggle /> */}
 
-        <ThemeToggle />
+        <Cull include={['mob', 'tab']}>
+            <ThemeToggle round />
+        </Cull>
     </header>
 }

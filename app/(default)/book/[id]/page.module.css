@@ -41,7 +41,7 @@
 .cover {
     position: relative;
     width: 16rem;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 1 / 1.4;
 }
 
 .rating {
@@ -83,4 +83,14 @@
     gap: var(--f-spacing-sml);
     line-height: 1.8;
     font-weight: 600;
+}
+
+@media (max-width: 480px) {
+    .section {
+        flex-direction: column;
+    }
+
+    .cover {
+        width: 100%;
+    }
 }

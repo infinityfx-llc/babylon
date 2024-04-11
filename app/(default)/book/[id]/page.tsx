@@ -11,6 +11,7 @@ import Related from './related';
 import Link from 'next/link';
 import Editions from './editions';
 import { BookTypes } from '@/lib/types';
+import BuyButton from './buy-button';
 
 export default async function Page({ params }: { params: { id: string; }; }) {
 
@@ -44,16 +45,10 @@ export default async function Page({ params }: { params: { id: string; }; }) {
                 </Frame>
 
                 <div className={styles.rating}>
-                    <IoStar /> {book.rating.toFixed(1)} &bull; {formatCount(book._count.reviews)} ratings
+                    <IoStar /> {book.rating.toFixed(1)} &bull; {formatCount(book._count.reviews)} rating{book._count.reviews == 1 ? '' : 's'}
                 </div>
 
-                <ActionMenu stretch options={[
-                    { type: 'option', label: 'Amazon' }
-                ]}>
-                    <Button>
-                        Where to buy
-                    </Button>
-                </ActionMenu>
+                <BuyButton editionId={edition.id} />
             </div>
 
             <div className={styles.content}>
@@ -64,7 +59,7 @@ export default async function Page({ params }: { params: { id: string; }; }) {
                         <h1 className={styles.title}>{book.title}</h1>
 
                         <h2>
-                            <Link href={`/catalogue/search/${book.author.name}`}>
+                            <Link href={`/catalogue/search/${book.author.fullName}`}>
                                 <Button variant="minimal" size="lrg">
                                     {book.author.name}
                                 </Button>

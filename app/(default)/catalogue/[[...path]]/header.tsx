@@ -8,6 +8,7 @@ import { useDebounce } from "@infinityfx/control";
 import { Autocomplete, Select } from "@infinityfx/fluid";
 import { IoSearch } from "react-icons/io5";
 import useSWR from 'swr';
+import styles from './header.module.css';
 
 export default function Header() {
     const { data, mutate } = useFilterStore();
@@ -19,7 +20,7 @@ export default function Header() {
         revalidateOnFocus: false
     });
 
-    return <div style={{ display: 'flex', gap: 'var(--f-spacing-med)' }}>
+    return <div className={styles.header}>
         <Autocomplete
             completions={completions?.suggestions.map(suggestion => suggestion.title) || []}
             placeholder="Title, Author, etc.."

@@ -18,3 +18,9 @@
     width: 24rem;
     padding-block: var(--f-spacing-xlg);
 }
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+}

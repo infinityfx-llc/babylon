@@ -8,7 +8,7 @@ import { useFilterStore } from '@/lib/stores';
 export default function Filters() {
     const { data, mutate } = useFilterStore();
 
-    return <Frame className={styles.container} background="dark" border>
+    return <Frame className={styles.container} background="light" border>
         <Accordion.Root multiple variant="minimal">
             <Accordion.Item label="Genres" defaultOpen>
                 <div className={styles.list}>

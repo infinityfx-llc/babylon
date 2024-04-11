@@ -27,7 +27,7 @@ export default function BookResult({ book }: { book: BaseBook; }) {
     }
 
     return <div className={styles.result}>
-        <Link href={`/book/${book.id}`} style={{ flexGrow: 1 }}>
+        <Link href={`/book/${book.id}`}>
             <Frame className={styles.image} background="dark" border>
                 <Image src={`/images/${book.id}.jpg`} fill alt={book.title} />
             </Frame>
@@ -40,7 +40,7 @@ export default function BookResult({ book }: { book: BaseBook; }) {
             </span>
         </div>
 
-        <div className={styles.row}>
+        <div className={styles.row} style={{ marginTop: 'auto' }}>
             <div>
                 <div className={styles.title}>{book.title}</div>
                 <div className={styles.author}>By {book.author.name}</div>

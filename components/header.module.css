@@ -3,9 +3,10 @@
     width: 100%;
     height: var(--header);
     padding-inline: var(--space);
-    background-color: var(--f-clr-fg-100);
+    background-color: var(--f-clr-bg-100);
     display: flex;
     align-items: center;
     gap: var(--f-spacing-lrg);
     z-index: 100;
+    border-bottom: solid 1px var(--f-clr-fg-200);
 }
