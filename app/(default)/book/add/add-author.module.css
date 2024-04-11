@@ -1,0 +1,9 @@
+.modal {
+    min-width: 24rem;
+}
+
+.rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--f-spacing-sml);
+}

@@ -11,7 +11,10 @@ export async function POST(req: Request) {
             rating: data.ratings?.length ? {
                 gte: data.ratings[0] * 10,
                 lte: data.ratings[1] * 10
-            } : undefined
+            } : undefined,
+            text: {
+                not: null
+            }
         },
         include: {
             reader: true

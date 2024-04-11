@@ -26,7 +26,7 @@ export default function WriteReview({ bookId }: { bookId: string; }) {
     });
 
     return <div className={styles.wrapper}>
-        <h3>Rate this book</h3>
+        {/* <h3>Rate this book</h3> */}
 
         <NumberField
             label="Rating"

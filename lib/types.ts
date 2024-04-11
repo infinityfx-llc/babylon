@@ -27,6 +27,12 @@ export const Sorting = {
     lowestRated: 'Lowest rated'
 } as const;
 
+export const BookTypes = {
+    paperback: 'Paperback',
+    hardcover: 'Hardcover',
+    ebook: 'eBook'
+} as const;
+
 export type BaseBook = Book & { genre: Genre; author: Author; };
 
 export type ApiReturnType<T extends (args: any) => any> = Awaited<ReturnType<T>> extends NextResponse<infer T> ? T : unknown;

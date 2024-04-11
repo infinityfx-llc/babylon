@@ -8,9 +8,14 @@ datasource db {
     directUrl = env("DIRECT_URL")
 }
 
-model Author { // add birthday, etc..
-    name  String @id
-    books Book[]
+model Author {
+    id          String    @id
+    name        String
+    fullName    String
+    born        DateTime
+    died        DateTime?
+    nationality String
+    books       Book[]
 }
 
 model Reader {
@@ -31,23 +36,37 @@ model Genre {
     books Book[]
 }
 
+enum BookType {
+    paperback
+    hardcover
+    ebook
+}
+
+model BookEdition {
+    id        String   @id
+    type      BookType
+    published DateTime
+    pages     Int
+    language  String
+    bookId    String
+    editionOf Book     @relation(fields: [bookId], references: [id])
+}
+
 model Book {
-    id          String   @id
+    id          String        @id
     title       String
-    authorName  String
-    author      Author   @relation(fields: [authorName], references: [name])
-    description String   @db.Text
-    releaseDate DateTime
+    description String        @db.Text
+    published   DateTime
+    authorId    String
+    author      Author        @relation(fields: [authorId], references: [id])
     genreId     String
-    genre       Genre    @relation(fields: [genreId], references: [id])
-    rating      Int
-    ratings     Int
-    pages       Int
-    language    String
+    genre       Genre         @relation(fields: [genreId], references: [id])
+    rating      Float         @default(0)
     reviews     Review[]
     readers     Reader[]
+    editions    BookEdition[]
 
-    @@index([releaseDate])
+    @@index([published])
     @@index([rating])
 }
 
@@ -55,7 +74,7 @@ model Review {
     id        Int      @id @default(autoincrement())
     bookId    String
     book      Book     @relation(fields: [bookId], references: [id])
-    rating    Int
+    rating    Int      @db.SmallInt
     text      String?  @db.Text
     timestamp DateTime @default(now())
     readerId  String

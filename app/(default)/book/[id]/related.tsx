@@ -15,11 +15,13 @@ export default async function Related({ bookId }: { bookId: string; }) {
         }
     });
 
+    if (!books.length) return null;
+
     return <section>
         <h3 className={styles.heading}>Similar books</h3>
 
         <div className={styles.list}>
             {books.map(book => <BookResult key={book.id} book={book} />)}
         </div>
-    </section>
+    </section>;
 }

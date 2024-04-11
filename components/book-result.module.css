@@ -1,6 +1,4 @@
 .result {
-    min-width: 16rem;
-    aspect-ratio: 3 / 5;
     background-color: var(--f-clr-fg-100);
     border-radius: var(--f-radius-med);
     display: flex;
@@ -13,6 +11,7 @@
     position: relative;
     height: 100%;
     width: 100%;
+    aspect-ratio: 1 / 1.4;
 }
 
 .image img {

@@ -5,11 +5,23 @@ import { NextResponse } from 'next/server';
 export async function POST(req: Request) {
     const data: ApiBookReviewRequest = await req.json();
 
-    try {
-        const review = await db.review.create({
+    const book = await db.book.findUnique({
+        where: {
+            id: data.bookId
+        },
+        include: {
+            _count: true
+        }
+    });
+
+    if (!book) return NextResponse.json({ review: null });
+    const ratings = book._count.reviews + 1;
+
+    const [review] = await db.$transaction([
+        db.review.create({
             data: {
                 rating: data.rating,
-                text: data.text,
+                text: data.text || null,
                 book: {
                     connect: {
                         id: data.bookId
@@ -21,13 +33,18 @@ export async function POST(req: Request) {
                     }
                 }
             }
-        });
+        }),
+        db.book.update({
+            where: {
+                id: data.bookId
+            },
+            data: {
+                rating: book.rating * (ratings - 1) / ratings + data.rating / 10 / ratings
+            }
+        })
+    ]);
 
-        return NextResponse.json({ review });
-    } catch (ex) {
-
-        return NextResponse.json({ review: null });
-    }
+    return NextResponse.json({ review });
 }
 
 export type ApiBookReviewRequest = {

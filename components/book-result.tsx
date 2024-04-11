@@ -13,14 +13,14 @@ export default function BookResult({ book }: { book: BaseBook; }) {
 
     return <div className={styles.result}>
         <Link href={`/book/${book.id}`} style={{ flexGrow: 1 }}>
-            <Frame className={styles.image}>
+            <Frame className={styles.image} background="dark" border>
                 <Image src={`/images/${book.id}.jpg`} fill alt={book.title} />
             </Frame>
         </Link>
         <div className={styles.row}>
             <Badge color="var(--f-clr-fg-200)">{book.genre.name}</Badge>
             <span className={styles.rating}>
-                <IoStar /> {book.rating / 10}
+                <IoStar /> {book.rating.toFixed(1)}
             </span>
         </div>
         <div className={styles.row}>

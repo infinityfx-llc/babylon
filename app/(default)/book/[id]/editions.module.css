@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--f-spacing-med);
+}
+
+.heading {
+    font-size: var(--f-font-size-sml);
+    font-weight: 600;
+}
+
+.list {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: var(--f-spacing-sml);
+}
+
+.pagination {
+    margin-left: auto;
+}
+
+.edition {
+    display: flex;
+    flex-direction: column;
+    padding: var(--f-spacing-sml);
+    gap: var(--f-spacing-sml);
+}
+
+.cover {
+    position: relative;
+    aspect-ratio: 1 / 1.4;
+}
+
+.badge {
+    align-self: flex-start;
+}
+
+.info {
+    font-size: var(--f-font-size-xsm);
+    font-weight: 600;
+    line-height: 1.6;
+}

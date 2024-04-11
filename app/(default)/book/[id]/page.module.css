@@ -62,15 +62,22 @@
     font-weight: 700;
 }
 
-.author {
-    font-size: var(--f-font-size-med);
-    font-weight: 600;
-}
-
 .description {
     text-align: justify;
 }
 
 .details {
     line-height: 1.8;
+}
+
+.heading {
+    padding-bottom: var(--f-spacing-sml);
+    font-size: var(--f-font-size-sml);
+    font-weight: 600;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--f-spacing-sml);
 }
