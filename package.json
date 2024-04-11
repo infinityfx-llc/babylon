@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "npx fluid compile && next dev",
-        "build": "npx fluid compile && next build",
+        "build": "npx prisma generate && npx fluid compile && next build",
         "start": "next start",
         "lint": "next lint"
     },
