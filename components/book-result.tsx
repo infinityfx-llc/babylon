@@ -11,7 +11,7 @@ import { source } from '@/lib/request';
 import { ApiReadlistRequest, ApiReadlistResponse } from '@/app/api/readlist/route';
 
 export default function BookResult({ book }: { book: BaseBook; }) {
-    const [bookmarked, setBookmarked] = useState(false); // set default value!!
+    const [bookmarked, setBookmarked] = useState(!!book.readers?.length);
 
     async function toggleRead() {
         setBookmarked(!bookmarked);

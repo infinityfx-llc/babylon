@@ -1,21 +1,13 @@
+import { getSession } from '@/lib/session';
 import { ApiReturnType, Genres, Sorting } from '@/lib/types';
+import { getOrderBy } from '@/lib/utils';
 import db from '@/prisma/client';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
-    const data: ApiBooksRequest = await req.json();
-    let orderBy: any = { rating: 'desc' };
+    const { user } = getSession();
 
-    switch (data.sorting) {
-        case 'latest': orderBy = { published: 'desc' };
-            break;
-        case 'earliest': orderBy = { published: 'asc' };
-            break;
-        case 'highestRated': orderBy = { rating: 'desc' };
-            break;
-        case 'lowestRated': orderBy = { rating: 'asc' };
-            break;
-    }
+    const data: ApiBooksRequest = await req.json();
 
     const config = {
         where: {
@@ -42,8 +34,8 @@ export async function POST(req: Request) {
                     OR: data.ratings?.length ? [
                         {
                             rating: {
-                                gte: data.ratings[0] * 10,
-                                lte: data.ratings[1] * 10
+                                gte: data.ratings[0],
+                                lte: data.ratings[1]
                             }
                         },
                         {
@@ -58,9 +50,17 @@ export async function POST(req: Request) {
         },
         include: {
             author: true,
-            genre: true
+            genre: true,
+            readers: user ? {
+                where: {
+                    id: user.id
+                },
+                select: {
+                    id: true
+                }
+            } : false
         },
-        orderBy
+        orderBy: getOrderBy(data.sorting)
     };
 
     if (data.aggregate) {

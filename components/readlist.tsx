@@ -11,10 +11,11 @@ import { Sorting } from '@/lib/types';
 import LoadingBooks from './loading-books';
 
 export default function Readlist({ readerId }: { readerId: string; }) {
+    const [sorting, setSorting] = useState<keyof typeof Sorting>('latest');
     const [index, setIndex] = useState(0);
     const limit = 5;
 
-    const { data, isLoading } = useSWR(['/api/reader/books', { readerId, index, limit }], args => source<ApiReaderBooksRequest, ApiReaderBooksResponse>(...args));
+    const { data, isLoading } = useSWR(['/api/reader/books', { readerId, sorting, index, limit }], args => source<ApiReaderBooksRequest, ApiReaderBooksResponse>(...args));
 
     return <section className={styles.wrapper}>
         <div className={styles.header}>
@@ -22,7 +23,14 @@ export default function Readlist({ readerId }: { readerId: string; }) {
 
             <Select
                 size="sml"
-                options={Object.entries(Sorting).map(([value, label]) => ({ label, value }))} />
+                value={sorting}
+                onChange={setSorting}
+                options={[
+                    { label: 'Latest', value: 'latest' },
+                    { label: 'Earliest', value: 'earliest' },
+                    { label: 'Highest rated', value: 'highestRated' },
+                    { label: 'Lowest rated', value: 'lowestRated' }
+                ]} />
         </div>
 
         <div className={styles.list}>

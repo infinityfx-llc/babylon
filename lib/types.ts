@@ -1,4 +1,4 @@
-import { Author, Book, Genre } from "@prisma/client";
+import { Author, Book, Genre, Reader } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export type Filter = 'genre' | 'search';
@@ -33,6 +33,6 @@ export const BookTypes = {
     ebook: 'eBook'
 } as const;
 
-export type BaseBook = Book & { genre: Genre; author: Author; };
+export type BaseBook = Book & { genre: Genre; author: Author; readers: Reader[]; };
 
 export type ApiReturnType<T extends (args: any) => any> = Awaited<ReturnType<T>> extends NextResponse<infer T> ? T : unknown;

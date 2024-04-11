@@ -5,9 +5,7 @@ import styles from './page.module.css';
 import Results from './results';
 
 export const metadata: Metadata = {
-    title: {
-        default: 'Catalogue'
-    }
+    title: 'Catalogue'
 };
 
 export default function Page() {
