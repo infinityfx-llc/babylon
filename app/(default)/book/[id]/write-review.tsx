@@ -1,12 +1,12 @@
-'use client';
-
 import { ApiBookReviewRequest, ApiBookReviewResponse } from '@/app/api/book/review/route';
 import { source } from '@/lib/request';
 import { useForm } from '@infinityfx/control';
 import { Textarea, Button, NumberField } from '@infinityfx/fluid';
+import { useRouter } from 'next/navigation';
 import styles from './write-review.module.css';
 
-export default function WriteReview({ bookId }: { bookId: string; }) {
+export default function WriteReview({ bookId, mutate }: { bookId: string; mutate: () => void; }) {
+    const router = useRouter();
 
     const form = useForm({
         initial: {
@@ -19,7 +19,8 @@ export default function WriteReview({ bookId }: { bookId: string; }) {
             if (!review) {
                 form.setErrors({ text: 'Something went wrong, please try again' });
             } else {
-                // mutate data
+                mutate();
+                router.refresh();
                 form.reset();
             }
         }

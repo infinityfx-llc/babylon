@@ -1,7 +1,6 @@
 import { Frame, Badge, Button, ActionMenu, Tooltip, Divider } from '@infinityfx/fluid';
 import { IoBookmarkOutline, IoShareSocial, IoStar } from 'react-icons/io5';
 import Image from 'next/image';
-import WriteReview from './write-review';
 import styles from './page.module.css';
 import db from '@/prisma/client';
 import { notFound } from 'next/navigation';
@@ -12,12 +11,14 @@ import Link from 'next/link';
 import Editions from './editions';
 import { BookTypes } from '@/lib/types';
 import BuyButton from './buy-button';
+import { Metadata } from 'next';
+import { cache } from 'react';
 
-export default async function Page({ params }: { params: { id: string; }; }) {
+const getBookEdition = cache(async (id: string) => {
 
-    const edition = await db.bookEdition.findUnique({
+    return await db.bookEdition.findUnique({
         where: {
-            id: params.id
+            id
         },
         include: {
             editionOf: {
@@ -30,6 +31,19 @@ export default async function Page({ params }: { params: { id: string; }; }) {
             }
         }
     });
+});
+
+export async function generateMetadata({ params }: { params: { id: string; }; }): Promise<Metadata> {
+    const edition = await getBookEdition(params.id);
+
+    return {
+        title: edition?.editionOf.title
+    };
+}
+
+export default async function Page({ params }: { params: { id: string; }; }) {
+
+    const edition = await getBookEdition(params.id);
 
     if (!edition) return notFound();
 
@@ -103,8 +117,6 @@ export default async function Page({ params }: { params: { id: string; }; }) {
                 <Related bookId={book.id} />
 
                 <Divider size="xsm" label="Give a review" labelPosition="start" />
-
-                <WriteReview bookId={book.id} />
 
                 <Reviews bookId={book.id} />
             </div>
