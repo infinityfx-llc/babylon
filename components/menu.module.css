@@ -1,0 +1,16 @@
+.header {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--f-spacing-sml);
+}
+
+@media (min-width: 769px) {
+    .button {
+        display: none !important;
+    }
+}

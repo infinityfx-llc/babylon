@@ -6,6 +6,7 @@ import styles from './header.module.css';
 import { Genres } from '@/lib/types';
 import Account from './account';
 import { Suspense } from 'react';
+import Menu from './menu';
 
 export default function Header() {
 
@@ -29,6 +30,8 @@ export default function Header() {
         </Suspense>
 
         {/* <FontSizeToggle /> */}
+
+        <Menu />
 
         <ThemeToggle round className={styles.desktop} />
     </header>
