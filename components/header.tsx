@@ -5,6 +5,7 @@ import Logo from './logo';
 import styles from './header.module.css';
 import { Genres } from '@/lib/types';
 import Account from './account';
+import { Suspense } from 'react';
 
 export default function Header() {
 
@@ -25,7 +26,9 @@ export default function Header() {
             ]} />
         </Cull>
 
-        <Account />
+        <Suspense>
+            <Account />
+        </Suspense>
 
         {/* <FontSizeToggle /> */}
 

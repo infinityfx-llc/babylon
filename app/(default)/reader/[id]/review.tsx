@@ -1,11 +1,11 @@
 import { Button, Frame } from '@infinityfx/fluid';
-import { Book, Review } from '@prisma/client';
+import type { Author, Book, Review } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { IoStar } from 'react-icons/io5';
 import styles from './review.module.css';
 
-export default function Review({ review }: { review: Review & { book: Book; } }) {
+export default function Review({ review }: { review: Review & { book: Book & { author: Author; }; } }) {
 
     return <div className={styles.review}>
         <Frame className={styles.cover}>
@@ -16,7 +16,7 @@ export default function Review({ review }: { review: Review & { book: Book; } })
             <div className={styles.row}>
                 <Link href={`/book/${review.book.id}`} tabIndex={-1}>
                     <Button variant="minimal">
-                        {review.book.title} by {review.book.authorName}
+                        {review.book.title} by {review.book.author.name}
                     </Button>
                 </Link>
 

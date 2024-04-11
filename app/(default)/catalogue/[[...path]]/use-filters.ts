@@ -20,5 +20,5 @@ export default function useFilters() {
                 break;
                 
         }
-    }, [path]);
+    }, [path, mutate, mutateQuery]);
 }

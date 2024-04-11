@@ -1,5 +1,5 @@
 import { Button } from '@infinityfx/fluid';
-import { Reader, Review } from '@prisma/client';
+import type { Reader, Review } from '@prisma/client';
 import Link from 'next/link';
 import { IoStar } from 'react-icons/io5';
 import styles from './review.module.css';

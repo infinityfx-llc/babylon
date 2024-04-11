@@ -11,7 +11,7 @@ export default function Footer() {
             <Logo />
 
             <div className={styles.list}>
-                <div className={styles.heading}>Babel's library</div>
+                <div className={styles.heading}>Babel&apos;s library</div>
 
                 <Link href="/about" className={styles.link}>About this site</Link>
                 <Link href="https://infinityfx.dev/contact" className={styles.link}>Contact us</Link>

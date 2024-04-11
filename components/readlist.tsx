@@ -39,7 +39,7 @@ export default function Readlist({ readerId }: { readerId: string; }) {
             {data?.books?.map(book => <BookResult key={book.id} book={book} />)}
 
             {!isLoading && !data?.books?.length && <div className={styles.message}>
-                This person hasn't read any books yet.
+                This person hasn&apos;t read any books yet.
             </div>}
         </div>
 

@@ -1,9 +1,12 @@
 import BookResult from '@/components/book-result';
+import { getSession } from '@/lib/session';
 import db from '@/prisma/client';
 import { Divider } from '@infinityfx/fluid';
 import styles from './related.module.css';
 
 export default async function Related({ bookId }: { bookId: string; }) {
+    const { user } = getSession();
+
     const books = await db.book.findMany({
         where: {
             id: {
@@ -12,7 +15,15 @@ export default async function Related({ bookId }: { bookId: string; }) {
         },
         include: {
             author: true,
-            genre: true
+            genre: true,
+            readers: user ? {
+                where: {
+                    id: user.id
+                },
+                select: {
+                    id: true
+                }
+            } : false
         },
         take: 5
     });
