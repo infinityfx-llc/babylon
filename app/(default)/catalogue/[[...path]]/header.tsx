@@ -5,12 +5,16 @@ import { source } from "@/lib/request";
 import { useFilterStore, useQueryStore } from "@/lib/stores";
 import { Sorting } from "@/lib/types";
 import { useDebounce } from "@infinityfx/control";
-import { Autocomplete, Select } from "@infinityfx/fluid";
-import { IoSearch } from "react-icons/io5";
+import { Autocomplete, Button, Drawer, Select } from "@infinityfx/fluid";
+import { useState } from "react";
+import { IoFilter, IoSearch } from "react-icons/io5";
 import useSWR from 'swr';
+import Filters from "./filters";
 import styles from './header.module.css';
 
 export default function Header() {
+    const [show, setShow] = useState(false);
+
     const { data, mutate } = useFilterStore();
     const { data: queryData, mutate: mutateQuery } = useQueryStore();
 
@@ -21,6 +25,10 @@ export default function Header() {
     });
 
     return <div className={styles.header}>
+        <Drawer show={show} onClose={() => setShow(false)}>
+            <Filters />
+        </Drawer>
+
         <Autocomplete
             completions={completions?.suggestions.map(suggestion => suggestion.title) || []}
             placeholder="Title, Author, etc.."
@@ -31,11 +39,18 @@ export default function Header() {
                 data.query = e.target.value;
             })} />
 
-        <Select placeholder="Sorting"
-            options={Object.entries(Sorting).map(([value, label]) => ({ label, value }))}
-            value={data.sorting}
-            onChange={val => mutate(data => {
-                data.sorting = val;
-            })} />
+        <div className={styles.row}>
+            <Select placeholder="Sorting"
+                style={{ flexGrow: 1 }}
+                options={Object.entries(Sorting).map(([value, label]) => ({ label, value }))}
+                value={data.sorting}
+                onChange={val => mutate(data => {
+                    data.sorting = val;
+                })} />
+
+            <Button onClick={() => setShow(!show)} size="lrg" variant="light" className={styles.toggle}>
+                <IoFilter />
+            </Button>
+        </div>
     </div>
 }

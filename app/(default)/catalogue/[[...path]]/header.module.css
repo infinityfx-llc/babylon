@@ -3,8 +3,19 @@
     gap: var(--f-spacing-med);
 }
 
+.row {
+    display: flex;
+    gap: var(--f-spacing-med);
+}
+
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
+    }
+}
+
+@media (min-width: 769px) {
+    .toggle {
+        display: none !important;
     }
 }

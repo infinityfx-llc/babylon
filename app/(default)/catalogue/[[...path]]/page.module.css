@@ -19,6 +19,10 @@
     padding-block: var(--f-spacing-xlg);
 }
 
+.container {
+    padding: var(--f-spacing-med);
+}
+
 @media (max-width: 768px) {
     .sidebar {
         display: none;

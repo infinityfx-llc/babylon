@@ -1,4 +1,4 @@
-import { Cull, NavigationMenu, ThemeToggle } from '@infinityfx/fluid';
+import { NavigationMenu, ThemeToggle } from '@infinityfx/fluid';
 import Link from 'next/link';
 import FontSizeToggle from './font-size-toggle';
 import Logo from './logo';
@@ -14,17 +14,15 @@ export default function Header() {
             <Logo />
         </Link>
 
-        <Cull include={['mob', 'tab']}>
-            <NavigationMenu Link={Link} links={[
-                { label: 'Home', href: '/' },
-                {
-                    label: 'Catalogue', href: '/catalogue', links: Object.entries(Genres).map(([value, name]) => ({
-                        label: name,
-                        href: `/catalogue/genre/${value}`
-                    }))
-                }
-            ]} />
-        </Cull>
+        <NavigationMenu className={styles.desktop} Link={Link} links={[
+            { label: 'Home', href: '/' },
+            {
+                label: 'Catalogue', href: '/catalogue', links: Object.entries(Genres).map(([value, name]) => ({
+                    label: name,
+                    href: `/catalogue/genre/${value}`
+                }))
+            }
+        ]} />
 
         <Suspense>
             <Account />
@@ -32,8 +30,6 @@ export default function Header() {
 
         {/* <FontSizeToggle /> */}
 
-        <Cull include={['mob', 'tab']}>
-            <ThemeToggle round />
-        </Cull>
+        <ThemeToggle round className={styles.desktop} />
     </header>
 }

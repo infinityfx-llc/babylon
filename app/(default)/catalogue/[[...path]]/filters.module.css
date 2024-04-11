@@ -1,7 +1,3 @@
-.container {
-    padding: var(--f-spacing-med);
-}
-
 .row {
     display: flex;
     gap: var(--f-spacing-sml);

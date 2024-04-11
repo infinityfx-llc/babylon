@@ -1,3 +1,4 @@
+import { Frame } from '@infinityfx/fluid';
 import { Metadata } from 'next';
 import Filters from './filters';
 import Header from './header';
@@ -13,12 +14,14 @@ export default function Page() {
     return <main className={styles.main}>
         <section className={styles.content}>
             <Header />
-            
+
             <Results />
         </section>
-        
+
         <aside className={styles.sidebar}>
-            <Filters />
+            <Frame className={styles.container} background="light" border>
+                <Filters />
+            </Frame>
         </aside>
     </main>;
 }
