@@ -1,0 +1,16 @@
+.main {
+    min-height: 100svh;
+    padding-top: var(--header);
+    padding-inline: var(--space);
+    display: flex;
+}
+
+.section {
+    padding-block: var(--f-spacing-xlg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    gap: var(--f-spacing-med);
+    font-size: var(--f-font-size-med);
+}

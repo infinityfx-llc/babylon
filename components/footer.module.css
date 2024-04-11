@@ -40,3 +40,10 @@
     display: flex;
     gap: var(--f-spacing-sml);
 }
+
+.copyright {
+    align-self: center;
+    font-size: var(--f-font-size-sml);
+    color: var(--f-clr-grey-500);
+    margin-left: auto;
+}

@@ -38,6 +38,10 @@ export default function Footer() {
                     Privacy policy
                 </Button>
             </div>
+
+            <div className={styles.copyright}>
+                ©Copyright2016-{new Date().getFullYear()} InfinityFX. All rights reserved.
+            </div>
         </section>
     </footer>
 }
