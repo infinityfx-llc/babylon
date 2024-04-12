@@ -2,9 +2,9 @@
 
 import { ApiBookAdd } from '@/app/api/book/add/route';
 import { source } from '@/lib/request';
-import { Genres, BookTypes } from '@/lib/types';
+import { Genres, BookTypes, Languages } from '@/lib/types';
 import { useForm } from '@infinityfx/control';
-import { DateField, Field, NumberField, Select, Textarea, Button, FileField, Tabs } from '@infinityfx/fluid';
+import { DateField, Field, NumberField, Select, Textarea, Button, FileField, Tabs, Tooltip } from '@infinityfx/fluid';
 import { Author, BookType } from '@prisma/client';
 import { useState, Fragment } from 'react';
 import { IoAdd } from 'react-icons/io5';
@@ -39,9 +39,9 @@ export default function Form({ authors }: { authors: Author[]; }) {
             return {};
         },
         async onSubmit(values) {
-            const { book } = await source<ApiBookAdd>('/api/book/add', values);
+            const { request } = await source<ApiBookAdd>('/api/book/add', values);
 
-            if (!book) {
+            if (!request) {
 
             } else {
                 form.reset();
@@ -70,6 +70,7 @@ export default function Form({ authors }: { authors: Author[]; }) {
         <div className={styles.row}>
             <Field label="Title" {...form.fieldProps('title')} />
             <Select label="Genre"
+                searchable
                 options={Object.entries(Genres).map(([value, label]) => ({ value, label }))}
                 value={form.values.genre}
                 onChange={genre => form.setValues({ genre })} />
@@ -81,15 +82,18 @@ export default function Form({ authors }: { authors: Author[]; }) {
                     onChange={val => form.setValues({ author: authorList.find(author => author.id === val) })}
                     options={authorList.map(author => ({ label: author.name, value: author.id }))} />
 
-                <Button variant="neutral" size="lrg"
-                    style={{ flexGrow: 0, flexBasis: 'auto', alignSelf: 'flex-end' }}
-                    onClick={() => toggleAuthorModal(!showAuthorModal)}>
-                    <IoAdd />
-                </Button>
+                <Tooltip content="Add a new author">
+                    <Button variant="neutral" size="lrg"
+                        style={{ flexGrow: 0, flexBasis: 'auto', alignSelf: 'flex-end' }}
+                        onClick={() => toggleAuthorModal(!showAuthorModal)}>
+                        <IoAdd />
+                    </Button>
+                </Tooltip>
             </div>
         </div>
 
         <Textarea label="Description"
+            resize="vertical"
             value={form.values.description}
             onChange={e => form.setValues({ description: e.target.value })} />
 
@@ -99,14 +103,17 @@ export default function Form({ authors }: { authors: Author[]; }) {
                 onChange={setEditionIndex}
                 options={editions.map((_, i) => ({ label: `Edition ${i + 1}`, value: i }))} />
 
-            <Button
-                variant="neutral"
-                style={{ flexGrow: 0, flexBasis: 'auto', paddingInline: '1em' }}
-                onClick={() => form.setValues({
-                    editions: [...editions, Object.assign({}, editions[editions.length - 1])]
-                })}>
-                Add edition
-            </Button>
+            <Tooltip content="Add edition">
+                <Button
+                    variant="neutral"
+                    size="lrg"
+                    style={{ flexGrow: 0, flexBasis: 'auto', paddingInline: '.85em' }}
+                    onClick={() => form.setValues({
+                        editions: [...editions, Object.assign({}, editions[editions.length - 1])]
+                    })}>
+                    <IoAdd />
+                </Button>
+            </Tooltip>
         </div>
 
         {editions.map((edition, i) => {
@@ -134,9 +141,11 @@ export default function Form({ authors }: { authors: Author[]; }) {
                         precision={0}
                         value={edition.pages}
                         onChange={e => setEditionField(i, 'pages', parseInt(e.target.value))} />
-                    <Field label="Language"
+                    <Select label="Language"
+                        searchable
+                        options={Object.entries(Languages).map(([value, label]) => ({ value, label }))}
                         value={edition.language}
-                        onChange={e => setEditionField(i, 'language', e.target.value)} />
+                        onChange={val => setEditionField(i, 'language', val)} />
                 </div>
             </Fragment>;
         })}

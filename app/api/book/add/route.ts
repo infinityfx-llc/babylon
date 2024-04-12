@@ -26,60 +26,68 @@ export type BookAddData = {
 
 export const POST = defineEndpoint(async (data: BookAddData) => {
 
-    const authorId = getAuthorId(data.author);
-    await db.author.upsert({
-        where: {
-            id: authorId
-        },
-        update: {},
-        create: {
-            id: authorId,
-            name: data.author.name,
-            fullName: data.author.fullName,
-            born: new Date(data.author.born),
-            died: data.author.died ? new Date(data.author.died) : null,
-            nationality: data.author.nationality
+    const request = await db.bookRequest.create({
+        data: {
+            data
         }
     });
 
-    const editions = data.editions
-        .map(edition => ({ ...edition, published: new Date(edition.published) }))
-        .sort((a, b) => a.published.getTime() - b.published.getTime());
+    return { request };
 
-    try {
-        const book = await db.book.create({
-            data: {
-                id: editions[0].id,
-                title: data.title,
-                description: data.description,
-                published: editions[0].published,
-                genre: {
-                    connectOrCreate: {
-                        where: {
-                            id: data.genre
-                        },
-                        create: {
-                            id: data.genre,
-                            name: Genres[data.genre]
-                        }
-                    }
-                },
-                author: {
-                    connect: { id: authorId }
-                },
-                editions: {
-                    createMany: {
-                        data: editions
-                    }
-                }
-            }
-        });
+    // const authorId = getAuthorId(data.author);
+    // await db.author.upsert({
+    //     where: {
+    //         id: authorId
+    //     },
+    //     update: {},
+    //     create: {
+    //         id: authorId,
+    //         name: data.author.name,
+    //         fullName: data.author.fullName,
+    //         born: new Date(data.author.born),
+    //         died: data.author.died ? new Date(data.author.died) : null,
+    //         nationality: data.author.nationality
+    //     }
+    // });
 
-        return { book };
-    } catch (ex) {
+    // const editions = data.editions
+    //     .map(edition => ({ ...edition, published: new Date(edition.published) }))
+    //     .sort((a, b) => a.published.getTime() - b.published.getTime());
 
-        return { book: null };
-    }
+    // try {
+    //     const book = await db.book.create({
+    //         data: {
+    //             id: editions[0].id,
+    //             title: data.title,
+    //             description: data.description,
+    //             published: editions[0].published,
+    //             genre: {
+    //                 connectOrCreate: {
+    //                     where: {
+    //                         id: data.genre
+    //                     },
+    //                     create: {
+    //                         id: data.genre,
+    //                         name: Genres[data.genre]
+    //                     }
+    //                 }
+    //             },
+    //             author: {
+    //                 connect: { id: authorId }
+    //             },
+    //             editions: {
+    //                 createMany: {
+    //                     data: editions
+    //                 }
+    //             }
+    //         }
+    //     });
+
+    //     return { book };
+    // } catch (ex) {
+
+    //     return { book: null };
+    // }
 });
 
 export type ApiBookAdd = ApiEndpoint<'/api/book/add', BookAddData, typeof POST>;
