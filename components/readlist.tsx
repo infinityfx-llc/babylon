@@ -1,10 +1,10 @@
 'use client';
 
 import BookResult from '@/components/book-result';
-import { Pagination, Select, Skeleton } from '@infinityfx/fluid';
+import { Pagination, Select } from '@infinityfx/fluid';
 import useSWR from 'swr';
 import { source } from '@/lib/request';
-import { ApiReaderBooksRequest, ApiReaderBooksResponse } from '@/app/api/reader/books/route';
+import { ApiReaderBooks } from '@/app/api/reader/books/route';
 import { useState } from 'react';
 import styles from './readlist.module.css';
 import { Sorting } from '@/lib/types';
@@ -15,7 +15,7 @@ export default function Readlist({ readerId }: { readerId: string; }) {
     const [index, setIndex] = useState(0);
     const limit = 5;
 
-    const { data, isLoading } = useSWR(['/api/reader/books', { readerId, sorting, index, limit }], args => source<ApiReaderBooksRequest, ApiReaderBooksResponse>(...args));
+    const { data, isLoading } = useSWR(['/api/reader/books' as const, { readerId, sorting, index, limit }], args => source<ApiReaderBooks>(...args));
 
     return <section className={styles.wrapper}>
         <div className={styles.header}>

@@ -7,7 +7,7 @@ import { useFilterStore, useQueryStore } from '@/lib/stores';
 import useFilters from './use-filters';
 import useSWR from 'swr';
 import { source } from '@/lib/request';
-import { ApiBooksRequest, ApiBooksResponse } from '@/app/api/books/route';
+import { ApiBooks } from '@/app/api/books/route';
 import { Skeleton } from '@infinityfx/fluid';
 import { useDebounce } from '@infinityfx/control';
 import { formatCount } from '@/lib/utils';
@@ -19,7 +19,7 @@ export default function Results() {
     const { data: queryData } = useQueryStore();
     const debouncedQuery = useDebounce(queryData.query);
 
-    const { data, isLoading } = useSWR(loaded ? ['/api/books', { ...filters, query: debouncedQuery }] : null, args => source<ApiBooksRequest, ApiBooksResponse>(...args));
+    const { data, isLoading } = useSWR(loaded ? ['/api/books' as const, { ...filters, query: debouncedQuery }] : null, args => source<ApiBooks>(...args));
 
     return <>
         {isLoading && <div className={styles.row}>
@@ -32,7 +32,7 @@ export default function Results() {
             <Skeleton h={34} w={100} radius="max" style={{ marginLeft: 'auto' }} />
         </div>}
 
-        {data?.genres.map(({ id, name, books }) => {
+        {data?.genres?.map(({ id, name, books }) => {
             if (!books.length) return null;
 
             return <div className={styles.row} key={name}>

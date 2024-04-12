@@ -1,6 +1,6 @@
 'use client';
 
-import { ApiSignInRequest, ApiSignInResponse } from "@/app/api/sign-in/route";
+import { ApiSignIn } from "@/app/api/sign-in/route";
 import { source } from "@/lib/request";
 import { useForm } from "@infinityfx/control";
 import { Button, Field, PasswordField } from "@infinityfx/fluid";
@@ -11,12 +11,15 @@ export default function Form() {
     const router = useRouter();
 
     const form = useForm({
-        initial: {},
+        initial: {
+            email: '',
+            password: ''
+        },
         async onSubmit(values) {
-            const { user } = await source<ApiSignInRequest, ApiSignInResponse>('/api/sign-in', values);
+            const { errors } = await source<ApiSignIn>('/api/sign-in', values);
 
-            if (!user) {
-
+            if (errors) {
+                form.setErrors(errors);
             } else {
                 router.push('/profile');
             }
@@ -24,8 +27,8 @@ export default function Form() {
     });
 
     return <>
-        <Field type="email" label="Email" icon={<IoMail />} />
-        <PasswordField label="Password" icon={<IoLockClosed />} />
+        <Field type="email" label="Email" icon={<IoMail />} {...form.fieldProps('email')} />
+        <PasswordField label="Password" icon={<IoLockClosed />} {...form.fieldProps('password')} />
 
         <Button loading={form.submitting} onClick={() => form.submit()}>
             Sign in

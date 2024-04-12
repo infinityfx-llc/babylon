@@ -1,10 +1,11 @@
-import { ApiReturnType } from '@/lib/types';
+import { ApiEndpoint, defineEndpoint } from '@/lib/api';
 import db from '@/prisma/client';
-import { NextResponse } from 'next/server';
 
-export async function POST(req: Request) {
-    const data: ApiAutocompleteRequest = await req.json();
-    
+type AutocompleteData = {
+    query: string;
+};
+
+export const POST = defineEndpoint(async (data: AutocompleteData) => {
     const suggestions = await db.book.findMany({
         where: {
             title: {
@@ -18,11 +19,7 @@ export async function POST(req: Request) {
         take: 10
     });
 
-    return NextResponse.json({ suggestions });
-}
+    return { suggestions };
+});
 
-export type ApiAutocompleteRequest = {
-    query: string;
-};
-
-export type ApiAutocompleteResponse = ApiReturnType<typeof POST>;
+export type ApiAutocomplete = ApiEndpoint<'/api/autocomplete', AutocompleteData, typeof POST>;

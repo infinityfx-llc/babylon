@@ -1,24 +1,30 @@
-import { ApiReturnType } from '@/lib/types';
+import { ApiEndpoint, defineEndpoint } from '@/lib/api';
 import db from '@/prisma/client';
-import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
-export async function POST(req: Request) {
-    const data: ApiSignInRequest = await req.json();
+type SignInData = {
+    email: string;
+    password: string;
+};
 
+export const POST = defineEndpoint(async (data: SignInData)  => {
     const user = await db.reader.findUnique({
         where: {
-            email: 'john@doe.com'
+            email: data.email
         }
     });
 
-    const response = NextResponse.json({ user });
-    response.cookies.set('session', JSON.stringify(user));
+    if (!user || user.passwordHash !== data.password) return {
+        user: undefined,
+        errors: {
+            email: 'Email or password is incorrect.',
+            password: 'Email or password is incorrect.'
+        }
+    };
 
-    return response;
-}
+    cookies().set('session', JSON.stringify(user));
 
-export type ApiSignInRequest = {
-    
-};
+    return { user };
+});
 
-export type ApiSignInResponse = ApiReturnType<typeof POST>;
+export type ApiSignIn = ApiEndpoint<'/api/sign-in', SignInData, typeof POST>;

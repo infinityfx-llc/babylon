@@ -1,17 +1,10 @@
-import { ApiReturnType } from '@/lib/types';
-import { NextResponse } from 'next/server';
+import { ApiEndpoint, defineEndpoint } from '@/lib/api';
+import { cookies } from 'next/headers';
 
-export async function POST(req: Request) {
-    const data: ApiSignOutRequest = await req.json();
+export const POST = defineEndpoint(async () => {
+    cookies().delete('session');
 
-    const response = NextResponse.json({ user: null });
-    response.cookies.delete('session');
+    return { user: null };
+});
 
-    return response;
-}
-
-export type ApiSignOutRequest = {
-    
-};
-
-export type ApiSignOutResponse = ApiReturnType<typeof POST>;
+export type ApiSignOut = ApiEndpoint<'/api/sign-out', {}, typeof POST>;

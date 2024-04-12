@@ -1,12 +1,15 @@
+import { ApiEndpoint, defineEndpoint } from '@/lib/api';
 import { getSession } from '@/lib/session';
-import { ApiReturnType, Genres, Sorting } from '@/lib/types';
+import { Genres } from '@/lib/types';
 import db from '@/prisma/client';
-import { NextResponse } from 'next/server';
 
-export async function POST(req: Request) {
+export type RecommendationsData = {
+    genre?: 'all' | keyof typeof Genres;
+};
+
+export const POST = defineEndpoint(async (data: RecommendationsData) => {
     const { user } = getSession();
-    const data: ApiRecommendationsRequest = await req.json();
-    
+
     const books = await db.book.findMany({
         where: {
             genre: data.genre !== 'all' || data.genre === undefined ? {
@@ -27,11 +30,7 @@ export async function POST(req: Request) {
         }
     });
 
-    return NextResponse.json({ books });
-}
+    return { books };
+});
 
-export type ApiRecommendationsRequest = {
-    genre?: 'all' | keyof typeof Genres;
-};
-
-export type ApiRecommendationsResponse = ApiReturnType<typeof POST>;
+export type ApiRecommendations = ApiEndpoint<'/api/recommendations', RecommendationsData, typeof POST>;

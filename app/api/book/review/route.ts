@@ -1,11 +1,21 @@
+import { ApiEndpoint, defineEndpoint } from '@/lib/api';
 import { getSession } from '@/lib/session';
-import { ApiReturnType } from '@/lib/types';
+import { ApiErrors } from '@/lib/types';
 import db from '@/prisma/client';
-import { NextResponse } from 'next/server';
 
-export async function POST(req: Request) {
+type BookReviewData = {
+    bookId: string;
+    rating: number;
+    text?: string;
+};
+
+export const POST = defineEndpoint(async (data: BookReviewData) => {
     const { user } = getSession();
-    const data: ApiBookReviewRequest = await req.json();
+
+    if (!user) return {
+        review: undefined,
+        errors: { generic: ApiErrors.noSession }
+    };
 
     const book = await db.book.findUnique({
         where: {
@@ -16,7 +26,11 @@ export async function POST(req: Request) {
         }
     });
 
-    if (!book || !user) return NextResponse.json({ review: null });
+    if (!book) return {
+        review: undefined,
+        errors: { generic: ApiErrors.noBook }
+    };
+
     const ratings = book._count.reviews + 1;
 
     const [review] = await db.$transaction([
@@ -46,13 +60,7 @@ export async function POST(req: Request) {
         })
     ]);
 
-    return NextResponse.json({ review });
-}
+    return { review };
+});
 
-export type ApiBookReviewRequest = {
-    bookId: string;
-    rating: number;
-    text?: string;
-};
-
-export type ApiBookReviewResponse = ApiReturnType<typeof POST>;
+export type ApiBookReview = ApiEndpoint<'/api/book/review', BookReviewData, typeof POST>;

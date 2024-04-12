@@ -1,6 +1,6 @@
 'use client';
 
-import { ApiBookAddRequest, ApiBookAddResponse } from '@/app/api/book/add/route';
+import { ApiBookAdd } from '@/app/api/book/add/route';
 import { source } from '@/lib/request';
 import { Genres, BookTypes } from '@/lib/types';
 import { useForm } from '@infinityfx/control';
@@ -39,7 +39,7 @@ export default function Form({ authors }: { authors: Author[]; }) {
             return {};
         },
         async onSubmit(values) {
-            const { book } = await source<ApiBookAddRequest, ApiBookAddResponse>('/api/book/add', values);
+            const { book } = await source<ApiBookAdd>('/api/book/add', values);
 
             if (!book) {
 

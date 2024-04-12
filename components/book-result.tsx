@@ -8,7 +8,7 @@ import { IoBookmarkOutline, IoBookmark, IoStar } from 'react-icons/io5';
 import styles from './book-result.module.css';
 import { BaseBook } from '@/lib/types';
 import { source } from '@/lib/request';
-import { ApiReadlistRequest, ApiReadlistResponse } from '@/app/api/readlist/route';
+import { ApiReadlist } from '@/app/api/readlist/route';
 
 export default function BookResult({ book }: { book: BaseBook; }) {
     const [bookmarked, setBookmarked] = useState(!!book.readers?.length);
@@ -16,11 +16,12 @@ export default function BookResult({ book }: { book: BaseBook; }) {
     async function toggleRead() {
         setBookmarked(!bookmarked);
 
-        const { read } = await source<ApiReadlistRequest, ApiReadlistResponse>('/api/readlist', { bookId: book.id });
+        const { read, errors } = await source<ApiReadlist>('/api/readlist', { bookId: book.id });
 
-        if (read === null) {
+        if (errors) {
             setBookmarked(false);
-            // show error / need to be logged in
+            
+            if (errors.generic) alert(errors.generic);
         } else {
             setBookmarked(read);
         }

@@ -35,4 +35,8 @@ export const BookTypes = {
 
 export type BaseBook = Book & { genre: Genre; author: Author; readers: { id: string; }[]; };
 
-export type ApiReturnType<T extends (args: any) => any> = Awaited<ReturnType<T>> extends NextResponse<infer T> ? T : unknown;
+export enum ApiErrors {
+    noSession = 'You are not signed in.',
+    noBook = 'No book was found for the given id.',
+    noReader = 'No reader was found for the given id.'
+}

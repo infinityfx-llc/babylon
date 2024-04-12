@@ -1,12 +1,18 @@
+import { ApiEndpoint, defineEndpoint } from '@/lib/api';
 import { getSession } from '@/lib/session';
-import { ApiReturnType, Sorting } from '@/lib/types';
+import { ApiErrors, Sorting } from '@/lib/types';
 import { getOrderBy } from '@/lib/utils';
 import db from '@/prisma/client';
-import { NextResponse } from 'next/server';
 
-export async function POST(req: Request) {
+export type ReaderBooksData = {
+    readerId: string;
+    sorting?: keyof typeof Sorting;
+    index?: number;
+    limit?: number;
+};
+
+export const POST = defineEndpoint(async (data: ReaderBooksData) => {
     const { user } = getSession();
-    const data: ApiReaderBooksRequest = await req.json();
 
     const reader = await db.reader.findUnique({
         where: {
@@ -34,16 +40,19 @@ export async function POST(req: Request) {
         }
     });
 
-    if (!reader) return NextResponse.json({ books: null, results: 0 });
+    if (!reader) return {
+        books: undefined, 
+        results: undefined,
+        errors: {
+            generic: ApiErrors.noReader
+        }
+    };
 
-    return NextResponse.json({ books: reader.readBooks, results: reader._count.readBooks });
-}
+    return {
+        errors: undefined,
+        books: reader.readBooks,
+        results: reader._count.readBooks
+    };
+});
 
-export type ApiReaderBooksRequest = {
-    readerId: string;
-    sorting?: keyof typeof Sorting;
-    index?: number;
-    limit?: number;
-};
-
-export type ApiReaderBooksResponse = ApiReturnType<typeof POST>;
+export type ApiReaderBooks = ApiEndpoint<'/api/reader/books', ReaderBooksData, typeof POST>;

@@ -1,4 +1,4 @@
-import { ApiBookReviewRequest, ApiBookReviewResponse } from '@/app/api/book/review/route';
+import { ApiBookReview } from '@/app/api/book/review/route';
 import { source } from '@/lib/request';
 import { useForm } from '@infinityfx/control';
 import { Textarea, Button, NumberField } from '@infinityfx/fluid';
@@ -14,10 +14,12 @@ export default function WriteReview({ bookId, mutate }: { bookId: string; mutate
             text: ''
         },
         async onSubmit(values) {
-            const { review } = await source<ApiBookReviewRequest, ApiBookReviewResponse>('/api/book/review', { ...values, bookId });
+            const { errors } = await source<ApiBookReview>('/api/book/review', { ...values, bookId });
 
-            if (!review) {
-                form.setErrors({ text: 'Something went wrong, please try again' });
+            if (errors) {
+                form.setErrors(errors);
+
+                if (errors.generic) alert(errors.generic); // TEMP
             } else {
                 mutate();
                 router.refresh();

@@ -1,5 +1,6 @@
 'use client';
 
+import { ApiSignOut } from "@/app/api/sign-out/route";
 import { source } from "@/lib/request";
 import { ActionMenu } from "@infinityfx/fluid";
 import { useRouter } from "next/navigation";
@@ -12,7 +13,7 @@ export default function AccountMenu({ children, name }: { children: React.ReactE
         { type: 'divider' },
         {
             type: 'option', label: 'Sign out', onClick: async () => {
-                await source('/api/sign-out', {});
+                await source<ApiSignOut>('/api/sign-out', {});
                 router.refresh();
             }
         }

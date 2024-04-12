@@ -4,7 +4,7 @@ import Review from './review';
 import styles from './reviews.module.css';
 import useSWR from 'swr';
 import { source } from '@/lib/request';
-import { ApiReviewsRequest, ApiReviewsResponse } from '@/app/api/reviews/route';
+import { ApiReviews } from '@/app/api/reviews/route';
 import { formatCount } from '@/lib/utils';
 import { Slider, Spinner } from '@infinityfx/fluid';
 import { useState } from 'react';
@@ -13,7 +13,7 @@ import WriteReview from './write-review';
 export default function Reviews({ bookId }: { bookId: string; }) {
     const [ratings, setRatings] = useState([1, 10]);
 
-    const { data, isLoading, mutate } = useSWR(['/api/reviews', { bookId, ratings }], args => source<ApiReviewsRequest, ApiReviewsResponse>(...args));
+    const { data, isLoading, mutate } = useSWR(['/api/reviews' as const, { bookId, ratings }], args => source<ApiReviews>(...args));
 
     return <>
         <WriteReview bookId={bookId} mutate={mutate} />

@@ -1,13 +1,19 @@
+import { ApiEndpoint, defineEndpoint } from '@/lib/api';
 import { getSession } from '@/lib/session';
-import { ApiReturnType, Genres, Sorting } from '@/lib/types';
+import { Genres, Sorting } from '@/lib/types';
 import { getOrderBy } from '@/lib/utils';
 import db from '@/prisma/client';
-import { NextResponse } from 'next/server';
 
-export async function POST(req: Request) {
+export type BooksData = {
+    aggregate?: boolean;
+    query?: string;
+    sorting?: keyof typeof Sorting;
+    genres?: (keyof typeof Genres)[];
+    ratings?: number[];
+};
+
+export const POST = defineEndpoint(async (data: BooksData) => {
     const { user } = getSession();
-
-    const data: ApiBooksRequest = await req.json();
 
     const config = {
         where: {
@@ -66,7 +72,7 @@ export async function POST(req: Request) {
     if (data.aggregate) {
         const books = await db.book.findMany(config);
 
-        return NextResponse.json({ books, genres: [] });
+        return { books };
     }
 
     const genres = await db.genre.findMany({
@@ -75,15 +81,7 @@ export async function POST(req: Request) {
         }
     });
 
-    return NextResponse.json({ genres, books: [] });
-}
+    return { genres };
+});
 
-export type ApiBooksRequest = {
-    aggregate?: boolean;
-    query?: string;
-    sorting?: keyof typeof Sorting;
-    genres?: (keyof typeof Genres)[];
-    ratings?: number[];
-};
-
-export type ApiBooksResponse = ApiReturnType<typeof POST>;
+export type ApiBooks = ApiEndpoint<'/api/books', BooksData, typeof POST>;

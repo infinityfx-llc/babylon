@@ -1,10 +1,12 @@
-import { ApiReturnType, Genres } from '@/lib/types';
+import { ApiEndpoint, defineEndpoint } from '@/lib/api';
 import db from '@/prisma/client';
-import { NextResponse } from 'next/server';
 
-export async function POST(req: Request) {
-    const data: ApiReviewsRequest = await req.json();
+export type ReviewsData = {
+    bookId: string;
+    ratings?: number[];
+};
 
+export const POST = defineEndpoint(async (data: ReviewsData) => {
     const reviews = await db.review.findMany({
         where: {
             bookId: data.bookId,
@@ -24,12 +26,7 @@ export async function POST(req: Request) {
         }
     });
 
-    return NextResponse.json({ reviews });
-}
+    return { reviews };
+});
 
-export type ApiReviewsRequest = {
-    bookId: string;
-    ratings?: number[];
-};
-
-export type ApiReviewsResponse = ApiReturnType<typeof POST>;
+export type ApiReviews = ApiEndpoint<'/api/reviews', ReviewsData, typeof POST>;

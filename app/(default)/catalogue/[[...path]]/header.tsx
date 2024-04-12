@@ -1,6 +1,6 @@
 'use client';
 
-import { ApiAutocompleteRequest, ApiAutocompleteResponse } from "@/app/api/autocomplete/route";
+import { ApiAutocomplete } from "@/app/api/autocomplete/route";
 import { source } from "@/lib/request";
 import { useFilterStore, useQueryStore } from "@/lib/stores";
 import { Sorting } from "@/lib/types";
@@ -19,7 +19,7 @@ export default function Header() {
     const { data: queryData, mutate: mutateQuery } = useQueryStore();
 
     const debouncedQuery = useDebounce(queryData.query);
-    const { data: completions } = useSWR(['/api/autocomplete', { query: debouncedQuery }], args => source<ApiAutocompleteRequest, ApiAutocompleteResponse>(...args), {
+    const { data: completions } = useSWR(['/api/autocomplete' as const, { query: debouncedQuery }], args => source<ApiAutocomplete>(...args), {
         keepPreviousData: true,
         revalidateOnFocus: false
     });

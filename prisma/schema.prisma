@@ -78,7 +78,7 @@ model Review {
     text      String?  @db.Text
     timestamp DateTime @default(now())
     readerId  String
-    reader    Reader   @relation(fields: [readerId], references: [email])
+    reader    Reader   @relation(fields: [readerId], references: [id])
 
     @@index([timestamp])
 }

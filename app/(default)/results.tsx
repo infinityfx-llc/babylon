@@ -1,16 +1,16 @@
 'use client';
 
 import BookResult from '@/components/book-result';
-import { Autocomplete, Button, Skeleton } from '@infinityfx/fluid';
+import { Autocomplete, Button } from '@infinityfx/fluid';
 import Link from 'next/link';
 import styles from './results.module.css';
 import useSWR from 'swr';
 import { source } from '@/lib/request';
-import { ApiBooksRequest, ApiBooksResponse } from '../api/books/route';
+import { ApiBooks } from '../api/books/route';
 import { IoSearch } from 'react-icons/io5';
 import { useState } from 'react';
 import { useDebounce } from '@infinityfx/control';
-import { ApiAutocompleteRequest, ApiAutocompleteResponse } from '../api/autocomplete/route';
+import { ApiAutocomplete } from '../api/autocomplete/route';
 import { formatCount } from '@/lib/utils';
 import LoadingBooks from '@/components/loading-books';
 
@@ -18,12 +18,12 @@ export default function Results() {
     const [query, setQuery] = useState('');
     const debouncedQuery = useDebounce(query);
 
-    const { data: completions } = useSWR(['/api/autocomplete', { query: debouncedQuery }], args => source<ApiAutocompleteRequest, ApiAutocompleteResponse>(...args), {
+    const { data: completions } = useSWR(['/api/autocomplete' as const, { query: debouncedQuery }], args => source<ApiAutocomplete>(...args), {
         keepPreviousData: true,
         revalidateOnFocus: false
     });
 
-    const { data, isLoading } = useSWR(['/api/books', debouncedQuery], ([url, query]) => source<ApiBooksRequest, ApiBooksResponse>(url, { aggregate: true, query }));
+    const { data, isLoading } = useSWR(['/api/books' as const, debouncedQuery], ([url, query]) => source<ApiBooks>(url, { aggregate: true, query }));
 
     return <>
         <Autocomplete
@@ -35,12 +35,12 @@ export default function Results() {
             onChange={e => setQuery(e.target.value)} />
 
         <div className={styles.wrapper}>
-            <h3 className={styles.heading}>{formatCount(data?.books.length)} results</h3>
+            <h3 className={styles.heading}>{formatCount(data?.books?.length)} results</h3>
 
             <div className={styles.list}>
                 {isLoading && <LoadingBooks count={5} />}
 
-                {data?.books.map((book, i) => <BookResult key={i} book={book} />)}
+                {data?.books?.map((book, i) => <BookResult key={i} book={book} />)}
             </div>
 
             <Link href={query ? `/catalogue/search/${query}` : '/catalogue'} tabIndex={-1} style={{ marginLeft: 'auto' }}>

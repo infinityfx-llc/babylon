@@ -1,13 +1,19 @@
+import { ApiEndpoint, defineEndpoint } from '@/lib/api';
 import { getSession } from '@/lib/session';
-import { ApiReturnType } from '@/lib/types';
+import { ApiErrors } from '@/lib/types';
 import db from '@/prisma/client';
-import { NextResponse } from 'next/server';
 
-export async function POST(req: Request) {
+export type ReadlistData = {
+    bookId: string;
+};
+
+export const POST = defineEndpoint(async (data: ReadlistData) => {
     const { user } = getSession();
-    const data: ApiReadlistRequest = await req.json();
 
-    if (!user) return NextResponse.json({ read: null });
+    if (!user) return {
+        read: undefined,
+        errors: { generic: ApiErrors.noSession }
+    }
 
     const reader = await db.reader.findUnique({
         where: {
@@ -36,11 +42,7 @@ export async function POST(req: Request) {
         }
     });
 
-    return NextResponse.json({ read: !reader });
-}
+    return { read: !reader };
+});
 
-export type ApiReadlistRequest = {
-    bookId: string;
-};
-
-export type ApiReadlistResponse = ApiReturnType<typeof POST>;
+export type ApiReadlist = ApiEndpoint<'/api/readlist', ReadlistData, typeof POST>;

@@ -1,11 +1,30 @@
-import { ApiReturnType, Genres } from '@/lib/types';
+import { ApiEndpoint, defineEndpoint } from '@/lib/api';
+import { Genres } from '@/lib/types';
 import { getAuthorId } from '@/lib/utils';
 import db from '@/prisma/client';
 import { BookType } from '@prisma/client';
-import { NextResponse } from 'next/server';
 
-export async function POST(req: Request) {
-    const data: ApiBookAddRequest = await req.json();
+export type BookAddData = {
+    title: string;
+    description: string;
+    genre: keyof typeof Genres;
+    author: {
+        name: string;
+        fullName: string;
+        born: Date;
+        died: Date | null;
+        nationality: string;
+    };
+    editions: {
+        id: string;
+        type: BookType;
+        published: Date;
+        pages: number;
+        language: string;
+    }[];
+};
+
+export const POST = defineEndpoint(async (data: BookAddData) => {
 
     const authorId = getAuthorId(data.author);
     await db.author.upsert({
@@ -56,31 +75,11 @@ export async function POST(req: Request) {
             }
         });
 
-        return NextResponse.json({ book });
+        return { book };
     } catch (ex) {
 
-        return NextResponse.json({ book: null });
+        return { book: null };
     }
-}
+});
 
-export type ApiBookAddRequest = {
-    title: string;
-    description: string;
-    genre: keyof typeof Genres;
-    author: {
-        name: string;
-        fullName: string;
-        born: Date;
-        died: Date | null;
-        nationality: string;
-    };
-    editions: {
-        id: string;
-        type: BookType;
-        published: Date;
-        pages: number;
-        language: string;
-    }[];
-};
-
-export type ApiBookAddResponse = ApiReturnType<typeof POST>;
+export type ApiBookAdd = ApiEndpoint<'/api/book/add', BookAddData, typeof POST>;
