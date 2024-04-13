@@ -10,7 +10,7 @@
     },
     "dependencies": {
         "@infinityfx/control": "^0.0.7",
-        "@infinityfx/fluid": "^0.1.0-beta.73",
+        "@infinityfx/fluid": "^0.1.0-beta.74",
         "@infinityfx/lively": "^3.5.0",
         "@prisma/client": "^5.12.1",
         "eslint": "^8.50.0",

@@ -3,6 +3,7 @@
 import { ApiBookAdd } from '@/app/api/book/add/route';
 import { source } from '@/lib/request';
 import { Genres, BookTypes, Languages } from '@/lib/types';
+import { Validate } from '@/lib/validate';
 import { useForm } from '@infinityfx/control';
 import { DateField, Field, NumberField, Select, Textarea, Button, FileField, Tabs, Tooltip } from '@infinityfx/fluid';
 import { Author, BookType } from '@prisma/client';
@@ -19,13 +20,13 @@ export default function Form({ authors }: { authors: Author[]; }) {
     const form = useForm({
         initial: {
             title: '',
-            author: undefined as Author | undefined,
-            genre: undefined as keyof typeof Genres | undefined,
+            author: '' as Author | '',
+            genre: '' as keyof typeof Genres | '',
             description: '',
             editions: [
                 {
                     id: '',
-                    type: undefined as BookType | undefined,
+                    type: '' as BookType | '',
                     published: undefined as Date | undefined,
                     coverImage: undefined as File | undefined,
                     pages: 0,
@@ -34,9 +35,14 @@ export default function Form({ authors }: { authors: Author[]; }) {
             ]
         },
         onValidate(values) {
-            if (values.genre === undefined) return { genre: 'Please select a genre' };
-            if (values.author === undefined) return { author: 'Please select an author' };
-            if (values.editions.some(edition => !edition.type || !edition.published)) return { editions: true };
+            return new Validate(values)
+                .req('title')
+                .req('author')
+                .req('description')
+                .in('genre', Genres)
+                .do('editions', function(editions) {
+                    if (editions.some(edition => !edition.published || !edition.language)) return 'One or more editions are invalid.';
+                }).errors;
         },
         onSubmit: async (values: ApiBookAdd[1]) => {
             const { request } = await source<ApiBookAdd>('/api/book/add', values);
@@ -71,6 +77,7 @@ export default function Form({ authors }: { authors: Author[]; }) {
             <Field label="Title" {...form.fieldProps('title')} />
             <Select label="Genre"
                 searchable
+                error={form.touched.genre && form.errors.genre}
                 options={Object.entries(Genres).map(([value, label]) => ({ value, label }))}
                 value={form.values.genre}
                 onChange={genre => form.setValues({ genre })} />
@@ -78,12 +85,13 @@ export default function Form({ authors }: { authors: Author[]; }) {
             <div className={styles.row}>
                 <Select label="Author"
                     searchable
-                    value={form.values.author?.id}
+                    error={form.touched.author && form.errors.author}
+                    value={typeof form.values.author === 'string' ? '' : form.values.author.id}
                     onChange={val => form.setValues({ author: authorList.find(author => author.id === val) })}
                     options={authorList.map(author => ({ label: author.name, value: author.id }))} />
 
                 <Tooltip content="Add a new author">
-                    <Button variant="neutral" size="lrg"
+                    <Button variant="neutral"
                         style={{ flexGrow: 0, flexBasis: 'auto', alignSelf: 'flex-end' }}
                         onClick={() => toggleAuthorModal(!showAuthorModal)}>
                         <IoAdd />
@@ -124,6 +132,8 @@ export default function Form({ authors }: { authors: Author[]; }) {
                     <NumberField label="ISBN"
                         precision={0}
                         controls={false}
+                        showError
+                        error={form.touched.editions && form.errors.editions}
                         value={edition.id}
                         onChange={e => setEditionField(i, 'id', e.target.value)} />
                     <Select label="Type"
