@@ -26,25 +26,32 @@ export const POST = defineEndpoint(async (data: ReadlistData) => {
         }
     });
 
-    // check if bookId exists
+    try {
+        await db.reader.update({
+            where: {
+                id: user.id
+            },
+            data: {
+                readBooks: {
+                    connect: reader ? undefined : {
+                        id: data.bookId
+                    },
+                    disconnect: reader ? {
+                        id: data.bookId
+                    } : undefined
+                }
+            }
+        });
 
-    await db.reader.update({
-        where: {
-            id: user.id
-        },
-        data: {
-            readBooks: {
-                connect: reader ? undefined : {
-                    id: data.bookId
-                },
-                disconnect: reader ? {
-                    id: data.bookId
-                } : undefined
+        return { read: !reader };
+    } catch (err) {
+
+        return {
+            errors: {
+                generic: ApiErrors.unexpected
             }
         }
-    });
-
-    return { read: !reader };
+    }
 });
 
 export type ApiReadlist = ApiEndpoint<'/api/readlist', ReadlistData, typeof POST>;

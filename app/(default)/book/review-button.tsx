@@ -3,9 +3,11 @@
 import { ApiBookVote } from "@/app/api/book/vote/route";
 import { source } from "@/lib/request";
 import { ActionMenu, Button } from "@infinityfx/fluid";
+import { useRouter } from "next/navigation";
 import { IoEllipsisVertical } from "react-icons/io5";
 
 export default function ReviewButton({ id }: { id?: number; }) {
+    const router = useRouter();
 
     async function decide(action: 'accept' | 'reject') {
         if (id === undefined) return;
@@ -16,6 +18,7 @@ export default function ReviewButton({ id }: { id?: number; }) {
             alert(errors.generic);
         } else {
             alert(`Book has been ${action}ed`!);
+            router.refresh();
         }
     }
 
