@@ -12,6 +12,7 @@
     height: 100%;
     width: 100%;
     aspect-ratio: 1 / 1.4;
+    image-rendering: pixelated;
 }
 
 .image img {

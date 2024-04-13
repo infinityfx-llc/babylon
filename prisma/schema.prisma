@@ -48,6 +48,7 @@ model BookEdition {
     published DateTime
     pages     Int
     language  String
+    cover     String   @default("") @db.Text
     bookId    String
     editionOf Book     @relation(fields: [bookId], references: [id])
 }
@@ -57,6 +58,7 @@ model Book {
     title       String
     description String        @db.Text
     published   DateTime
+    cover       String        @default("") @db.Text
     authorId    String
     author      Author        @relation(fields: [authorId], references: [id])
     genreId     String

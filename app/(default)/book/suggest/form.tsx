@@ -1,6 +1,7 @@
 'use client';
 
-import { ApiBookAdd } from '@/app/api/book/add/route';
+import styles from './page.module.css';
+import { ApiBookSuggest } from '@/app/api/book/suggest/route';
 import { source } from '@/lib/request';
 import { Genres, BookTypes, Languages } from '@/lib/types';
 import { resizeImage } from '@/lib/utils';
@@ -11,7 +12,6 @@ import { Author, BookType } from '@prisma/client';
 import { useState, Fragment } from 'react';
 import { IoAdd } from 'react-icons/io5';
 import AddAuthor from './add-author';
-import styles from './page.module.css';
 
 export default function Form({ authors }: { authors: Author[]; }) {
     const [showAuthorModal, toggleAuthorModal] = useState(false);
@@ -29,7 +29,7 @@ export default function Form({ authors }: { authors: Author[]; }) {
                     id: '',
                     type: '' as BookType | '',
                     published: undefined as Date | undefined,
-                    coverImage: '',
+                    cover: '',
                     pages: 0,
                     language: ''
                 }
@@ -45,14 +45,14 @@ export default function Form({ authors }: { authors: Author[]; }) {
                     if (editions.some(edition => edition.id.length < 13 ||
                         !edition.published ||
                         !edition.language ||
-                        !edition.coverImage ||
+                        !edition.cover ||
                         !edition.language)) return 'One or more editions are invalid.';
                 }).errors;
         },
-        onSubmit: async (values: ApiBookAdd[1]) => {
-            const { request } = await source<ApiBookAdd>('/api/book/add', values);
+        onSubmit: async (values: ApiBookSuggest[1]) => {
+            const { suggestion } = await source<ApiBookSuggest>('/api/book/suggest', values);
 
-            if (!request) {
+            if (!suggestion) {
                 alert('Something went wrong, please try again!');
             } else {
                 form.reset();
@@ -158,9 +158,9 @@ export default function Form({ authors }: { authors: Author[]; }) {
                             const file = e.target.files?.[0];
                             if (file) {
                                 resizeImage(file, 45, 64)
-                                    .then(base64 => setEditionField(i, 'coverImage', base64 || ''));
+                                    .then(base64 => setEditionField(i, 'cover', base64 || ''));
                             } else {
-                                setEditionField(i, 'coverImage', '');
+                                setEditionField(i, 'cover', '');
                             }
                         }} />
                     <NumberField label="Page count"
@@ -179,7 +179,7 @@ export default function Form({ authors }: { authors: Author[]; }) {
         <Button
             loading={form.submitting}
             onClick={() => form.submit()}>
-            Request addition
+            Suggest
         </Button>
     </>
 }

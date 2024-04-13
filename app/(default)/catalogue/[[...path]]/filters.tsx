@@ -1,8 +1,8 @@
 'use client';
 
-import { Accordion, Checkbox, Slider, DateField } from '@infinityfx/fluid';
+import { Accordion, Checkbox, Slider, DateField, Select } from '@infinityfx/fluid';
 import styles from './filters.module.css';
-import { Genres } from '@/lib/types';
+import { Genres, Languages } from '@/lib/types';
 import { useFilterStore } from '@/lib/stores';
 
 export default function Filters() {
@@ -38,6 +38,13 @@ export default function Filters() {
                 <DateField label="From" />
                 <DateField label="To" />
             </div>
+        </Accordion.Item>
+
+        <Accordion.Item label="Languages">
+            <Select
+                searchable
+                multiple
+                options={Object.entries(Languages).map(([value, label]) => ({ value, label }))} />
         </Accordion.Item>
     </Accordion.Root>;
 }

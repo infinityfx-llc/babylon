@@ -26,6 +26,8 @@ export const POST = defineEndpoint(async (data: ReadlistData) => {
         }
     });
 
+    // check if bookId exists
+
     await db.reader.update({
         where: {
             id: user.id

@@ -29,6 +29,7 @@
 .cover {
     position: relative;
     aspect-ratio: 1 / 1.4;
+    image-rendering: pixelated;
 }
 
 .badge {

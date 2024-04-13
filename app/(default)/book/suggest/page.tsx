@@ -7,7 +7,7 @@ export default async function Page() {
 
     return <main className={styles.main}>
         <section className={styles.section}>
-            <h1>Request addition of a new book</h1>
+            <h1>Suggest a book to be added</h1>
 
             <Form authors={authors} />
         </section>

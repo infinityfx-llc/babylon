@@ -32,9 +32,16 @@ export const BookTypes = {
     ebook: 'eBook'
 } as const;
 
-export type BaseBook = Book & { genre: Genre; author: Author; readers: { id: string; }[]; };
+export type BaseBook = Book & {
+    genre: Genre;
+    author: Author;
+    readers: {
+        id: string;
+    }[];
+};
 
 export enum ApiErrors {
+    unexpected = 'An unexpected error occured.',
     noSession = 'You are not signed in.',
     noBook = 'No book was found for the given id.',
     noReader = 'No reader was found for the given id.'
