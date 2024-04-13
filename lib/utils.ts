@@ -44,3 +44,32 @@ export function getOrderBy(sorting?: keyof typeof Sorting) {
 
     return orderBy;
 }
+
+export function fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+    });
+}
+
+export function resizeImage(file: File, w: number, h: number): Promise<string | null> {
+    return new Promise(async (resolve) => {
+        const canvas = document.createElement('canvas'),
+            context = canvas.getContext('2d'),
+            image = new Image();
+
+        if (!context || file.type.slice(0, 5) !== 'image') return resolve(null);
+
+        image.src = await fileToBase64(file);
+        canvas.width = w;
+        canvas.height = h;
+
+        image.onload = () => {
+            context.drawImage(image, 0, 0, w, h);
+
+            resolve(canvas.toDataURL('image/jpeg'));
+        }
+    });
+}

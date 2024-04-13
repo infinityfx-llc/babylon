@@ -28,7 +28,7 @@ export class Validate<T extends { [key: string]: any; }> {
     }
 
     in(field: keyof T, map: object) {
-        if (!(field in map)) this.set`${field} is invalid.`;
+        if (!(this.data[field] in map)) this.set`${field} is invalid.`;
 
         return this;
     }

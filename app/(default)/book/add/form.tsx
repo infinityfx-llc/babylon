@@ -3,6 +3,7 @@
 import { ApiBookAdd } from '@/app/api/book/add/route';
 import { source } from '@/lib/request';
 import { Genres, BookTypes, Languages } from '@/lib/types';
+import { resizeImage } from '@/lib/utils';
 import { Validate } from '@/lib/validate';
 import { useForm } from '@infinityfx/control';
 import { DateField, Field, NumberField, Select, Textarea, Button, FileField, Tabs, Tooltip } from '@infinityfx/fluid';
@@ -28,7 +29,7 @@ export default function Form({ authors }: { authors: Author[]; }) {
                     id: '',
                     type: '' as BookType | '',
                     published: undefined as Date | undefined,
-                    coverImage: undefined as File | undefined,
+                    coverImage: '',
                     pages: 0,
                     language: ''
                 }
@@ -40,17 +41,22 @@ export default function Form({ authors }: { authors: Author[]; }) {
                 .req('author')
                 .req('description')
                 .in('genre', Genres)
-                .do('editions', function(editions) {
-                    if (editions.some(edition => !edition.published || !edition.language)) return 'One or more editions are invalid.';
+                .do('editions', function (editions) {
+                    if (editions.some(edition => edition.id.length < 13 ||
+                        !edition.published ||
+                        !edition.language ||
+                        !edition.coverImage ||
+                        !edition.language)) return 'One or more editions are invalid.';
                 }).errors;
         },
         onSubmit: async (values: ApiBookAdd[1]) => {
             const { request } = await source<ApiBookAdd>('/api/book/add', values);
 
             if (!request) {
-
+                alert('Something went wrong, please try again!');
             } else {
                 form.reset();
+                alert('Addition requested!');
             }
         }
     });
@@ -148,7 +154,15 @@ export default function Form({ authors }: { authors: Author[]; }) {
                 <div className={styles.row}>
                     <FileField label="Cover image"
                         accept="image/png, image/jpeg"
-                        onChange={e => setEditionField(i, 'coverImage', e.target.files?.[0])} />
+                        onChange={e => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                                resizeImage(file, 45, 64)
+                                    .then(base64 => setEditionField(i, 'coverImage', base64 || ''));
+                            } else {
+                                setEditionField(i, 'coverImage', '');
+                            }
+                        }} />
                     <NumberField label="Page count"
                         precision={0}
                         value={edition.pages}

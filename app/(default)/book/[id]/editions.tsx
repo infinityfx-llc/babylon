@@ -1,4 +1,4 @@
-import { BookTypes } from '@/lib/types';
+import { BookTypes, Languages } from '@/lib/types';
 import { Badge, Divider, Frame, Pagination } from '@infinityfx/fluid';
 import { BookEdition } from '@prisma/client';
 import Image from 'next/image';
@@ -26,7 +26,7 @@ export default function Editions({ title, editions }: { title: string; editions:
 
                         <div className={styles.info}>
                             Published: {edition.published.toLocaleDateString('en', { dateStyle: 'medium' })} <br />
-                            Language: {edition.language}
+                            Language: {Languages[edition.language]}
                         </div>
                     </Frame>
                 </Link>

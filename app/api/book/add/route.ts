@@ -19,6 +19,7 @@ export type BookAddData = {
         id: string;
         type: BookType;
         published: Date;
+        coverImage: string;
         pages: number;
         language: string;
     }[];

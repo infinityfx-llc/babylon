@@ -15,11 +15,11 @@ export default function AddAuthor({ show, onClose, authors, setAuthors }: {
         initial: {
             firstName: '',
             lastName: '',
-            born: new Date(),
-            died: new Date(),
+            born: undefined as Date | undefined,
+            died: undefined as Date | undefined,
             nationality: ''
         },
-        onSubmit({ firstName, lastName, born, died, nationality }) {
+        onSubmit({ firstName, lastName, born, died, nationality }: any) {
             const { fullName, name } = getAuthorNames({ firstName, lastName });
 
             setAuthors([...authors, {
@@ -31,6 +31,7 @@ export default function AddAuthor({ show, onClose, authors, setAuthors }: {
                 nationality
             }]);
 
+            form.reset();
             onClose();
         }
     });
