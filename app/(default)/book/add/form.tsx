@@ -19,26 +19,26 @@ export default function Form({ authors }: { authors: Author[]; }) {
     const form = useForm({
         initial: {
             title: '',
-            author: { id: '' } as Author,
-            genre: 'biography' as keyof typeof Genres,
+            author: undefined as Author | undefined,
+            genre: undefined as keyof typeof Genres | undefined,
             description: '',
             editions: [
                 {
                     id: '',
-                    type: 'paperback' as BookType,
-                    published: new Date(),
-                    coverImage: undefined,
+                    type: undefined as BookType | undefined,
+                    published: undefined as Date | undefined,
+                    coverImage: undefined as File | undefined,
                     pages: 0,
                     language: ''
                 }
             ]
         },
         onValidate(values) {
-            if (!values.author) return { author: 'Please select an author' };
-
-            return {};
+            if (values.genre === undefined) return { genre: 'Please select a genre' };
+            if (values.author === undefined) return { author: 'Please select an author' };
+            if (values.editions.some(edition => !edition.type || !edition.published)) return { editions: true };
         },
-        async onSubmit(values) {
+        onSubmit: async (values: ApiBookAdd[1]) => {
             const { request } = await source<ApiBookAdd>('/api/book/add', values);
 
             if (!request) {
@@ -78,7 +78,7 @@ export default function Form({ authors }: { authors: Author[]; }) {
             <div className={styles.row}>
                 <Select label="Author"
                     searchable
-                    value={form.values.author.id}
+                    value={form.values.author?.id}
                     onChange={val => form.setValues({ author: authorList.find(author => author.id === val) })}
                     options={authorList.map(author => ({ label: author.name, value: author.id }))} />
 
@@ -93,9 +93,9 @@ export default function Form({ authors }: { authors: Author[]; }) {
         </div>
 
         <Textarea label="Description"
+            rows={5}
             resize="vertical"
-            value={form.values.description}
-            onChange={e => form.setValues({ description: e.target.value })} />
+            {...form.fieldProps('description')} />
 
         <div className={styles.row}>
             <Tabs
@@ -136,7 +136,9 @@ export default function Form({ authors }: { authors: Author[]; }) {
                 </div>
 
                 <div className={styles.row}>
-                    <FileField label="Cover image" accept="image/png, image/jpeg" />
+                    <FileField label="Cover image"
+                        accept="image/png, image/jpeg"
+                        onChange={e => setEditionField(i, 'coverImage', e.target.files?.[0])} />
                     <NumberField label="Page count"
                         precision={0}
                         value={edition.pages}

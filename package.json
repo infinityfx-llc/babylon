@@ -1,5 +1,5 @@
 {
-    "name": "next-fluid-template",
+    "name": "babylon",
     "version": "1.0.0",
     "private": true,
     "scripts": {
@@ -9,8 +9,8 @@
         "lint": "next lint"
     },
     "dependencies": {
-        "@infinityfx/control": "^0.0.6",
-        "@infinityfx/fluid": "^0.1.0-beta.72",
+        "@infinityfx/control": "^0.0.7",
+        "@infinityfx/fluid": "^0.1.0-beta.73",
         "@infinityfx/lively": "^3.5.0",
         "@prisma/client": "^5.12.1",
         "eslint": "^8.50.0",

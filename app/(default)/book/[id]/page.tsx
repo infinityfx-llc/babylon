@@ -9,7 +9,7 @@ import { formatCount } from '@/lib/utils';
 import Related from './related';
 import Link from 'next/link';
 import Editions from './editions';
-import { BookTypes } from '@/lib/types';
+import { BookTypes, Languages } from '@/lib/types';
 import BuyButton from './buy-button';
 import { Metadata } from 'next';
 import { cache } from 'react';
@@ -107,7 +107,7 @@ export default async function Page({ params }: { params: { id: string; }; }) {
                     </Badge>
 
                     Published: {edition.published.toLocaleDateString('en', { dateStyle: 'medium' })} <br />
-                    Language: {edition.language} <br />
+                    Language: {Languages[edition.language as keyof typeof Languages]} <br />
                     Pages: {edition.pages} <br />
                     ISBN: {edition.id}
                 </div>
