@@ -14,9 +14,20 @@
 .row {
     display: flex;
     gap: var(--f-spacing-med);
+    flex-wrap: wrap;
 }
 
 .row > * {
     flex-basis: 0;
+    flex-grow: 1;
+}
+
+.joined {
+    display: flex;
+    gap: var(--f-spacing-med);
+    align-items: flex-end;
+}
+
+.joined > *:first-child {
     flex-grow: 1;
 }

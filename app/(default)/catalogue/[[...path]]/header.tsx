@@ -48,7 +48,7 @@ export default function Header() {
                     data.sorting = val;
                 })} />
 
-            <Button onClick={() => setShow(!show)} size="lrg" variant="light" className={styles.toggle}>
+            <Button onClick={() => setShow(!show)} variant="light" className={styles.toggle}>
                 <IoFilter />
             </Button>
         </div>

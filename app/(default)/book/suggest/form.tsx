@@ -9,14 +9,15 @@ import { Validate } from '@/lib/validate';
 import { useForm } from '@infinityfx/control';
 import { DateField, Field, NumberField, Select, Textarea, Button, FileField, Tabs, Tooltip } from '@infinityfx/fluid';
 import { Author, BookType } from '@prisma/client';
-import { useState, Fragment } from 'react';
-import { IoAdd } from 'react-icons/io5';
+import { useState, Fragment, useRef } from 'react';
+import { IoAdd, IoClipboard } from 'react-icons/io5';
 import AddAuthor from './add-author';
 
 export default function Form({ authors }: { authors: Author[]; }) {
     const [showAuthorModal, toggleAuthorModal] = useState(false);
     const [authorList, setAuthorList] = useState(authors);
     const [editionIndex, setEditionIndex] = useState(0);
+    const fileInput = useRef<HTMLInputElement>(null);
 
     const form = useForm({
         initial: {
@@ -61,6 +62,29 @@ export default function Form({ authors }: { authors: Author[]; }) {
         }
     });
 
+    async function pasteImage() {
+        if (!fileInput.current) return;
+
+        const items = await navigator.clipboard.read();
+
+        for (const item of items) {
+            const type = item.types.find(type => ['image/jpeg', 'image/jpg', 'image/png'].includes(type));
+            if (!type) continue;
+
+            const blob = await item.getType(type);
+            const html = await item.getType('text/html');
+
+            const text = await html.text();
+            const name = text.match(/\/([^\/]+)"/)?.[1] || 'unknown';
+
+            const data = new DataTransfer();
+            data.items.add(new File([blob], name, { type: blob.type }));
+            fileInput.current.files = data.files;
+
+            fileInput.current.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    }
+
     const editions = form.values.editions;
 
     type Edition = (typeof form.values.editions)[number];
@@ -88,7 +112,7 @@ export default function Form({ authors }: { authors: Author[]; }) {
                 value={form.values.genre}
                 onChange={genre => form.setValues({ genre })} />
 
-            <div className={styles.row}>
+            <div className={styles.joined}>
                 <Select label="Author"
                     searchable
                     error={form.touched.author && form.errors.author}
@@ -97,9 +121,7 @@ export default function Form({ authors }: { authors: Author[]; }) {
                     options={authorList.map(author => ({ label: author.name, value: author.id }))} />
 
                 <Tooltip content="Add a new author">
-                    <Button variant="neutral"
-                        style={{ flexGrow: 0, flexBasis: 'auto', alignSelf: 'flex-end' }}
-                        onClick={() => toggleAuthorModal(!showAuthorModal)}>
+                    <Button variant="neutral" onClick={() => toggleAuthorModal(!showAuthorModal)}>
                         <IoAdd />
                     </Button>
                 </Tooltip>
@@ -152,17 +174,27 @@ export default function Form({ authors }: { authors: Author[]; }) {
                 </div>
 
                 <div className={styles.row}>
-                    <FileField label="Cover image"
-                        accept="image/png, image/jpeg"
-                        onChange={e => {
-                            const file = e.target.files?.[0];
-                            if (file) {
-                                resizeImage(file, 45, 64)
-                                    .then(base64 => setEditionField(i, 'cover', base64 || ''));
-                            } else {
-                                setEditionField(i, 'cover', '');
-                            }
-                        }} />
+                    <div className={styles.joined}>
+                        <FileField label="Cover image"
+                            inputRef={fileInput}
+                            accept="image/png, image/jpeg"
+                            onChange={e => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                    resizeImage(file, 45, 64)
+                                        .then(base64 => setEditionField(i, 'cover', base64 || ''));
+                                } else {
+                                    setEditionField(i, 'cover', '');
+                                }
+                            }} />
+
+                        <Tooltip content="Paste from clipboard">
+                            <Button onClick={pasteImage}>
+                                <IoClipboard />
+                            </Button>
+                        </Tooltip>
+                    </div>
+
                     <NumberField label="Page count"
                         precision={0}
                         value={edition.pages}
