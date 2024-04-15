@@ -1,18 +1,18 @@
 import styles from './page.module.css';
 import Link from 'next/link';
-import { IoLink } from 'react-icons/io5';
 import { Button } from '@infinityfx/fluid';
 
 export default function Page() {
 
     return <main className={styles.main}>
         <section className={styles.section}>
-            This demo is brought to you by
+            <p>
+                This is a demo project built on <Link href="https://infinityfx.dev/fluid" className={styles.link}>Fluid UI</Link>.
+            </p>
 
-            <Link href="https://infinityfx.dev" target="_blank">
+            <Link href="https://infinityfx.dev" target="_blank" tabIndex={-1}>
                 <Button variant="minimal">
-                    <IoLink />
-                    InfinityFX
+                    Made by InfinityFX
                 </Button>
             </Link>
         </section>

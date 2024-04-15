@@ -1,0 +1,13 @@
+.main {
+    min-height: 100svh;
+    padding-top: var(--header);
+    padding-inline: var(--space);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    font-size: var(--f-font-size-xxl);
+    font-weight: 800;
+}
