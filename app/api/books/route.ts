@@ -1,6 +1,6 @@
 import { ApiEndpoint, defineEndpoint } from '@/lib/api';
 import { getSession } from '@/lib/session';
-import { Genres, Sorting } from '@/lib/types';
+import { Genres, Languages, Sorting } from '@/lib/types';
 import { getOrderBy } from '@/lib/utils';
 import db from '@/prisma/client';
 
@@ -9,7 +9,9 @@ export type BooksData = {
     query?: string;
     sorting?: keyof typeof Sorting;
     genres?: (keyof typeof Genres)[];
+    languages?: (keyof typeof Languages)[];
     ratings?: number[];
+    timestamps?: (Date | null)[];
 };
 
 export const POST = defineEndpoint(async (data: BooksData) => {
@@ -50,8 +52,19 @@ export const POST = defineEndpoint(async (data: BooksData) => {
                     ] : undefined
                 }
             ],
+            published: data.timestamps?.length ? {
+                gte: data.timestamps[0] || undefined,
+                lte: data.timestamps[1] || undefined
+            } : undefined,
             genreId: data.genres?.length ? {
                 in: data.genres
+            } : undefined,
+            editions: data.languages?.length ? {
+                some: {
+                    language: {
+                        in: data.languages
+                    }
+                }
             } : undefined
         },
         include: {

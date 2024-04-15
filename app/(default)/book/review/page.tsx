@@ -20,13 +20,12 @@ export default async function Page() {
 
     const edition = {
         ...editionData,
-        published: new Date(editionData.published),
         bookId: editionData.id,
         editionOf: {
             id: editionData.id,
             title: request.title,
             description: request.description,
-            published: new Date(editionData.published),
+            published: editionData.published,
             cover: editionData.cover,
             rating: 0,
             authorId: request.author.id,

@@ -1,3 +1,4 @@
+import { parseJson } from '@infinityfx/control';
 import { NextResponse } from 'next/server';
 
 type EndpointResponseType<T extends (args: any) => any> = Awaited<ReturnType<T>> extends NextResponse<infer T> ? T : unknown;
@@ -12,8 +13,8 @@ export function defineEndpoint<K, T extends { [key: string]: any; }>(
     }>) {
 
     return async (request: Request) => {
-        const data = await request.json();
-        const response = await handler(data);
+        const text = await request.text();
+        const response = await handler(parseJson(text));
 
         return NextResponse.json(response);
     };

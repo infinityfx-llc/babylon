@@ -18,7 +18,7 @@ export default function Review({ review }: { review: Review & { reader: Reader; 
                 </Link>
 
                 <div className={styles.date}>
-                    {new Date(review.timestamp).toLocaleDateString('en', { dateStyle: 'long' })}
+                    {review.timestamp.toLocaleDateString('en', { dateStyle: 'long' })}
                 </div>
             </div>
 

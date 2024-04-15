@@ -35,8 +35,8 @@ export default function Filters() {
 
         <Accordion.Item label="Release date">
             <div className={styles.row}>
-                <DateField label="From" />
-                <DateField label="To" />
+                <DateField label="From" value={data.timestamps[0]} onChange={date => mutate(data => data.timestamps[0] = date)} />
+                <DateField label="To" value={data.timestamps[1]} onChange={date => mutate(data => data.timestamps[1] = date)} />
             </div>
         </Accordion.Item>
 
@@ -44,6 +44,8 @@ export default function Filters() {
             <Select
                 searchable
                 multiple
+                value={data.languages}
+                onChange={langs => mutate(data => data.languages = langs)}
                 options={Object.entries(Languages).map(([value, label]) => ({ value, label }))} />
         </Accordion.Item>
     </Accordion.Root>;

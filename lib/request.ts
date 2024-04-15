@@ -1,3 +1,4 @@
+import { parseJson } from '@infinityfx/control';
 import { ApiEndpoint } from './api';
 
 export async function source<T extends ApiEndpoint<any, any, any>>(url: T[0], data: T[1]): Promise<T[2]> {
@@ -9,5 +10,6 @@ export async function source<T extends ApiEndpoint<any, any, any>>(url: T[0], da
         body: JSON.stringify(data)
     });
 
-    return await res.json();
+    const text = await res.text();
+    return parseJson(text);
 }

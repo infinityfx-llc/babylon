@@ -17,7 +17,7 @@ export default function Form({ authors }: { authors: Author[]; }) {
     const [showAuthorModal, toggleAuthorModal] = useState(false);
     const [authorList, setAuthorList] = useState(authors);
     const [editionIndex, setEditionIndex] = useState(0);
-    const fileInput = useRef<HTMLInputElement>(null);
+    const fileInput = useRef<(HTMLInputElement | null)[]>([]);
 
     const form = useForm({
         initial: {
@@ -62,8 +62,9 @@ export default function Form({ authors }: { authors: Author[]; }) {
         }
     });
 
-    async function pasteImage() {
-        if (!fileInput.current) return;
+    async function pasteImage(index: number) {
+        const input = fileInput.current[index];
+        if (!input) return;
 
         const items = await navigator.clipboard.read();
 
@@ -79,9 +80,9 @@ export default function Form({ authors }: { authors: Author[]; }) {
 
             const data = new DataTransfer();
             data.items.add(new File([blob], name, { type: blob.type }));
-            fileInput.current.files = data.files;
+            input.files = data.files;
 
-            fileInput.current.dispatchEvent(new Event('change', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
         }
     }
 
@@ -176,7 +177,7 @@ export default function Form({ authors }: { authors: Author[]; }) {
                 <div className={styles.row}>
                     <div className={styles.joined}>
                         <FileField label="Cover image"
-                            inputRef={fileInput}
+                            inputRef={el => { fileInput.current[i] = el }}
                             accept="image/png, image/jpeg"
                             onChange={e => {
                                 const file = e.target.files?.[0];
@@ -189,7 +190,7 @@ export default function Form({ authors }: { authors: Author[]; }) {
                             }} />
 
                         <Tooltip content="Paste from clipboard">
-                            <Button onClick={pasteImage}>
+                            <Button onClick={() => pasteImage(i)}>
                                 <IoClipboard />
                             </Button>
                         </Tooltip>

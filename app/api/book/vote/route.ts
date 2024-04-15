@@ -52,17 +52,13 @@ export const POST = defineEndpoint(async (data: BookVoteData) => {
         },
         update: {},
         create: {
-            id: authorId,
-            name: author.name,
-            fullName: author.fullName,
-            born: new Date(author.born),
-            died: author.died ? new Date(author.died) : null,
-            nationality: author.nationality
+            ...author,
+            id: authorId
         }
     });
 
     const sortedEditions = editions
-        .map(edition => ({ ...edition, published: new Date(edition.published) }))
+        .map(edition => ({ ...edition, published: edition.published }))
         .sort((a, b) => a.published.getTime() - b.published.getTime());
 
     try {
