@@ -15,8 +15,8 @@ export default function AddAuthor({ show, onClose, authors, setAuthors }: {
         initial: {
             firstName: '',
             lastName: '',
-            born: undefined as Date | undefined,
-            died: undefined as Date | undefined,
+            born: null as Date | null,
+            died: null as Date | null,
             nationality: ''
         },
         onSubmit({ firstName, lastName, born, died, nationality }: any) {
@@ -41,7 +41,10 @@ export default function AddAuthor({ show, onClose, authors, setAuthors }: {
             <Field label="First name" required {...form.fieldProps('firstName')} />
             <Field label="Last name" required {...form.fieldProps('lastName')} />
             <DateField label="Date of birth" required value={form.values.born} onChange={born => form.setValues({ born })} />
-            <DateField label="Date of death" value={form.values.died} onChange={died => form.setValues({ died })} />
+            <DateField label="Date of death"
+                clearable
+                value={form.values.died}
+                onChange={died => form.setValues({ died })} />
             <Field label="nationality" required {...form.fieldProps('nationality')} />
 
             <Button loading={form.submitting} onClick={() => form.submit()}>

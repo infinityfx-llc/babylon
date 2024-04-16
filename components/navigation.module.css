@@ -1,0 +1,14 @@
+.menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: .4em;
+}
+
+.heading {
+    grid-column: span 3;
+    padding: .4rem;
+    padding-bottom: 0;
+    font-weight: 700;
+    color: var(--f-clr-grey-500);
+    font-size: var(--f-font-size-xsm);
+}

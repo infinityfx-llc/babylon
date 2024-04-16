@@ -35,8 +35,14 @@ export default function Filters() {
 
         <Accordion.Item label="Release date">
             <div className={styles.row}>
-                <DateField label="From" value={data.timestamps[0] || undefined} onChange={date => mutate(data => data.timestamps[0] = date)} />
-                <DateField label="To" value={data.timestamps[1] || undefined} onChange={date => mutate(data => data.timestamps[1] = date)} />
+                <DateField label="From"
+                    clearable
+                    value={data.timestamps[0]}
+                    onChange={date => mutate(data => data.timestamps[0] = date)} />
+                <DateField label="To"
+                    clearable
+                    value={data.timestamps[1]}
+                    onChange={date => mutate(data => data.timestamps[1] = date)} />
             </div>
         </Accordion.Item>
 

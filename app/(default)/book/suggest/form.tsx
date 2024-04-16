@@ -29,7 +29,7 @@ export default function Form({ authors }: { authors: Author[]; }) {
                 {
                     id: '',
                     type: '' as BookType | '',
-                    published: undefined as Date | undefined,
+                    published: null as Date | null,
                     cover: '',
                     pages: 0,
                     language: ''
