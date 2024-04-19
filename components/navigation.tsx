@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export default function Navigation() {
 
-    return <NavigationMenu.Root>
+    return <NavigationMenu.Root className={styles.navigation}>
         <NavigationMenu.Group label="Home" href="/" Link={Link} />
 
         <NavigationMenu.Group label="Catalogue" href="/catalogue" Link={Link} className={styles.menu}>

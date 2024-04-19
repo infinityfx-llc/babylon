@@ -9,6 +9,12 @@
     flex-grow: 1;
 }
 
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--f-spacing-sml);
+}
+
 .list {
     display: flex;
     flex-direction: column;

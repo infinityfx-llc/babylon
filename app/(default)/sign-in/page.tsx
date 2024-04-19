@@ -1,10 +1,15 @@
 import { getSession } from '@/lib/session';
 import { Button, Divider } from '@infinityfx/fluid';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { IoLogoFacebook, IoLogoGoogle } from 'react-icons/io';
 import Form from './form';
 import styles from './page.module.css';
+
+export const metadata: Metadata = {
+    title: 'Sign in'
+};
 
 export default function Page() {
     const { user } = getSession();

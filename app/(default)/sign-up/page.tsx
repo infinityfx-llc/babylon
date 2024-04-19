@@ -1,6 +1,11 @@
 import { Field, PasswordField, Button } from '@infinityfx/fluid';
+import { Metadata } from 'next';
 import { IoMail, IoLockClosed, IoPerson, IoPeople } from 'react-icons/io5';
 import styles from './page.module.css';
+
+export const metadata: Metadata = {
+    title: 'Sign up'
+};
 
 export default function Page() {
 

@@ -1,6 +1,11 @@
 import styles from './page.module.css';
 import Link from 'next/link';
 import { Button } from '@infinityfx/fluid';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'About'
+};
 
 export default function Page() {
 

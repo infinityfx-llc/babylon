@@ -1,6 +1,11 @@
 import { Button, Field } from '@infinityfx/fluid';
+import { Metadata } from 'next';
 import { IoMail } from 'react-icons/io5';
 import styles from './page.module.css';
+
+export const metadata: Metadata = {
+    title: 'Forgot password'
+};
 
 export default function Page() {
 

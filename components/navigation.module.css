@@ -12,3 +12,9 @@
     color: var(--f-clr-grey-500);
     font-size: var(--f-font-size-xsm);
 }
+
+@media (max-width: 768px) {
+    .navigation {
+        display: none !important;
+    }
+}

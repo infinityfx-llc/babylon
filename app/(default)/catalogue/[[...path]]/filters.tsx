@@ -34,7 +34,7 @@ export default function Filters() {
         </Accordion.Item>
 
         <Accordion.Item label="Release date">
-            <div className={styles.row}>
+            <div className={styles.column}>
                 <DateField label="From"
                     clearable
                     value={data.timestamps[0]}
