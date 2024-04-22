@@ -1,12 +1,15 @@
 import { ApiBookReview } from '@/app/api/book/review/route';
+import { useToast } from '@/context/toast';
 import { source } from '@/lib/request';
 import { useForm } from '@infinityfx/control';
 import { Textarea, Button, NumberField } from '@infinityfx/fluid';
 import { useRouter } from 'next/navigation';
+import { IoAlert } from 'react-icons/io5';
 import styles from './write-review.module.css';
 
 export default function WriteReview({ bookId, mutate }: { bookId: string; mutate: () => void; }) {
     const router = useRouter();
+    const notify = useToast();
 
     const form = useForm({
         initial: {
@@ -19,7 +22,11 @@ export default function WriteReview({ bookId, mutate }: { bookId: string; mutate
             if (errors) {
                 form.setErrors(errors);
 
-                if (errors.generic) alert(errors.generic); // TEMP
+                if (errors.generic) notify({
+                    title: errors.generic,
+                    color: 'red',
+                    icon: <IoAlert />
+                });
             } else {
                 mutate();
                 router.refresh();

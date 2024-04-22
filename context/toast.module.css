@@ -1,0 +1,9 @@
+.toasts {
+    position: fixed;
+    z-index: 999;
+    bottom: var(--f-spacing-med);
+    right: var(--f-spacing-med);
+    display: flex;
+    flex-direction: column;
+    gap: var(--f-spacing-sml);
+}

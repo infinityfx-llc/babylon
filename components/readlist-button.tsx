@@ -1,13 +1,15 @@
 'use client';
 
 import { ApiReadlist } from "@/app/api/readlist/route";
+import { useToast } from "@/context/toast";
 import { source } from "@/lib/request";
 import { Button, Tooltip } from "@infinityfx/fluid";
 import { useState } from "react";
-import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
+import { IoAlert, IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 
 export default function ReadlistButton({ bookId, defaultRead }: { bookId: string; defaultRead: boolean; }) {
     const [bookmarked, setBookmarked] = useState(defaultRead);
+    const notify = useToast();
 
     async function toggleRead() {
         setBookmarked(!bookmarked);
@@ -17,7 +19,11 @@ export default function ReadlistButton({ bookId, defaultRead }: { bookId: string
         if (errors) {
             setBookmarked(false);
             
-            if (errors.generic) alert(errors.generic);
+            if (errors.generic) notify({
+                title: errors.generic,
+                color: 'red',
+                icon: <IoAlert />
+            });
         } else {
             setBookmarked(read);
         }

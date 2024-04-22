@@ -10,14 +10,16 @@ import { useForm } from '@infinityfx/control';
 import { DateField, Field, NumberField, Select, Textarea, Button, FileField, Tabs, Tooltip } from '@infinityfx/fluid';
 import { Author, BookType } from '@prisma/client';
 import { useState, Fragment, useRef } from 'react';
-import { IoAdd, IoClipboard } from 'react-icons/io5';
+import { IoAdd, IoAlert, IoCheckmark, IoClipboard } from 'react-icons/io5';
 import AddAuthor from './add-author';
+import { useToast } from '@/context/toast';
 
 export default function Form({ authors }: { authors: Author[]; }) {
     const [showAuthorModal, toggleAuthorModal] = useState(false);
     const [authorList, setAuthorList] = useState(authors);
     const [editionIndex, setEditionIndex] = useState(0);
     const fileInput = useRef<(HTMLInputElement | null)[]>([]);
+    const notify = useToast();
 
     const form = useForm({
         initial: {
@@ -54,10 +56,19 @@ export default function Form({ authors }: { authors: Author[]; }) {
             const { suggestion } = await source<ApiBookSuggest>('/api/book/suggest', values);
 
             if (!suggestion) {
-                alert('Something went wrong, please try again!');
+                notify({
+                    title: 'Something went wrong, please try again.',
+                    color: 'red',
+                    icon: <IoAlert />
+                });
             } else {
                 form.reset();
-                alert('Addition requested!');
+
+                notify({
+                    title: 'Suggestion sent!',
+                    color: 'var(--f-clr-primary-100)',
+                    icon: <IoCheckmark />
+                });
             }
         }
     });
