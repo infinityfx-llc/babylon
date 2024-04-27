@@ -12,6 +12,7 @@ import Related from "./related";
 import Reviews from "./reviews";
 import ReviewButton from './review-button';
 import ReadlistButton from '@/components/readlist-button';
+import ShareButton from './share-button';
 
 export default function BookOverview({ edition, review }: {
     edition: BookEdition & {
@@ -64,9 +65,7 @@ export default function BookOverview({ edition, review }: {
                 <div className={styles.horizontal}>
                     <ReadlistButton defaultRead={!!book.readers?.length} bookId={book.id} />
 
-                    <Button round size="lrg" variant="minimal">
-                        <IoShareSocial />
-                    </Button>
+                    <ShareButton title={book.title} />
 
                     <ReviewButton id={review} />
                 </div>

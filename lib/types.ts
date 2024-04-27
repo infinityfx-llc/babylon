@@ -44,7 +44,8 @@ export enum ApiErrors {
     unexpected = 'An unexpected error occured.',
     noSession = 'You are not signed in.',
     noBook = 'No book was found for the given id.',
-    noReader = 'No reader was found for the given id.'
+    noReader = 'No reader was found for the given id.',
+    unauthorized = 'You are not authorized.'
 }
 
 export const Languages = {

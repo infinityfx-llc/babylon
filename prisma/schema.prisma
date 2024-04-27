@@ -28,6 +28,7 @@ model Reader {
     readBooks    Book[]
     friends      Reader[] @relation("friends")
     friendOf     Reader[] @relation("friends")
+    admin        Boolean  @default(false)
 }
 
 model Genre {

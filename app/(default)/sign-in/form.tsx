@@ -28,7 +28,7 @@ export default function Form() {
 
     return <>
         <Field type="email" label="Email" icon={<IoMail />} {...form.fieldProps('email')} />
-        <PasswordField label="Password" icon={<IoLockClosed />} {...form.fieldProps('password')} />
+        <PasswordField label="Password" icon={<IoLockClosed />} {...form.fieldProps('password')} onEnter={form.submit} />
 
         <Button loading={form.submitting} onClick={() => form.submit()}>
             Sign in

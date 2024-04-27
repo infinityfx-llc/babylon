@@ -2,22 +2,26 @@
 
 import { ApiSignOut } from "@/app/api/sign-out/route";
 import { source } from "@/lib/request";
-import { ActionMenu } from "@infinityfx/fluid";
+import { ActionMenu, Divider } from "@infinityfx/fluid";
 import { useRouter } from "next/navigation";
 
 export default function AccountMenu({ children, name }: { children: React.ReactElement; name: string; }) {
     const router = useRouter();
 
-    return <ActionMenu options={[
-        { type: 'option', label: name, onClick: () => router.push('/profile') },
-        { type: 'divider' },
-        {
-            type: 'option', label: 'Sign out', onClick: async () => {
+    return <ActionMenu.Root>
+        <ActionMenu.Trigger>
+            {children}
+        </ActionMenu.Trigger>
+
+        <ActionMenu.Menu>
+            <ActionMenu.Item onClick={() => router.push('/profile')}>{name}</ActionMenu.Item>
+            <Divider size="xsm" />
+            <ActionMenu.Item onClick={async () => {
                 await source<ApiSignOut>('/api/sign-out', {});
                 router.refresh();
-            }
-        }
-    ]}>
-        {children}
-    </ActionMenu>;
+            }}>
+                Sign out
+            </ActionMenu.Item>
+        </ActionMenu.Menu>
+    </ActionMenu.Root>;
 }

@@ -13,10 +13,10 @@ export type BookVoteData = {
 export const POST = defineEndpoint(async (data: BookVoteData) => {
     const { user } = getSession();
 
-    if (!user) return {
+    if (!user?.admin) return {
         book: undefined,
         errors: {
-            generic: ApiErrors.noSession
+            generic: ApiErrors.unauthorized
         }
     };
 

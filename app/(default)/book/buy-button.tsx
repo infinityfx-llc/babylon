@@ -5,15 +5,17 @@ import { IoLink } from "react-icons/io5";
 
 export default function BuyButton({ editionId }: { editionId: string; }) {
 
-    return <ActionMenu stretch options={[
-        {
-            type: 'option',
-            label: <><IoLink /> Amazon</>,
-            onClick: () => window.open(`https://www.amazon.com/s?k=${editionId}`, '_blank')
-        }
-    ]}>
-        <Button>
-            Where to buy
-        </Button>
-    </ActionMenu>;
+    return <ActionMenu.Root stretch>
+        <ActionMenu.Trigger>
+            <Button>
+                Where to buy
+            </Button>
+        </ActionMenu.Trigger>
+
+        <ActionMenu.Menu>
+            <ActionMenu.Item onClick={() => window.open(`https://www.amazon.com/s?k=${editionId}`, '_blank')}>
+                <IoLink /> Amazon
+            </ActionMenu.Item>
+        </ActionMenu.Menu>
+    </ActionMenu.Root>;
 }

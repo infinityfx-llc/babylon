@@ -13,7 +13,7 @@ export default async function Page() {
 
     const book = await db.bookRequest.findFirst();
 
-    if (!book) return notFound();
+    if (!book || !user.admin) return notFound();
     
     const request = book.data as any as ApiBookSuggest[1];
     const editionData = request.editions[0];

@@ -1,5 +1,6 @@
 import { ApiEndpoint, defineEndpoint } from '@/lib/api';
 import db from '@/prisma/client';
+import bcrypt from 'bcrypt';
 import { cookies } from 'next/headers';
 
 type SignInData = {
@@ -8,13 +9,13 @@ type SignInData = {
 };
 
 export const POST = defineEndpoint(async (data: SignInData)  => {
-    const user = await db.reader.findUnique({
+    const { passwordHash, ...user } = (await db.reader.findUnique({
         where: {
             email: data.email
         }
-    });
+    })) || {};
 
-    if (!user || user.passwordHash !== data.password) return {
+    if (!passwordHash || !bcrypt.compareSync(data.password, passwordHash)) return {
         user: undefined,
         errors: {
             email: 'Email or password is incorrect.',

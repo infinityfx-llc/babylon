@@ -5,6 +5,6 @@ export function getSession() {
     const session = cookies().get('session')?.value;
 
     return {
-        user: session ? JSON.parse(session) as Reader : null
+        user: session ? JSON.parse(session) as Omit<Reader, 'passwordHash'> : null
     };
 }
