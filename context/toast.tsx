@@ -31,7 +31,6 @@ export function ToastProvider({ children }: { children: React.ReactNode; }) {
 
         setTimeout(() => {
             const i = toasts.current.findIndex(toast => toast.timestamp === options.timestamp);
-            console.log(i);
 
             if (i >= 0) {
                 toasts.current.splice(i, 1);
