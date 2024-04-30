@@ -30,6 +30,7 @@ export default function Results() {
             completions={completions?.suggestions.map(suggestion => suggestion.title) || []}
             placeholder="Title, Author, etc.."
             size="lrg"
+            contentSize="lrg"
             icon={<IoSearch />}
             value={query}
             onChange={e => setQuery(e.target.value)} />
