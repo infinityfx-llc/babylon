@@ -18,7 +18,12 @@ export default function BookResult({ book }: { book: BaseBook; }) {
         </Link>
 
         <div className={styles.row}>
-            <Badge color="var(--f-clr-fg-200)">{book.genre.name}</Badge>
+            <div className={styles.genres}>
+                {book.genres.slice(0, 2).map((genre, i) => (
+                    <Badge key={i} color="var(--f-clr-fg-200)">{genre.name}</Badge>
+                ))}
+            </div>
+
             <span className={styles.rating}>
                 <IoStar /> {book.rating.toFixed(1)}
             </span>
@@ -27,7 +32,7 @@ export default function BookResult({ book }: { book: BaseBook; }) {
         <div className={styles.row} style={{ marginTop: 'auto' }}>
             <div>
                 <div className={styles.title}>{book.title}</div>
-                <div className={styles.author}>By {book.author.name}</div>
+                <div className={styles.author}>By {book.authors[0].name}</div>
             </div>
 
             <ReadlistButton defaultRead={!!book.readers?.length} bookId={book.id} />

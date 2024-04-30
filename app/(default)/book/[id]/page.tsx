@@ -16,8 +16,8 @@ const getBookEdition = cache(async (id: string) => {
         include: {
             editionOf: {
                 include: {
-                    author: true,
-                    genre: true,
+                    authors: true,
+                    genres: true,
                     _count: true,
                     editions: true,
                     readers: user ? {

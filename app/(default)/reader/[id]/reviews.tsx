@@ -7,7 +7,7 @@ export default async function Reviews() {
         include: {
             book: {
                 include: {
-                    author: true
+                    authors: true
                 }
             }
         }

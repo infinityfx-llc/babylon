@@ -4,6 +4,9 @@ const countFormatter = new Intl.NumberFormat('en', { notation: 'compact' });
 
 export const formatCount = (val: any) => countFormatter.format(typeof val === 'number' ? val : 0);
 
+/**
+ * Get a unique decimal encoded id for an author based on their full name, date of birth and nationality.
+ */
 export function getAuthorId(author: {
     fullName: string;
     born: string | Date;
@@ -29,7 +32,9 @@ export function getOrderBy(sorting?: keyof typeof Sorting) {
     let orderBy: {
         rating?: 'asc' | 'desc';
         published?: 'asc' | 'desc';
-    } = { rating: 'desc' };
+    } = {
+        rating: 'desc'
+    };
 
     switch (sorting) {
         case 'latest': orderBy = { published: 'desc' };

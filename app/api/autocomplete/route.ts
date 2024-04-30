@@ -5,6 +5,9 @@ type AutocompleteData = {
     query: string;
 };
 
+/**
+ * Autocomplete a search query based on matching book titles.
+ */
 export const POST = defineEndpoint(async (data: AutocompleteData) => {
     const suggestions = await db.book.findMany({
         where: {

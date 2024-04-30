@@ -70,7 +70,7 @@ export const POST = defineEndpoint(async (data: BookVoteData) => {
                     description,
                     published: editions[0].published,
                     cover: editions[0].cover,
-                    genre: {
+                    genres: {
                         connectOrCreate: {
                             where: {
                                 id: genre
@@ -81,7 +81,7 @@ export const POST = defineEndpoint(async (data: BookVoteData) => {
                             }
                         }
                     },
-                    author: {
+                    authors: {
                         connect: { id: authorId }
                     },
                     editions: {

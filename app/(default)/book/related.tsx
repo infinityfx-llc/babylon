@@ -14,8 +14,8 @@ export default async function Related({ bookId }: { bookId: string; }) {
             }
         },
         include: {
-            author: true,
-            genre: true,
+            authors: true,
+            genres: true,
             readers: user ? {
                 where: {
                     id: user.id

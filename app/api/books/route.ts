@@ -14,6 +14,9 @@ export type BooksData = {
     timestamps?: (Date | null)[];
 };
 
+/**
+ * Retrieve all books matching some set of filters.
+ */
 export const POST = defineEndpoint(async (data: BooksData) => {
     const { user } = getSession();
 
@@ -29,10 +32,12 @@ export const POST = defineEndpoint(async (data: BooksData) => {
                             }
                         },
                         {
-                            author: {
-                                fullName: {
-                                    contains: data.query,
-                                    mode: 'insensitive' as const
+                            authors: {
+                                some: {
+                                    fullName: {
+                                        contains: data.query,
+                                        mode: 'insensitive' as const
+                                    }
                                 }
                             }
                         }
@@ -56,8 +61,12 @@ export const POST = defineEndpoint(async (data: BooksData) => {
                 gte: data.timestamps[0] || undefined,
                 lte: data.timestamps[1] || undefined
             } : undefined,
-            genreId: data.genres?.length ? {
-                in: data.genres
+            genres: data.genres?.length ? {
+                some: {
+                    id: {
+                        in: data.genres
+                    }
+                }
             } : undefined,
             editions: data.languages?.length ? {
                 some: {
@@ -68,8 +77,8 @@ export const POST = defineEndpoint(async (data: BooksData) => {
             } : undefined
         },
         include: {
-            author: true,
-            genre: true,
+            authors: true,
+            genres: true,
             readers: user ? {
                 where: {
                     id: user.id

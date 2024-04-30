@@ -6,6 +6,9 @@ export type ReviewsData = {
     ratings?: number[];
 };
 
+/**
+ * Retrieve a list of reviews for a given book.
+ */
 export const POST = defineEndpoint(async (data: ReviewsData) => {
     const reviews = await db.review.findMany({
         where: {

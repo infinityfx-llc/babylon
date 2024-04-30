@@ -33,8 +33,8 @@ export const BookTypes = {
 } as const;
 
 export type BaseBook = Book & {
-    genre: Genre;
-    author: Author;
+    genres: Genre[];
+    authors: Author[];
     readers: {
         id: string;
     }[];

@@ -60,10 +60,8 @@ model Book {
     description String        @db.Text
     published   DateTime
     cover       String        @default("") @db.Text
-    authorId    String
-    author      Author        @relation(fields: [authorId], references: [id])
-    genreId     String
-    genre       Genre         @relation(fields: [genreId], references: [id])
+    authors     Author[]
+    genres      Genre[]
     rating      Float         @default(0)
     reviews     Review[]
     readers     Reader[]

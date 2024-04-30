@@ -29,12 +29,12 @@ export default async function Page() {
             cover: editionData.cover,
             rating: 0,
             authorId: request.author.id,
-            author: request.author,
+            authors: [request.author],
             genreId: request.genre,
-            genre: {
+            genres: [{
                 id: request.genre,
                 name: Genres[request.genre]
-            },
+            }],
             editions: request.editions.map(data => ({
                 ...data,
                 bookId: editionData.id

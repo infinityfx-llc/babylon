@@ -5,7 +5,7 @@ import { Badge, Button, Divider, Frame } from "@infinityfx/fluid";
 import { Author, Book, BookEdition, Genre, Reader } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-import { IoShareSocial, IoStar } from "react-icons/io5";
+import { IoStar } from "react-icons/io5";
 import BuyButton from "./buy-button";
 import Editions from "./editions";
 import Related from "./related";
@@ -17,8 +17,8 @@ import ShareButton from './share-button';
 export default function BookOverview({ edition, review }: {
     edition: BookEdition & {
         editionOf: Book & {
-            genre: Genre;
-            author: Author;
+            genres: Genre[];
+            authors: Author[];
             readers?: { id: string }[];
             editions: BookEdition[];
             _count: {
@@ -50,13 +50,17 @@ export default function BookOverview({ edition, review }: {
 
             <section className={styles.header}>
                 <div className={styles.vertical}>
-                    <Badge color="var(--f-clr-fg-200)">{book.genre.name}</Badge>
+                    <div className={styles.genres}>
+                        {book.genres.map((genre, i) => (
+                            <Badge key={i} color="var(--f-clr-fg-200)">{genre.name}</Badge>
+                        ))}
+                    </div>
                     <h1 className={styles.title}>{book.title}</h1>
 
                     <h2>
-                        <Link href={`/catalogue/search/${book.author.fullName}`}>
+                        <Link href={`/catalogue/search/${book.authors[0].fullName}`}>
                             <Button variant="minimal" size="lrg">
-                                {book.author.name}
+                                {book.authors[0].name}
                             </Button>
                         </Link>
                     </h2>

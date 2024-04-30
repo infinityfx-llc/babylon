@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { IoStar } from 'react-icons/io5';
 import styles from './review.module.css';
 
-export default function Review({ review }: { review: Review & { book: Book & { author: Author; }; } }) {
+export default function Review({ review }: { review: Review & { book: Book & { authors: Author[]; }; } }) {
 
     return <div className={styles.review}>
         <Frame className={styles.cover}>
@@ -16,7 +16,7 @@ export default function Review({ review }: { review: Review & { book: Book & { a
             <div className={styles.row}>
                 <Link href={`/book/${review.book.id}`} tabIndex={-1}>
                     <Button variant="minimal">
-                        {review.book.title} by {review.book.author.name}
+                        {review.book.title} by {review.book.authors[0].name}
                     </Button>
                 </Link>
 

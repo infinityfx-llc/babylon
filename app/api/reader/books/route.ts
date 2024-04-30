@@ -11,6 +11,9 @@ export type ReaderBooksData = {
     limit?: number;
 };
 
+/**
+ * Retrieve a readers read books.
+ */
 export const POST = defineEndpoint(async (data: ReaderBooksData) => {
     const { user } = getSession();
 
@@ -22,8 +25,8 @@ export const POST = defineEndpoint(async (data: ReaderBooksData) => {
             _count: true,
             readBooks: {
                 include: {
-                    author: true,
-                    genre: true,
+                    authors: true,
+                    genres: true,
                     readers: user ? {
                         where: {
                             id: user.id

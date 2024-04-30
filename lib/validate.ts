@@ -13,6 +13,11 @@ export class Validate<T extends { [key: string]: any; }> {
         return this;
     }
 
+    /**
+     * Convert kebab-case and camelCase to a capitalized space-seperated string.
+     * @example
+     * this.fieldName("my-field-name") // -> "My Field Name"
+     */
     private fieldName(field: string | number | symbol) {
         return field.toString()
             .replace(/([a-z])(?:(?:\-([a-z]))|([A-Z]))/g, '$1 $2')

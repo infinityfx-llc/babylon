@@ -8,6 +8,9 @@ type SignInData = {
     password: string;
 };
 
+/**
+ * Sign in a user based on their email and password.
+ */
 export const POST = defineEndpoint(async (data: SignInData)  => {
     const { passwordHash, ...user } = (await db.reader.findUnique({
         where: {
