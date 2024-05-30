@@ -9,7 +9,7 @@ export default function Review({ review }: { review: Review & { book: Book & { a
 
     return <div className={styles.review}>
         <Frame className={styles.cover}>
-            <Image src={`/images/${review.book.id}.jpg`} fill alt={review.book.title} />
+            <Image src={review.book.cover} fill alt={review.book.title} />
         </Frame>
 
         <div className={styles.body}>
