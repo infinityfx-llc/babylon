@@ -1,14 +1,15 @@
 'use client';
 
+import styles from './recommendations.module.css';
 import { Genres } from '@/lib/types';
 import { Pagination, Select } from '@infinityfx/fluid';
-import styles from './recommendations.module.css';
 import useSWR from 'swr';
 import { source } from '@/lib/request';
 import BookResult from './book-result';
 import { useState } from 'react';
 import { ApiRecommendations } from '@/app/api/recommendations/route';
 import LoadingBooks from './loading-books';
+import EmptyResult from './empty-result';
 
 export default function Recommendations() {
     const [genre, setGenre] = useState<'all' | keyof typeof Genres>('all');
@@ -27,6 +28,10 @@ export default function Recommendations() {
 
         <div className={styles.list}>
             {isLoading && <LoadingBooks count={5} />}
+
+            {!isLoading && !data?.books.length && <EmptyResult>
+                You have no matching recommendations
+            </EmptyResult>}
 
             {data?.books.map(book => <BookResult key={book.id} book={book} />)}
         </div>

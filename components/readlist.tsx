@@ -9,6 +9,7 @@ import { useState } from 'react';
 import styles from './readlist.module.css';
 import { Sorting } from '@/lib/types';
 import LoadingBooks from './loading-books';
+import EmptyResult from './empty-result';
 
 export default function Readlist({ readerId }: { readerId: string; }) {
     const [sorting, setSorting] = useState<keyof typeof Sorting>('latest');
@@ -38,9 +39,9 @@ export default function Readlist({ readerId }: { readerId: string; }) {
 
             {data?.books?.map(book => <BookResult key={book.id} book={book} />)}
 
-            {!isLoading && !data?.books?.length && <div className={styles.message}>
+            {!isLoading && !data?.books?.length && <EmptyResult>
                 This person hasn&apos;t read any books yet.
-            </div>}
+            </EmptyResult>}
         </div>
 
         <Pagination

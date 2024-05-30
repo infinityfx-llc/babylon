@@ -12,7 +12,7 @@ export default function Navigation() {
         <NavigationMenu.Group label="Catalogue" href="/catalogue" Link={Link} className={styles.menu}>
             <div className={styles.heading}>Genres</div>
 
-            <Animatable inherit animate={{ scale: [0.8, 1], opacity: [0, 1], duration: .35, delay: .35 }}>
+            <Animatable inherit animate={{ scale: [0.8, 1], opacity: [0, 1], duration: .35 }}>
                 {Object.entries(Genres).map(([value, name]) => {
 
                     return <NavigationMenu.Link key={value} href={`/catalogue/genre/${value}`} Link={Link}>

@@ -13,6 +13,7 @@ import { useDebounce } from '@infinityfx/control';
 import { ApiAutocomplete } from '../api/autocomplete/route';
 import { formatCount } from '@/lib/utils';
 import LoadingBooks from '@/components/loading-books';
+import EmptyResult from '@/components/empty-result';
 
 export default function Results() {
     const [query, setQuery] = useState('');
@@ -40,6 +41,10 @@ export default function Results() {
 
             <div className={styles.list}>
                 {isLoading && <LoadingBooks count={5} />}
+
+                {!isLoading && !data?.books?.length && <EmptyResult>
+                    No matching results found
+                </EmptyResult>}
 
                 {data?.books?.map((book, i) => <BookResult key={i} book={book} />)}
             </div>

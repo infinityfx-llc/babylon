@@ -23,10 +23,10 @@ export default function Menu() {
                 
             <nav className={styles.links}>
                 <Link href="/">
-                    <Sidebar.Link label="Home" />
+                    <Sidebar.Item label="Home" />
                 </Link>
                 <Link href="/catalogue">
-                    <Sidebar.Link label="Catalogue" />
+                    <Sidebar.Item label="Catalogue" />
                 </Link>
             </nav>
         </Drawer>

@@ -26,8 +26,15 @@
     display: flex;
     gap: var(--f-spacing-med);
     align-items: flex-end;
+    flex-shrink: 0;
+    min-width: 320px;
 }
 
 .joined > *:first-child {
     flex-grow: 1;
+}
+
+.joined > *:last-child {
+    position: relative;
+    margin-bottom: 2px;
 }

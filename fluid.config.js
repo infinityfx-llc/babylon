@@ -17,5 +17,10 @@ module.exports = {
                 accent: ['#ffffff']
             }
         }
-    }
+    },
+    paths: [
+        './app/**/*.{jsx,tsx}',
+        './components/**/*.{jsx,tsx}',
+        './context/**/*.{jsx,tsx}'
+    ]
 }
