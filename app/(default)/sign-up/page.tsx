@@ -1,4 +1,4 @@
-import { Field, PasswordField, Button } from '@infinityfx/fluid';
+import { Field, PasswordField, Button, Annotation } from '@infinityfx/fluid';
 import { Metadata } from 'next';
 import { IoMail, IoLockClosed, IoPerson, IoPeople } from 'react-icons/io5';
 import styles from './page.module.css';
@@ -14,12 +14,22 @@ export default function Page() {
             <h1 className={styles.heading}>Sign up</h1>
 
             <div className={styles.row}>
-                <Field label="First name" icon={<IoPerson />} />
-                <Field label="Last name" icon={<IoPeople />} />
+                <Annotation label="First name">
+                    <Field icon={<IoPerson />} />
+                </Annotation>
+                <Annotation label="Last name">
+                    <Field icon={<IoPeople />} />
+                </Annotation>
             </div>
-            <Field type="email" label="Email" icon={<IoMail />} />
-            <PasswordField label="Password" icon={<IoLockClosed />} strengthBar />
-            <PasswordField label="Repeat password" icon={<IoLockClosed />} />
+            <Annotation label="Email">
+                <Field type="email" icon={<IoMail />} />
+            </Annotation>
+            <Annotation label="Password">
+                <PasswordField icon={<IoLockClosed />} strengthBar />
+            </Annotation>
+            <Annotation label="Repeat password">
+                <PasswordField icon={<IoLockClosed />} />
+            </Annotation>
 
             <Button>
                 Sign up

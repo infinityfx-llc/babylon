@@ -1,6 +1,6 @@
 'use client';
 
-import { Accordion, Checkbox, Slider, DateField, Select } from '@infinityfx/fluid';
+import { Accordion, Checkbox, Slider, DateField, Select, Annotation } from '@infinityfx/fluid';
 import styles from './filters.module.css';
 import { Genres, Languages } from '@/lib/types';
 import { useFilterStore } from '@/lib/stores';
@@ -35,14 +35,18 @@ export default function Filters() {
 
         <Accordion.Item label="Release date">
             <div className={styles.column}>
-                <DateField label="From"
-                    clearable
-                    value={data.timestamps[0]}
-                    onChange={date => mutate(data => data.timestamps[0] = date)} />
-                <DateField label="To"
-                    clearable
-                    value={data.timestamps[1]}
-                    onChange={date => mutate(data => data.timestamps[1] = date)} />
+                <Annotation label="From">
+                    <DateField
+                        clearable
+                        value={data.timestamps[0]}
+                        onChange={date => mutate(data => data.timestamps[0] = date)} />
+                </Annotation>
+                <Annotation label="To">
+                    <DateField
+                        clearable
+                        value={data.timestamps[1]}
+                        onChange={date => mutate(data => data.timestamps[1] = date)} />
+                </Annotation>
             </div>
         </Accordion.Item>
 

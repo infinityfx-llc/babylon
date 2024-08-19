@@ -1,6 +1,6 @@
 import { getAuthorId, getAuthorNames } from "@/lib/utils";
 import { useForm } from "@infinityfx/control";
-import { Button, DateField, Field, Modal } from "@infinityfx/fluid";
+import { Annotation, Button, DateField, Field, Modal } from "@infinityfx/fluid";
 import { Author } from "@prisma/client";
 import styles from './add-author.module.css';
 
@@ -38,14 +38,24 @@ export default function AddAuthor({ show, onClose, authors, setAuthors }: {
 
     return <Modal show={show} onClose={onClose} title="Add a new author" className={styles.modal}>
         <div className={styles.rows}>
-            <Field label="First name" required {...form.fieldProps('firstName')} />
-            <Field label="Last name" required {...form.fieldProps('lastName')} />
-            <DateField label="Date of birth" required value={form.values.born} onChange={born => form.setValues({ born })} />
-            <DateField label="Date of death"
-                clearable
-                value={form.values.died}
-                onChange={died => form.setValues({ died })} />
-            <Field label="nationality" required {...form.fieldProps('nationality')} />
+            <Annotation label="First name">
+                <Field required {...form.fieldProps('firstName')} />
+            </Annotation>
+            <Annotation label="Last name">
+                <Field required {...form.fieldProps('lastName')} />
+            </Annotation>
+            <Annotation label="Date of birth">
+                <DateField required value={form.values.born} onChange={born => form.setValues({ born })} />
+            </Annotation>
+            <Annotation label="Date of death">
+                <DateField
+                    clearable
+                    value={form.values.died}
+                    onChange={died => form.setValues({ died })} />
+            </Annotation>
+            <Annotation label="nationality">
+                <Field required {...form.fieldProps('nationality')} />
+            </Annotation>
 
             <Button loading={form.submitting} onClick={() => form.submit()}>
                 Add author

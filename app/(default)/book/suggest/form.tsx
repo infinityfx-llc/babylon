@@ -7,7 +7,7 @@ import { Genres, BookTypes, Languages } from '@/lib/types';
 import { resizeImage } from '@/lib/utils';
 import { Validate } from '@/lib/validate';
 import { useForm } from '@infinityfx/control';
-import { DateField, Field, NumberField, Select, Textarea, Button, FileField, Tabs, Tooltip } from '@infinityfx/fluid';
+import { DateField, Field, NumberField, Select, Textarea, Button, FileField, Tabs, Tooltip, Annotation } from '@infinityfx/fluid';
 import { Author, BookType } from '@prisma/client';
 import { useState, Fragment, useRef } from 'react';
 import { IoAdd, IoAlert, IoCheckmark, IoClipboard } from 'react-icons/io5';
@@ -116,21 +116,27 @@ export default function Form({ authors }: { authors: Author[]; }) {
             setAuthors={setAuthorList} />
 
         <div className={styles.row}>
-            <Field label="Title" {...form.fieldProps('title')} />
-            <Select label="Genre"
-                searchable
-                error={form.touched.genre && form.errors.genre}
-                options={Object.entries(Genres).map(([value, label]) => ({ value, label }))}
-                value={form.values.genre}
-                onChange={genre => form.setValues({ genre })} />
+            <Annotation label="Title">
+                <Field {...form.fieldProps('title')} />
+            </Annotation>
+            <Annotation label="Genre">
+                <Select
+                    searchable
+                    error={form.touched.genre && form.errors.genre}
+                    options={Object.entries(Genres).map(([value, label]) => ({ value, label }))}
+                    value={form.values.genre}
+                    onChange={genre => form.setValues({ genre })} />
+            </Annotation>
 
             <div className={styles.joined}>
-                <Select label="Author"
-                    searchable
-                    error={form.touched.author && form.errors.author}
-                    value={typeof form.values.author === 'string' ? '' : form.values.author.id}
-                    onChange={val => form.setValues({ author: authorList.find(author => author.id === val) })}
-                    options={authorList.map(author => ({ label: author.name, value: author.id }))} />
+                <Annotation label="Author">
+                    <Select
+                        searchable
+                        error={form.touched.author && form.errors.author}
+                        value={typeof form.values.author === 'string' ? '' : form.values.author.id}
+                        onChange={val => form.setValues({ author: authorList.find(author => author.id === val) })}
+                        options={authorList.map(author => ({ label: author.name, value: author.id }))} />
+                </Annotation>
 
                 <Tooltip content="Add a new author">
                     <Button variant="neutral" onClick={() => toggleAuthorModal(!showAuthorModal)}>
@@ -140,10 +146,12 @@ export default function Form({ authors }: { authors: Author[]; }) {
             </div>
         </div>
 
-        <Textarea label="Description"
-            rows={5}
-            resize="vertical"
-            {...form.fieldProps('description')} />
+        <Annotation label="Description">
+            <Textarea
+                rows={5}
+                resize="vertical"
+                {...form.fieldProps('description')} />
+        </Annotation>
 
         <div className={styles.row}>
             <Tabs
@@ -169,36 +177,43 @@ export default function Form({ authors }: { authors: Author[]; }) {
 
             return <Fragment key={i}>
                 <div className={styles.row}>
-                    <NumberField label="ISBN"
-                        precision={0}
-                        controls={false}
-                        showError
-                        error={form.touched.editions && form.errors.editions}
-                        value={edition.id}
-                        onChange={e => setEditionField(i, 'id', e.target.value)} />
-                    <Select label="Type"
-                        options={Object.entries(BookTypes).map(([value, label]) => ({ value, label }))}
-                        value={edition.type}
-                        onChange={val => setEditionField(i, 'type', val)} />
-                    <DateField label="Release date"
-                        value={edition.published}
-                        onChange={val => setEditionField(i, 'published', val)} />
+                    <Annotation label="ISBN" error={form.touched.editions ? form.errors.editions as string : undefined}>
+                        <NumberField
+                            precision={0}
+                            controls={false}
+                            error={form.touched.editions && form.errors.editions}
+                            value={edition.id}
+                            onChange={e => setEditionField(i, 'id', e.target.value)} />
+                    </Annotation>
+                    <Annotation label="Type">
+                        <Select
+                            options={Object.entries(BookTypes).map(([value, label]) => ({ value, label }))}
+                            value={edition.type}
+                            onChange={val => setEditionField(i, 'type', val)} />
+                    </Annotation>
+                    <Annotation label="Release date">
+                        <DateField
+                            value={edition.published}
+                            onChange={val => setEditionField(i, 'published', val)} />
+                    </Annotation>
                 </div>
 
                 <div className={styles.row}>
                     <div className={styles.joined}>
-                        <FileField label="Cover image"
-                            inputRef={el => { fileInput.current[i] = el }}
-                            accept="image/png, image/jpeg"
-                            onChange={e => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                    resizeImage(file, 45, 64)
-                                        .then(base64 => setEditionField(i, 'cover', base64 || ''));
-                                } else {
-                                    setEditionField(i, 'cover', '');
-                                }
-                            }} />
+                        <Annotation label="Cover image">
+                            <FileField
+                                inputRef={el => { fileInput.current[i] = el }}
+                                accept="image/png, image/jpeg"
+                                onChange={e => {
+                                    const file = e.target.files?.[0];
+                                    if (file) {
+                                        resizeImage(file, 45, 64)
+                                            .then(base64 => setEditionField(i, 'cover', base64 || ''));
+                                    } else {
+                                        setEditionField(i, 'cover', '');
+                                    }
+                                }} />
+                        </Annotation>
 
                         <Tooltip content="Paste from clipboard">
                             <Button onClick={() => pasteImage(i)}>
@@ -207,15 +222,19 @@ export default function Form({ authors }: { authors: Author[]; }) {
                         </Tooltip>
                     </div>
 
-                    <NumberField label="Page count"
-                        precision={0}
-                        value={edition.pages}
-                        onChange={e => setEditionField(i, 'pages', parseInt(e.target.value))} />
-                    <Select label="Language"
-                        searchable
-                        options={Object.entries(Languages).map(([value, label]) => ({ value, label }))}
-                        value={edition.language}
-                        onChange={val => setEditionField(i, 'language', val)} />
+                    <Annotation label="Page count">
+                        <NumberField
+                            precision={0}
+                            value={edition.pages}
+                            onChange={e => setEditionField(i, 'pages', parseInt(e.target.value))} />
+                    </Annotation>
+                    <Annotation label="Language">
+                        <Select
+                            searchable
+                            options={Object.entries(Languages).map(([value, label]) => ({ value, label }))}
+                            value={edition.language}
+                            onChange={val => setEditionField(i, 'language', val)} />
+                    </Annotation>
                 </div>
             </Fragment>;
         })}

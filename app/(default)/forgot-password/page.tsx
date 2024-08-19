@@ -1,4 +1,4 @@
-import { Button, Field } from '@infinityfx/fluid';
+import { Annotation, Button, Field } from '@infinityfx/fluid';
 import { Metadata } from 'next';
 import { IoMail } from 'react-icons/io5';
 import styles from './page.module.css';
@@ -13,7 +13,9 @@ export default function Page() {
         <div className={styles.form}>
             <h1 className={styles.heading}>Forgot your password?</h1>
 
-            <Field type="email" label="Email" icon={<IoMail />} />
+            <Annotation label="Email">
+                <Field type="email" icon={<IoMail />} />
+            </Annotation>
 
             <Button>
                 Request a reset

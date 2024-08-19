@@ -2,7 +2,7 @@ import { ApiBookReview } from '@/app/api/book/review/route';
 import { useToast } from '@/context/toast';
 import { source } from '@/lib/request';
 import { useForm } from '@infinityfx/control';
-import { Textarea, Button, NumberField } from '@infinityfx/fluid';
+import { Textarea, Button, NumberField, Annotation } from '@infinityfx/fluid';
 import { useRouter } from 'next/navigation';
 import { IoAlert } from 'react-icons/io5';
 import styles from './write-review.module.css';
@@ -36,19 +36,21 @@ export default function WriteReview({ bookId, mutate }: { bookId: string; mutate
     });
 
     return <div className={styles.wrapper}>
-        <NumberField
-            label="Rating"
-            min={1}
-            max={10}
-            precision={1}
-            value={form.values.rating / 10}
-            onChange={e => form.setValues({ rating: parseFloat(e.target.value) * 10 })} />
+        <Annotation label="Rating">
+            <NumberField
+                min={1}
+                max={10}
+                precision={1}
+                value={form.values.rating / 10}
+                onChange={e => form.setValues({ rating: parseFloat(e.target.value) * 10 })} />
+        </Annotation>
 
-        <Textarea
-            resize="vertical"
-            label="Review"
-            value={form.values.text}
-            onChange={e => form.setValues({ text: e.target.value })} />
+        <Annotation label="Review">
+            <Textarea
+                resize="vertical"
+                value={form.values.text}
+                onChange={e => form.setValues({ text: e.target.value })} />
+        </Annotation>
 
         <Button loading={form.submitting} onClick={() => form.submit()}>
             Rate this book
