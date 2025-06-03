@@ -4,8 +4,8 @@ import Link from 'next/link';
 import AccountMenu from './account-menu';
 import styles from './account.module.css';
 
-export default function Account() {
-    const { user } = getSession();
+export default async function Account() {
+    const { user } = await getSession();
 
     if (!user) return <Link href="/sign-in" tabIndex={-1} style={{ marginLeft: 'auto' }}>
         <Button variant="light" round className={styles.account}>

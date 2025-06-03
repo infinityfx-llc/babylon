@@ -7,7 +7,7 @@ import BookOverview from '../book-overview';
 import styles from './page.module.css';
 
 export default async function Page() {
-    const { user } = getSession();
+    const { user } = await getSession();
 
     if (!user) return redirect('/sign-in');
 

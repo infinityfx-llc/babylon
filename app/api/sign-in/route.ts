@@ -26,7 +26,7 @@ export const POST = defineEndpoint(async (data: SignInData)  => {
         }
     };
 
-    cookies().set('session', JSON.stringify(user));
+    (await cookies()).set('session', JSON.stringify(user));
 
     return { user };
 });

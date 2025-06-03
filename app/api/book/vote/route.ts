@@ -11,7 +11,7 @@ export type BookVoteData = {
 };
 
 export const POST = defineEndpoint(async (data: BookVoteData) => {
-    const { user } = getSession();
+    const { user } = await getSession();
 
     if (!user?.admin) return {
         book: undefined,

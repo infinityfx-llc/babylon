@@ -11,8 +11,8 @@ export const metadata: Metadata = {
     title: 'Sign in'
 };
 
-export default function Page() {
-    const { user } = getSession();
+export default async function Page() {
+    const { user } = await getSession();
 
     if (user) redirect('/profile');
 

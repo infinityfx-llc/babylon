@@ -10,7 +10,7 @@ type BookReviewData = {
 };
 
 export const POST = defineEndpoint(async (data: BookReviewData) => {
-    const { user } = getSession();
+    const { user } = await getSession();
 
     if (!user) return {
         review: undefined,

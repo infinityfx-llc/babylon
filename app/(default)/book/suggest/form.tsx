@@ -231,6 +231,7 @@ export default function Form({ authors }: { authors: Author[]; }) {
                     <Annotation label="Language">
                         <Select
                             searchable
+                            virtualItemHeight={36}
                             options={Object.entries(Languages).map(([value, label]) => ({ value, label }))}
                             value={edition.language}
                             onChange={val => setEditionField(i, 'language', val)} />

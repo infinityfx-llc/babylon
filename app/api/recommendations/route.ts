@@ -11,7 +11,7 @@ export type RecommendationsData = {
  * Retrieve a list of recommended books for the signed in user.
  */
 export const POST = defineEndpoint(async (data: RecommendationsData) => {
-    const { user } = getSession();
+    const { user } = await getSession();
 
     const books = await db.book.findMany({
         where: {

@@ -54,6 +54,7 @@ export default function Filters() {
             <Select
                 searchable
                 multiple
+                virtualItemHeight={36}
                 value={data.languages}
                 onChange={langs => mutate(data => data.languages = langs)}
                 options={Object.entries(Languages).map(([value, label]) => ({ value, label }))} />

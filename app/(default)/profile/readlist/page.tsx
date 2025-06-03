@@ -1,8 +1,8 @@
 import Readlist from "@/components/readlist";
 import { getSession } from "@/lib/session";
 
-export default function Page() {
-    const { user } = getSession();
+export default async function Page() {
+    const { user } = await getSession();
 
     if (!user) throw new Error();
 

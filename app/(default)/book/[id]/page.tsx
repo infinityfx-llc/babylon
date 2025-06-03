@@ -7,7 +7,7 @@ import BookOverview from '../book-overview';
 import { getSession } from '@/lib/session';
 
 const getBookEdition = cache(async (id: string) => {
-    const { user } = getSession();
+    const { user } = await getSession();
 
     return await db.bookEdition.findUnique({
         where: {
@@ -34,17 +34,26 @@ const getBookEdition = cache(async (id: string) => {
     });
 });
 
-export async function generateMetadata({ params }: { params: { id: string; }; }): Promise<Metadata> {
-    const edition = await getBookEdition(params.id);
+export async function generateMetadata({ params }: {
+    params: Promise<{
+        id: string;
+    }>;
+}): Promise<Metadata> {
+    const { id } = await params;
+    const edition = await getBookEdition(id);
 
     return {
         title: edition?.editionOf.title
     };
 }
 
-export default async function Page({ params }: { params: { id: string; }; }) {
-
-    const edition = await getBookEdition(params.id);
+export default async function Page({ params }: {
+    params: Promise<{
+        id: string;
+    }>;
+}) {
+    const { id } = await params;
+    const edition = await getBookEdition(id);
 
     if (!edition) return notFound();
 

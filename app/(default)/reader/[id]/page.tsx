@@ -8,14 +8,19 @@ import { IoEllipsisVertical, IoPersonAdd } from 'react-icons/io5';
 import styles from './page.module.css';
 import Reviews from './reviews';
 
-export default async function Page({ params }: { params: { id: string; } }) {
-    const { user } = getSession();
+export default async function Page({ params }: {
+    params: Promise<{
+        id: string;
+    }>;
+}) {
+    const { id } = await params;
+    const { user } = await getSession();
 
-    if (user?.id === params.id) redirect('/profile');
+    if (user?.id === id) redirect('/profile');
 
     const reader = await db.reader.findUnique({
         where: {
-            id: params.id
+            id
         },
         include: {
             _count: true

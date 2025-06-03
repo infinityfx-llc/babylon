@@ -18,7 +18,7 @@ export type BooksData = {
  * Retrieve all books matching some set of filters.
  */
 export const POST = defineEndpoint(async (data: BooksData) => {
-    const { user } = getSession();
+    const { user } = await getSession();
 
     const config = {
         where: {

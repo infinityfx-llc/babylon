@@ -3,8 +3,8 @@ import styles from './page.module.css';
 import { getSession } from '@/lib/session';
 import Recommendations from '@/components/recommendations';
 
-export default function Page() {
-    const { user } = getSession();
+export default async function Page() {
+    const { user } = await getSession();
 
     return <main className={styles.main}>
         <section className={styles.section}>

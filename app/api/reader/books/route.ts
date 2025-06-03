@@ -15,7 +15,7 @@ export type ReaderBooksData = {
  * Retrieve a readers read books.
  */
 export const POST = defineEndpoint(async (data: ReaderBooksData) => {
-    const { user } = getSession();
+    const { user } = await getSession();
 
     const reader = await db.reader.findUnique({
         where: {

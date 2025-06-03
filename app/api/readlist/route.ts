@@ -8,7 +8,7 @@ export type ReadlistData = {
 };
 
 export const POST = defineEndpoint(async (data: ReadlistData) => {
-    const { user } = getSession();
+    const { user } = await getSession();
 
     if (!user) return {
         read: undefined,

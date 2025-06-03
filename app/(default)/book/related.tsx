@@ -5,7 +5,7 @@ import { Divider } from '@infinityfx/fluid';
 import styles from './related.module.css';
 
 export default async function Related({ bookId }: { bookId: string; }) {
-    const { user } = getSession();
+    const { user } = await getSession();
 
     const books = await db.book.findMany({
         where: {

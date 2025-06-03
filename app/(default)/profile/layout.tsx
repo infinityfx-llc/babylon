@@ -6,7 +6,7 @@ import styles from './layout.module.css';
 import Navigation from "./navigation";
 
 export default async function Layout({ children }: { children: React.ReactNode; }) {
-    const { user } = getSession();
+    const { user } = await getSession();
 
     if (!user) redirect('/sign-in');
 
